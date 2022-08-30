@@ -7,7 +7,7 @@
     - [计算机视觉-CNN](#计算机视觉-CNN)
     - [计算机视觉-Transformer](#计算机视觉-Transformer)
     - [生成模型](#生成模型)
-    - [计算机视觉-Object Detection](#计算机视觉-Object Detection)
+    - [计算机视觉-Object Detection](#计算机视觉-ObjectDetection)
     - [计算机视觉-对比学习](#计算机视觉-对比学习)
     - [自然语言处理-Transformer](#自然语言处理-Transformer)
     - [系统](#系统)
