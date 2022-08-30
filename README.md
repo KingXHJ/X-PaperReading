@@ -7,7 +7,7 @@
     - [计算机视觉-CNN](#计算机视觉-CNN)
     - [计算机视觉-Transformer](#计算机视觉-Transformer)
     - [生成模型](#生成模型)
-    - [计算机视觉-Object Detection](#计算机视觉-ObjectDetection)
+    - [计算机视觉-ObjectDetection](#计算机视觉-ObjectDetection)
     - [计算机视觉-对比学习](#计算机视觉-对比学习)
     - [自然语言处理-Transformer](#自然语言处理-Transformer)
     - [系统](#系统)
@@ -16,7 +16,7 @@
     - [新领域应用](#新领域应用)
 ## 深度学习论文精读
 
-### 计算机视觉 - CNN
+### 计算机视觉-CNN
 
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
@@ -29,7 +29,7 @@
 | | 2019 | [EfficientNet](https://arxiv.org/pdf/1905.11946.pdf) | 通过架构搜索得到的CNN                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F4f2eda8077dc7a69bb2b4e0a1a086cf054adb3f9%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/EfficientNet%3A-Rethinking-Model-Scaling-for-Neural-Tan-Le/4f2eda8077dc7a69bb2b4e0a1a086cf054adb3f9)  |
 | | 2021 |  [Non-deep networks](https://arxiv.org/pdf/2110.07641.pdf) | 让不深的网络也能在ImageNet刷到SOTA                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F0d7f6086772079bc3e243b7b375a9ca1a517ba8b%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Non-deep-Networks-Goyal-Bochkovskiy/0d7f6086772079bc3e243b7b375a9ca1a517ba8b) |
 
-### 计算机视觉 - Transformer
+### 计算机视觉-Transformer
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -56,7 +56,7 @@
 | | 2021 | [Guided Diffusion Models](https://arxiv.org/pdf/2105.05233.pdf) | 号称超越 GAN  |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F64ea8f180d0682e6c18d1eb688afdb2027c02794%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Diffusion-Models-Beat-GANs-on-Image-Synthesis-Dhariwal-Nichol/64ea8f180d0682e6c18d1eb688afdb2027c02794)  |
 | | 2021 | [StyleGAN3](https://arxiv.org/pdf/2106.12423.pdf) |        |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fc1ff08b59f00c44f34dfdde55cd53370733a2c19%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Alias-Free-Generative-Adversarial-Networks-Karras-Aittala/c1ff08b59f00c44f34dfdde55cd53370733a2c19)  |
 
-### 计算机视觉 - Object Detection
+### 计算机视觉-Object Detection
 
 | 笔记 | 年份 | 名字                                              | 简介         | 引用 |
 | ------ | ---- | ------------------------------------------------- | ------------ | ------------------------------------------------------------ |
@@ -73,7 +73,7 @@
 
 <a name="contrastive_learning"></a>
 
-### 计算机视觉 - 对比学习
+### 计算机视觉-对比学习
 
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
@@ -93,7 +93,7 @@
 |  ✅ | 2021 |  [DINO](https://arxiv.org/pdf/2104.14294.pdf) | transformer加自监督在视觉也很香                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fad4a0938c48e61b7827869e4ac3baffd0aefab35%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Emerging-Properties-in-Self-Supervised-Vision-Caron-Touvron/ad4a0938c48e61b7827869e4ac3baffd0aefab35)  |
 
 
-### 自然语言处理 - Transformer
+### 自然语言处理-Transformer
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
