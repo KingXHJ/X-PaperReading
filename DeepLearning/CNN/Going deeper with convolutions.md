@@ -18,13 +18,14 @@
 4. 提出“初始架构思想”（Inception），用于寻找稀疏结构中的稠密部分
 5. 我们的结果似乎提供了一个坚实的证据，即通过现成的密集构建块来近似预期的最佳稀疏结构是改进计算机视觉神经网络的可行方法
 # 三、设计的模型
-![GoogLeNet](./pictures/GoogLeNet.png)
+![GoogLeNet](../pictures/GoogLeNet.png)
 1. >The network is 22 layers deep when counting only layers with parameters (or 27 layers if we also count pooling)
 2. > It was found that a move from fully connected layers to average pooling improved the top-1 accuracy by about 0.6%, however the use of dropout remained essential even after removing the fully connected layers.
-![Inception](./pictures/Inception.png)
+
+![Inception](../pictures/Inception.png)
 - Inception最初提出的版本主要思想是利用不同大小的卷积核实现不同尺度的感知
 
-![GoogLeNet_Structure](./pictures/GoogLeNet_Struction.png)
+![GoogLeNet_Structure](../pictures/GoogLeNet_Struction.png)
 - GoogLeNet采用了模块化的结构（Inception结构），方便增添和修改；
 
 - 网络最后采用了average pooling（平均池化）来代替全连接层，该想法来自NIN（Network in Network），事实证明这样可以将准确率提高0.6%。

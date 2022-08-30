@@ -28,7 +28,8 @@
 3. 采用Overlapping Pooling的方式可以有效削弱过拟合的可能
 4. >The kernels of the second, fourth, and fifth convolutional layers are connected only to those kernel maps in the previous layer which reside on the same GPU (see Figure 2). The kernels of the third convolutional layer are connected to all kernel maps in the second 
 - 卷积层的连接状态不同
-![AlexNet](./pictures/AlexNet.png)
+
+![AlexNet](../pictures/AlexNet.png)
 
 计算卷积层输出图像尺寸的公式：
 $$W_{output} = \lfloor \frac{W_{input} - W_{filter} + 2P}{S} \rfloor + 1$$
