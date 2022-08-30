@@ -56,7 +56,7 @@
 | | 2021 | [Guided Diffusion Models](https://arxiv.org/pdf/2105.05233.pdf) | 号称超越 GAN  |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F64ea8f180d0682e6c18d1eb688afdb2027c02794%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Diffusion-Models-Beat-GANs-on-Image-Synthesis-Dhariwal-Nichol/64ea8f180d0682e6c18d1eb688afdb2027c02794)  |
 | | 2021 | [StyleGAN3](https://arxiv.org/pdf/2106.12423.pdf) |        |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fc1ff08b59f00c44f34dfdde55cd53370733a2c19%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Alias-Free-Generative-Adversarial-Networks-Karras-Aittala/c1ff08b59f00c44f34dfdde55cd53370733a2c19)  |
 
-### 计算机视觉-Object Detection
+### 计算机视觉-ObjectDetection
 
 | 笔记 | 年份 | 名字                                              | 简介         | 引用 |
 | ------ | ---- | ------------------------------------------------- | ------------ | ------------------------------------------------------------ |
