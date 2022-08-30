@@ -1,6 +1,7 @@
 # X-PaperReading
 
 >by KingXHJ
+[toc]
 
 ## 深度学习论文精读
 
