@@ -16,6 +16,7 @@
 1. >a depth of up to 152 layers—8×deeper than VGG nets
 2. >a deep residual learning framework
 ![ResidualLearning](../pictures/Residual_learning.png)
+
 我认为就是由于网络深度增加，信息到高维后变得稀疏，关系丢失，原始信息零散化
 3. 假定某神经网络的输入是x，期望输出是H(x)，如果我们直接把输入x传到输出作为初始结果，那么此时我们需要学习的目标就是F(x) = H(x) - x。一个残差学习单元（Residual Unit）如下图所示，ResNet相当于将学习目标改变了，不再是学习一个完整的输出H(x)，只是输出和输入的差别H(x) - x，即残差。
 4. ResNet has no hidden fc layers
