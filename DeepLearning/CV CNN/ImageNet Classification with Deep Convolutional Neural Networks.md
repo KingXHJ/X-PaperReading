@@ -13,10 +13,12 @@
 3. 模型需要有先验知识
 # 二、做出的创新
 1. 训练了一个巨大的卷积神经网络
-2. 开源了GPU的高度优化部署代码
+2. 开源了GPU的高度优化部署代码，**开创了把神经网络拆分到两个GPU上运行，Parallel training**
 3. 采用了一系列新的且不寻常的特征来提高效果并减少训练时间
 4. 对过拟合采取了措施
 5. 已经将5个卷积层和3个全连接层的神经网络优化至最小最精简了
+6. 没有做预处理，仅仅是对图片裁剪成256·256
+7. 首先用了end to end（原始图片或文本进去，神经网络做出来，不需要进行单独的特征提取）
 
 # 三、设计的模型
 > We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes.
@@ -25,7 +27,7 @@
 
 1. 采用ReLU作为激活函数，比tanh快，且和tanh近似一样准
 2. 采用Local Response Normalization此方案有助于泛化，CNN在未归一化的情况下，测试错误率为13%;在归一化的情况下，测试错误率为11%
-3. 采用Overlapping Pooling的方式可以有效削弱过拟合的可能
+3. 采用Overlapping Pooling（重叠Pooling）的方式可以有效削弱过拟合的可能
 4. >The kernels of the second, fourth, and fifth convolutional layers are connected only to those kernel maps in the previous layer which reside on the same GPU (see Figure 2). The kernels of the third convolutional layer are connected to all kernel maps in the second 
 - 卷积层的连接状态不同
 
@@ -39,7 +41,7 @@ $$W_{output} = \lfloor \frac{W_{input} - W_{filter}}{S} \rfloor + 1$$
 $$H_{output} = \lfloor \frac{H_{input} - H_{filter}}{S} \rfloor + 1$$
 
 5. 减少过拟合的方法：
-- > to artificially enlarge the dataset using label-preserving transformations 对图片进行剪裁和通道的预处理
+- > 数据增强，把部分图片人工进行调整，通过随机扣取原来图片的一部分或者调整RGB颜色
 - 采用Dropout的方法
 
 6. Back Propergation
@@ -58,7 +60,8 @@ $$H_{output} = \lfloor \frac{H_{input} - H_{filter}}{S} \rfloor + 1$$
 2. 又大又深的网络，且已经被优化到体积最小
 
 ## 3、改进空间
-1. 算力还是够的，但是在当时缺乏足够大的数据集
+- 在现在看来，正则不一定是解决过拟合的最好方法，模型设计更关键
+
 # 五、结论
 
 ## 1、模型是否解决了目标问题
