@@ -47,7 +47,7 @@
   - 加权和是通过value的key和query的相似度（compatibility function）计算得到的
   
   ![Transformer Attention calculate](../pictures/Transformer%20Attention%20calculate.png)
-  - q、k维度相同为$d_k$，做内积，再除以长度开根号，最后通过softmax算出来权重（非负，加和为1）；v的维度是$d_v$；完整计算：$$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+  - q和k维度相同为$d_k$，做内积，再除以长度开根号，最后通过softmax算出来权重（非负，加和为1）；v的维度是$d_v$；完整计算：$$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$$
   - 和其他注意力机制的区别：
     - 一种叫加型的注意力机制，用于处理query不等长的情况；还用一种点积的注意力机制，和本文的类似，除了本文除以了$\sqrt{d_k}$
     - 点乘比较简单
