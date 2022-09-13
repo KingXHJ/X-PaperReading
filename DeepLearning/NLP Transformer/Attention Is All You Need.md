@@ -63,7 +63,7 @@
     - 再做一个线性层回到原来的样子
   - 目的是：点积的Attention没什么好学的东西，但是Linear投影有参数是可以学习的，学习不同的投影方式，来匹配不同的相似函数。
   $$MultiHead(Q,K,V)=Concat(head_1,...,head_h)W^O$$
-  $$where\quad head_i=Attention(QW^{Q}_{i},KW^{K}_{i},VW^{V}_{i})$$
+  $$where\quad head_i=Attention(QW^Q_i,KW^K_i,VW^V_i)$$
   $$Where\quad the\quad projections\quad are\quad parameter\quad matrices\quad W^Q_i\in \mathbb{R}^{d_{model}×d_k}, W^K_i\in \mathbb{R}^{d_{model}×d_k}, W^V_i\in \mathbb{R}^{d_{model}×d_v}andW^O\in \mathbb{R}^{hd_v×d_{model}}$$
 
 5. Transformer如何使用注意力的：
@@ -85,7 +85,7 @@
   - 本质就是MLP
   - 每个词是一个点，对每个词作用一次就是point-wise
   $$FFN(x)=max(0,xW_1+b_1)W_2+b_2$$
-  $$d_{moddel}=512,\quad d_{ff}=2048$$
+  $$d_{model}=512,\quad d_{ff}=2048$$
 
 7. Embeddings and Softmax
   - Embedding(encoder decoder softmax的embedding权重相同，训练方便)就是去学习一个向量去表示一个词
