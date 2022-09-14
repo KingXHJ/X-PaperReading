@@ -4,7 +4,7 @@
 - 网络名称：MoCov1
 - 意义：无监督训练效果也很好
 - 作者：Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, Ross Girshick; Facebook AI Research (FAIR)
-- 实验环境：
+- 实验环境：8 GPUs
 - 数据集：PASCAL VOC, COCO
 
 # 一些前瞻知识
@@ -14,8 +14,11 @@
 - 目标函数：它的研究可以和代理任务分开。MoCo就是这么做的，它提出的又大又一致的字典，主要影响Info NCE这个目标函数的计算
     - 生成式网络的目标函数：原图和新建图之间的差异，$L_1 \& L_2$loss
     - 判别式网络的目标函数：cross-entropy/margin-based
-    - 对比学习目标函数
-    - 对抗性的目标函数
+    - 对比学习目标函数：去特征空间里，衡量各个样本对之间的相似性，让相似物体的特征拉的尽量近，不相似的物体特征推的尽量远。
+        - 与上述两种的区别就是：
+        - 上述两种最终的目标是固定的
+        - 但是对比学习的目标是在训练中不断变化的，由编码器抽取的数据特征决定
+    - 对抗性的目标函数：衡量的是两个概率分布之间的差异（GAN），主要做无监督数据生成的
 # 一、解决的问题
 1. 无监督预训练在NLP很成功，但是在CV不成功。作者认为是信号空间的不同，NLP是离散的字典，但是CV是在一个连续的、高维的空间。
 2. 无监督学习就该训练一些编码器，实现字典的查找
@@ -48,14 +51,63 @@
     - 字典太大，显卡内存肯定吃不消。所以要想一个办法，能让字典的大小，和每次模型去做前向过程时的batch size大小剥离开
     - 解决方案：用队列这种数据结构。移除老的mini-batch，添入新的mini-batch
     - 但是这样难以保证一致性
-    - 于是引入了`momentum encoder`$$\theta_k=m\theta_{k-1}+(1-m)\theta_q$$选择一个大的动量$m$，使得$\theta_k$变化缓慢，受$\theta_q$影响较小，就可以尽最大可能保证相对的一致性
+    - 于是引入了`momentum encoder`$$\theta_k=m\theta_{k-1}+(1-m)\theta_q$$选择一个大的动量 $m$ ，使得$\theta_k$变化缓慢，受 $\theta_q$ 影响较小，就可以尽最大可能保证相对的一致性
 
 4. 选择代理任务：
     - 一个简单的`instance discrimination`任务（个体判别任务）
     - 是什么呢：如果一个`query`和一个`key`，是同一个图片的不同视角（不同的随机裁剪得到的），就说这个`query`和`key`能配上对。
 
-# 四、实验结果
+5. Info NCE：
+    - $\frac{exp(z_k)}{\sum^k_{i=0}exp(z_i)}$ 这是softmax
+    - $-log\frac{exp(z_k)}{\sum^k_{i=0}exp(z_i)}$ 这是cross entropy loss
+    - 这里的 $k$ 在有监督学习下，指的是这个数据集里**有多少类别**。在对比学习中，理论上好用，实际行不通。如果用`instance discrimination`当自监督信号的话，那么这里的$k$将是非常巨大的数字，那就是有多少图片，就有多少类了。代表了**负样本数的多少**。softmax在有这么多类别的情况下工作不了
+    - 所以引进了NCE（noise contrastive estimation） loss：把这么多类简化成二分类任务，data sa
+    - 但是二分类可能对模型学习不友好，在那么多噪声中，大家可能不是一个类，看成多分类比较好，NCE loss变成了Info NCE loss $$\pounds_q=-log\frac{exp(q\cdot k_+/\tau)}{\sum^K_{i=0}exp(q\cdot k_i/\tau)} $$
+        - $\tau$ 是温度的超参数，控制分布形状
+        - $q\cdot k$ 类比于softmax用的 $z$ ，是logit
 
+6. Momenum Contrast
+    - 对比学习在高维的、连续的输入上打造一个离散的、动态的字典
+    - 动态的原因：字典里的`key`都是随机取样的；给`key`做编码的编码器也是不断在训练中变化
+
+7. Dictionary as a queue:
+    - 核心就是把字典用一个队列表示出来，**FIFO**
+    - 整个队列就是一个字典，里面的元素就是放进去的`key`
+    - 每一次mini-batch都有新`key`进去，老的`key`出来
+    - 用队列的好处就是可以重复使用之前编码好的、老的`key`
+    - 这样就可以把mini-batch的大小和字典大小剥离开了
+    - 字典一直是数据的子集
+8. Momentum update：
+    - 用了太大的队列，没有办法做梯度回传
+    - 也就是`key`的编码器没有办法通过反向传播的方式去更新参数了
+    - 有一个方法是每个iteration后，把`query`学习的参数复制给`key`，但是这会降低所有`key`的一致性
+    - 于是引入了`momentum encoder`$$\theta_k=m\theta_{k-1}+(1-m)\theta_q$$选择一个大的动量 $m$ ，使得$\theta_k$变化缓慢，受 $\theta_q$ 影响较小，就可以尽最大可能保证相对的一致性。用了$m=0.999$。使用大动量比小动量效果更好
+9. Relation to previous mechanisms:
+    ![MoCo comparison](../pictures/MoCo%20comparison.png)
+    - 之前的方法：
+        - end-to-end：q和k都是一个mini-batch来的，encoder也可以梯度学习了，但是受限于字典大小
+        - memory bank：只有一个q的encoder，把所有特征都存在了memory bank，但是特征一致性不好，每个epoch会导致一致性差的更多；扩展性不好
+        - MoCo：也只有一个编码器更新
+
+10. shuffle BN
+    - 用了BN以后，很有可能造成当前样本信息的泄露，模型可能通过泄露的信息很容易找到了正样本，而不会去好好学习模型
+    - 在多卡训练中，把样本打乱，送到不同的GPU上，在集中回来算loss，这样BN就存在与各个GPU上了
+
+# 四、实验结果
+1. Linear Classification Protocol:
+    - 居然找到学习率**30**比较好！！！
+2. 消融实现
+    - queue：
+        - 受到硬件限制
+        - 一致性不好，性能不好
+    - momentum：
+        - 动量0.999最好，0.9和0.9999都没0.999好
+3. Transferring Features:
+    - **无监督就是要学习一个可迁移的模型**
+    - 最有影响力的就是下游任务做微调
+    - 在检测上做了实验
+        - 归一化解决学习率30的问题
+        - 短期学习，防止COCO这种超大数据集，不需要预训练也可以表现得很好
 ## 1、比之前模型的优势
 
 ## 2、有优势的原因
@@ -72,7 +124,37 @@
 ## 3、模型是否引入了新的问题
 
 # 六、代码
-
+![MoCo code](../pictures/MoCo%20code.png)
+```
+# f_q, f_k: encoder networks for query and key
+# queue: dictionary as a queue of K keys (CxK)
+# m: momentum
+# t: temperature
+f_k.params = f_q.params # initialize
+for x in loader: # load a minibatch x with N samples
+    x_q = aug(x) # a randomly augmented version
+    x_k = aug(x) # another randomly augmented version
+    q = f_q.forward(x_q) # queries: NxC
+    k = f_k.forward(x_k) # keys: NxC
+    k = k.detach() # no gradient to keys
+    # positive logits: Nx1
+    l_pos = bmm(q.view(N,1,C), k.view(N,C,1))
+    # negative logits: NxK
+    l_neg = mm(q.view(N,C), queue.view(C,K))
+    # logits: Nx(1+K)
+    logits = cat([l_pos, l_neg], dim=1)
+    # contrastive loss, Eqn.(1)
+    labels = zeros(N) # positives are the 0-th
+    loss = CrossEntropyLoss(logits/t, labels)
+    # SGD update: query network
+    loss.backward()
+    update(f_q.params)
+    # momentum update: key network
+    f_k.params = m*f_k.params+(1-m)*f_q.params
+    # update dictionary
+    enqueue(queue, k) # enqueue the current minibatch
+    dequeue(queue) # dequeue the earliest minibatch
+```
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 2. 总结文章改进的思想
