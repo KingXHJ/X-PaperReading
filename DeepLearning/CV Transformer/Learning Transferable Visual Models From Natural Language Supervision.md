@@ -67,10 +67,15 @@
 
 # 七、应用
 [CLIPasso：Semantically-Aware Object Sketching](../CV%20Transformer/CLIPasso%EF%BC%9ASemantically-Aware%20Object%20Sketching.md)
+
 [CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval](../CV%20Transformer/CLIP4Clip%20An%20Empirical%20Study%20of%20CLIP%20for%20End%20to%20End%20Video%20Clip%20Retrieval.md)
+
 [ActionCLIP: A New Paradigm for Video Action Recognition](../CV%20Transformer/ActionCLIP%20A%20New%20Paradigm%20for%20Video%20Action%20Recognition.md)
+
 [HOW MUCH CAN CLIP BENEFIT VISION-ANDLANGUAGE TASKS](../CV%20Transformer/HOW%20MUCH%20CAN%20CLIP%20BENEFIT%20VISION-ANDLANGUAGE%20TASKS.md)
+
 [AudioCLIP Extending CLIP to Image, Text and Audio](../CV%20Transformer/ActionCLIP%20A%20New%20Paradigm%20for%20Video%20Action%20Recognition.md)
+
 [Can Language Understand Depth](../CV%20Transformer/Can%20Language%20Understand%20Depth.md)
 
 ![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
