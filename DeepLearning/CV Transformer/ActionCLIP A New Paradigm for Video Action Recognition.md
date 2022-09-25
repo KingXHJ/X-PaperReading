@@ -42,13 +42,15 @@
     - 把一组frame-level representations -> 一个Video representation
 
 # 四、实验结果
-
+- 提问的方式，进行消融实验
 ## 1、比之前模型的优势
-
+- multimodel frame work将one hot变成language guided的方式更好
+- pre-train->prompt->fine-tune, pre train是非常必要的
+- prompt在文本方面影响不大，但是CV方面对prompt依赖还是很强的
 ## 2、有优势的原因
 
 ## 3、改进空间
-
+- 在视频领域还是大有可为的
 # 五、结论
 
 ## 1、模型是否解决了目标问题

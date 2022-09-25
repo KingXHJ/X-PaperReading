@@ -69,7 +69,15 @@
 [CLIPasso：Semantically-Aware Object Sketching](../CV%20Transformer/CLIPasso%EF%BC%9ASemantically-Aware%20Object%20Sketching.md)
 [CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval](../CV%20Transformer/CLIP4Clip%20An%20Empirical%20Study%20of%20CLIP%20for%20End%20to%20End%20Video%20Clip%20Retrieval.md)
 [ActionCLIP: A New Paradigm for Video Action Recognition](../CV%20Transformer/ActionCLIP%20A%20New%20Paradigm%20for%20Video%20Action%20Recognition.md)
+[HOW MUCH CAN CLIP BENEFIT VISION-ANDLANGUAGE TASKS](../CV%20Transformer/HOW%20MUCH%20CAN%20CLIP%20BENEFIT%20VISION-ANDLANGUAGE%20TASKS.md)
+[AudioCLIP Extending CLIP to Image, Text and Audio](../CV%20Transformer/ActionCLIP%20A%20New%20Paradigm%20for%20Video%20Action%20Recognition.md)
+[Can Language Understand Depth](../CV%20Transformer/Can%20Language%20Understand%20Depth.md)
 
+![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
+- 三种用途：
+    1. 改动最小的方式：利用CLIP学习到的文本和图像特征直接拿来用，然后与自己想要的特征融合一下（点乘或者拼接），之前的训练框架保持不动，只是加强之前模型的训练
+    2. 改动居中的方式：把CLIP当作一个teacher，把CLIP的特征拿来做蒸馏，帮助现有的模型收敛更快
+    3. 改动最大：不借助CLIP的预训练参数，借助多模态对比学习的思想，应用到自己的任务中，自己设定正样本或者负样本
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 - 研究动机：NLP大成功，如自己的GPT3
