@@ -65,6 +65,11 @@
 
 # 六、代码
 
+# 七、应用
+[CLIPasso：Semantically-Aware Object Sketching](../CV%20Transformer/CLIPasso%EF%BC%9ASemantically-Aware%20Object%20Sketching.md)
+[CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval](../CV%20Transformer/CLIP4Clip%20An%20Empirical%20Study%20of%20CLIP%20for%20End%20to%20End%20Video%20Clip%20Retrieval.md)
+[ActionCLIP: A New Paradigm for Video Action Recognition](../CV%20Transformer/ActionCLIP%20A%20New%20Paradigm%20for%20Video%20Action%20Recognition.md)
+
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 - 研究动机：NLP大成功，如自己的GPT3
