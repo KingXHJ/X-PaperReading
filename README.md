@@ -9,6 +9,7 @@
     - [生成模型](#生成模型)
     - [计算机视觉-ObjectDetection](#计算机视觉-ObjectDetection)
     - [计算机视觉-对比学习](#计算机视觉-对比学习)
+    - [计算机视觉-LSTM](#计算机视觉-LSTM)
     - [自然语言处理-Transformer](#自然语言处理-Transformer)
     - [系统](#系统)
     - [图神经网络](#图神经网络)
@@ -93,7 +94,11 @@
 | [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/DeepLearning/CV%20Contrastive%20Learning/Overview%20of%20Comparative%20Learning.md) | 2021 | [MoCov3](https://arxiv.org/pdf/2104.02057.pdf) | 如何更稳定的自监督训练ViT                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F739ceacfafb1c4eaa17509351b647c773270b3ae%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/An-Empirical-Study-of-Training-Self-Supervised-Chen-Xie/739ceacfafb1c4eaa17509351b647c773270b3ae)  |
 | [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/DeepLearning/CV%20Contrastive%20Learning/Overview%20of%20Comparative%20Learning.md)  | 2021 |  [DINO](https://arxiv.org/pdf/2104.14294.pdf) | transformer加自监督在视觉也很香                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fad4a0938c48e61b7827869e4ac3baffd0aefab35%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Emerging-Properties-in-Self-Supervised-Vision-Caron-Touvron/ad4a0938c48e61b7827869e4ac3baffd0aefab35)  |
 
+### 计算机视觉-LSTM
 
+| 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
+| ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+|   | 2022 | [Sequencer](https://arxiv.org/pdf/2205.01972) | 可以替代ViT                 | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F1ae6c9a120507c83ca43b4ed361b7a5f8461a284%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Sequencer%3A-Deep-LSTM-for-Image-Classification-Tatsunami-Taki/1ae6c9a120507c83ca43b4ed361b7a5f8461a284) |
 
 ### 自然语言处理-Transformer
 
