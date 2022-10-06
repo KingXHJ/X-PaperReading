@@ -45,7 +45,7 @@
         - 机器学习算法都是顺序的模型，导致大量的全局同步，影响性能
         - 计算规模大，要用成百上千台机器做计算的时候，容灾就很严重
             - 如果计算组中的机器出现了不能计算的问题，需要保证其他机器能够正常的计算下去
-            ![parameter server statistics](../System/pictures/parameter%20server%20statistics.png)
+            ![parameter server statistics](../pictures/parameter%20server%20statistics.png)
             - （论文第一页右上角非常重要）
             - 跑大任务的时候，失败的概率很大
             - 机器挂了的原因：
@@ -67,10 +67,10 @@
         - 容灾：一台机器挂了，不需要把整个任务去重启，而是从上一个保存点重启
             - 这里用到的技术是，对每一个服务器节点，去做一个实时的复制，使得一台节点挂了，但是数据在另一个地方还会有，这个在分布式系统用得很多，但是机器学习用的不多
             - 对计算节点来说，因为不用存全局共享参数，所以可以动态调整
-                ![parameter server ml performed](../System/pictures/parameter%20server%20ml%20performed.png)
+                ![parameter server ml performed](../pictures/parameter%20server%20ml%20performed.png)
                 - 坐标是对数化的
 
-                ![parameter server data analysis](../System/pictures/parameter%20server%20data%20analysis.png)
+                ![parameter server data analysis](../pictures/parameter%20server%20data%20analysis.png)
                 - 数据结构
 
 # 二、做出的创新
@@ -115,7 +115,7 @@
 # 三、设计的模型
 **设计原则：简单、实用**
 1. 参数服务器的架构图
-    ![parameter server structure](../System/pictures/parameter%20server%20structure.png)
+    ![parameter server structure](../pictures/parameter%20server%20structure.png)
     - 设计目的
         - 尽量的通用
     - server group
@@ -164,11 +164,11 @@
     - 然而有依赖性的任务怎么办
         - 通过execute-after-finished
         - 即等到依赖的任务完成，再进行下一步
-            ![parameter server dependency](../System/pictures/parameter%20server%20dependency.png)
+            ![parameter server dependency](../pictures/parameter%20server%20dependency.png)
             - 有一个问题是，iter10正在发送的时候，iter11开始计算了，但是iter11用的是旧的梯度
             - iter12是必须等iter11完成之后，才能开始计算
 6. 通过加依赖组成灵活的一致性模型
-    ![parameter server consistency](../System/pictures/parameter%20server%20consistency.png)
+    ![parameter server consistency](../pictures/parameter%20server%20consistency.png)
     - 展示了三个常用的一致性模型
         - 圆圈和数字表示迭代或者小批量
         - 箭头表示依赖
@@ -197,7 +197,7 @@
         - 实现上通过filter
 3. Consistent Hashing(一致性的哈希，和区块链很像)
     - 核心思想是server端怎么存权重（做热备份）
-        ![parameter server consistent hash](../System/pictures/parameter%20server%20consistent%20hash.png)
+        ![parameter server consistent hash](../pictures/parameter%20server%20consistent%20hash.png)
         - 左图表示一个Key的环（一致性哈希环），在环里面分段，可以随机插进去
         - 每一段由一个服务器节点来维护，同时也会去存下面的两段作为备份
         - 这样每一段最多允许两个server挂掉，还可以保持继续执行
@@ -216,17 +216,17 @@
     - LDA式的一个聚类算法
     - 一个分布式的Sketching
 ## 1、比之前模型的优势
-![parameter server test1](../System/pictures/parameter%20server%20test1.png)
-![parameter server test2](../System/pictures/parameter%20server%20test2.png)
+![parameter server test1](../pictures/parameter%20server%20test1.png)
+![parameter server test2](../pictures/parameter%20server%20test2.png)
 - System-B和Parameter Server算法基本一样
     - B没用异步，因此收敛时间短，但是等待时间长
     - 参数服务器用了异步，收敛时间长，但是等待时间大大降低
-![parameter server test3](../System/pictures/parameter%20server%20test3.png)
+![parameter server test3](../pictures/parameter%20server%20test3.png)
 - 省时间的原因
     - server: 用了filter和哈希，而且压缩稀疏矩阵会大大节省空间
     - worker: 发送的是梯度，不是那么稀疏，所以压缩的效果并不如server那么明显
         - KKT是刻画对一个凸函数来说，离最优解有多远
-![parameter server test4](../System/pictures/parameter%20server%20test4.png)
+![parameter server test4](../pictures/parameter%20server%20test4.png)
 - 放不放松一致性
     - 不放松一致性的话，计算时间较少，但是等待时间就会很长
     - 放松一致性会增加计算量，但是减少等待时间
@@ -246,7 +246,7 @@
 ## 3、模型是否引入了新的问题
 
 # 七、代码
-![parameter server algorithm](../System/pictures/parameter%20server%20algorithm.png)
+![parameter server algorithm](../pictures/parameter%20server%20algorithm.png)
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 2. 总结文章改进的思想
