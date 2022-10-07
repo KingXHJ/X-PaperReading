@@ -66,6 +66,29 @@
 # 六、代码
 
 # 七、应用
+![CLIP together up](../pictures/CLIP%20together%20up.png)
+- 各个领域：
+    - 分割：Lseg、GroupViT
+    - 目标检测：ViLD、VLIP v1、VLIP v2
+    - 视频领域：Video CLIP、CLIP4CLIP、actionCLIP
+    - optic flow depth：depthCLIP
+    - 3D：pointCLIP
+    - 语音：audioCLIP
+    - 图像生成：CLIPpasso、VQGAN CLIP、CLIP-Draw
+    - 多模态：Vision Language downstream
+
+[Language-driven Semantic Segmentation](../CV%20Transformer/Language-driven%20Semantic%20Segmentation.md)
+
+[GroupViT Semantic Segmentation Emerges from Text Supervision](../CV%20Transformer/GroupViT%20Semantic%20Segmentation%20Emerges%20from%20Text%20Supervision.md)
+
+
+
+![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
+- 三种用途：
+    1. 改动最小的方式：利用CLIP学习到的文本和图像特征直接拿来用，然后与自己想要的特征融合一下（点乘或者拼接），之前的训练框架保持不动，只是加强之前模型的训练
+    2. 改动居中的方式：把CLIP当作一个teacher，把CLIP的特征拿来做蒸馏，帮助现有的模型收敛更快
+    3. 改动最大：不借助CLIP的预训练参数，借助多模态对比学习的思想，应用到自己的任务中，自己设定正样本或者负样本
+
 [CLIPasso：Semantically-Aware Object Sketching](../CV%20Transformer/CLIPasso%EF%BC%9ASemantically-Aware%20Object%20Sketching.md)
 
 [CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval](../CV%20Transformer/CLIP4Clip%20An%20Empirical%20Study%20of%20CLIP%20for%20End%20to%20End%20Video%20Clip%20Retrieval.md)
@@ -78,11 +101,6 @@
 
 [Can Language Understand Depth](../CV%20Transformer/Can%20Language%20Understand%20Depth.md)
 
-![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
-- 三种用途：
-    1. 改动最小的方式：利用CLIP学习到的文本和图像特征直接拿来用，然后与自己想要的特征融合一下（点乘或者拼接），之前的训练框架保持不动，只是加强之前模型的训练
-    2. 改动居中的方式：把CLIP当作一个teacher，把CLIP的特征拿来做蒸馏，帮助现有的模型收敛更快
-    3. 改动最大：不借助CLIP的预训练参数，借助多模态对比学习的思想，应用到自己的任务中，自己设定正样本或者负样本
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 - 研究动机：NLP大成功，如自己的GPT3
