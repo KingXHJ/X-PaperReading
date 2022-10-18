@@ -74,7 +74,7 @@
     - optic flow depth：depthCLIP
     - 3D：pointCLIP
     - 语音：audioCLIP
-    - 图像生成：CLIPpasso、VQGAN CLIP、CLIP-Draw
+    - 图像生成：CLIPasso、VQGAN CLIP、CLIP-Draw
     - 多模态：Vision Language downstream
 
 [Language-driven Semantic Segmentation](../CV%20Transformer/Language-driven%20Semantic%20Segmentation.md)
