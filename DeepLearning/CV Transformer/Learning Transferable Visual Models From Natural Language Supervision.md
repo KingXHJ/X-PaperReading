@@ -81,7 +81,9 @@
 
 [GroupViT Semantic Segmentation Emerges from Text Supervision](../CV%20Transformer/GroupViT%20Semantic%20Segmentation%20Emerges%20from%20Text%20Supervision.md)
 
+[Open-vocabulary Object Detection via Vision and Language Knowledge Distillation](../CV%20Transformer/Open-vocabulary%20Object%20Detection%20via%20Vision%20and%20Language%20Knowledge%20Distillation.md)
 
+[Grounded Language-Image Pre-training](../CV%20Transformer/Grounded%20Language-Image%20Pre-training.md)
 
 ![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
 - 三种用途：
