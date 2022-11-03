@@ -4,6 +4,7 @@
 
 ## 目录
   - [深度学习论文](#深度学习论文)
+    - [计算机视觉-3D](#计算机视觉-3D)
     - [计算机视觉-CNN](#计算机视觉-CNN)
     - [计算机视觉-Transformer](#计算机视觉-Transformer)
       - [CLIP相关工作](#CLIP相关工作)
@@ -18,6 +19,13 @@
     - [新领域应用](#新领域应用)
   
 ## 深度学习论文
+
+### 计算机视觉-3D
+
+| 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
+| ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+| [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/DeepLearning/CV%20CNN/ImageNet%20Classification%20with%20Deep%20Convolutional%20Neural%20Networks.md)      | 2018 | [MVSNet](https://openaccess.thecvf.com/content_ECCV_2018/papers/Yao_Yao_MVSNet_Depth_Inference_ECCV_2018_paper.pdf) | 第一个基于深度学习的MVS模型                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F87ca28235555f7e70cf1edc2a63cda4aef7fee42%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/MVSNet%3A-Depth-Inference-for-Unstructured-Multi-view-Yao-Luo/87ca28235555f7e70cf1edc2a63cda4aef7fee42) |
+
 
 ### 计算机视觉-CNN
 
