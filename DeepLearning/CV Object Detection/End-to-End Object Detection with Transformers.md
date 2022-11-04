@@ -28,11 +28,10 @@
     - 输出的框和ground Truth的框去做一个匹配，在匹配的框里去算目标检测的loss（推理不需要，用一个阈值去卡置信度即可->0.7）
     - 没画object query
 2. Object detection set prediction loss
-    - DETR任何时候都会输出N个预测框（文章中$N=100$）
-
+    - DETR任何时候都会输出N个预测框（文章中 $N=100$ ）
     ![DETR loss](../pictures/DETR%20loss.png)
     
-    $$\pounds_{Hungarian}(y,\hat{y})=\sum_{i=1}^{N}[-log\hat{p}_{\hat{\sigma}(i)}(c_i)+\mathbb{1}_{\{c_i\neq \varnothing \}}\pounds_{box}(b_i,\hat{b}_{\hat{\sigma}}(i))]$$
+    $$\pounds_{Hungarian}(y,\hat{y})=\sum_{i=1}^{N}[-log\hat{p}_ {\hat{\sigma}(i)}(c_i)+\mathbb{1}_ {\{c_i\neq \varnothing \}}\pounds_{box}(b_i,\hat{b}_ {\hat{\sigma}}(i))]$$
     - 分类的loss和匹配框的loss
     - 一定要得到一对一的结果
     - 先算最优匹配，再在上面算loss
