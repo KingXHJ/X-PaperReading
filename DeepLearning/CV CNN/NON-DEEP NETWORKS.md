@@ -17,7 +17,9 @@
 3. Skip-Squeeze-and-Excitation(SSE) which is based on the Squeeze-and-Excitation (SE)
 
 # 三、设计的模型
+
 ![ParNet and ParNet block](../pictures/ParNet.png)
+
 1. We replace the ReLU activation with SiLU which make the network more non-linearity
 2. Skip-Squeeze-and-Excitation(SSE) won't increase depth
 3. Downsampling and Fusion blocks
