@@ -97,7 +97,7 @@
 
         2. 代价矩阵
             - 聚合多个特征体成为一个代价体$ C $
-            - $ V=\frac{W}{4} \cdot \frac{H}{4} \cdot D \cdot F $
+            -  $ V=\frac{W}{4} \cdot \frac{H}{4} \cdot D \cdot F $
                 - W：图像宽度
                 - H：图像高度
                 - D：采样深度序号
