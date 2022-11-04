@@ -13,7 +13,7 @@
 3. 模型需要有先验知识
 # 二、做出的创新
 1. 训练了一个巨大的卷积神经网络
-2. 开源了GPU的高度优化部署代码，**开创了把神经网络拆分到两个GPU上运行，Parallel training**
+2. 开源了GPU的高度优化部署代码，***开创了把神经网络拆分到两个GPU上运行，Parallel training***
 3. 采用了一系列新的且不寻常的特征来提高效果并减少训练时间
 4. 对过拟合采取了措施
 5. 已经将5个卷积层和3个全连接层的神经网络优化至最小最精简了
@@ -23,6 +23,7 @@
 # 三、设计的模型
 > We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSVRC-2010 contest into the 1000 different classes.
 >The neural network, which has 60 million parameters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully-connected layers with a final 1000-way softmax.
+
 实现了一个参数量6000万、65万个神经元的5卷积层 + 3全连接层深度卷积神经网络，实现了120万张高清图片的上千种分类
 
 1. 采用ReLU作为激活函数，比tanh快，且和tanh近似一样准
@@ -34,10 +35,15 @@
 ![AlexNet](../pictures/AlexNet.png)
 
 计算卷积层输出图像尺寸的公式：
+
 $$W_{output} = \lfloor \frac{W_{input} - W_{filter} + 2P}{S} \rfloor + 1$$
+
 $$H_{output} = \lfloor \frac{H_{input} - H_{filter} + 2P}{S} \rfloor + 1$$
+
 计算池化层输出图像尺寸的公式：
+
 $$W_{output} = \lfloor \frac{W_{input} - W_{filter}}{S} \rfloor + 1$$
+
 $$H_{output} = \lfloor \frac{H_{input} - H_{filter}}{S} \rfloor + 1$$
 
 5. 减少过拟合的方法：
