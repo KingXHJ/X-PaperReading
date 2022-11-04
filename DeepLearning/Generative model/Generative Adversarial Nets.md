@@ -28,7 +28,7 @@
     - 输出一个标量，表示真实数据或者生成数据，二分类分类器
 4. 训练 $G$ 来最小化 $log(1-D(G(z)))$
 
-5. 总之就是训练 $D&G$ ：
+5. 总之就是训练D和G：
 
     $$\underset{G}{min} \underset{D}{max} V(D,G) = \mathbb{E}_{x \sim p_{data} (x)} [ log D(x) ] + \mathbb{E}_{z \sim p_z (z)} [ log(1-D(G(z))) ]$$
 
