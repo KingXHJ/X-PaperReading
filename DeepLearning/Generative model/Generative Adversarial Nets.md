@@ -21,17 +21,18 @@
 1. 最简单的应用就是：当生成器和辨别器都是MLP的时候
 2. 生成器：
     - 生成器在数据 $x$ 上学习一个 $p_g$ 的分布
-    - 定义一个先验的噪音分布变量 $p_z(z)$ (高斯噪声，均值为0方差为1)
-    - 学习一个MLP，使得$z$可以映射到 $G(z;\theta_g)$
+    - 定义一个先验的噪音分布变量 $p_{z}(z)$ (高斯噪声，均值为0方差为1)
+    - 学习一个MLP，使得 $z$ 可以映射到 $G(z ; \theta _g)$
 3. 辨别器：
-    - 辨别器也是个MLP，有自己可以学习的 $D(x;\theta_d)$
+    - 辨别器也是个MLP，有自己可以学习的 $D(x ; \theta _d)$
     - 输出一个标量，表示真实数据或者生成数据，二分类分类器
 4. 训练 $G$ 来最小化 $log(1-D(G(z)))$
 5. 总之就是训练 $D \& G$：
 
-$$\underset{G}{min}\underset{D}{max}V(D,G)=\mathbb{E}_{x\sim p_{data}(x)}[logD(x)]+\mathbb{E}_{z\sim p_z(z)}[log(1-D(G(z)))]$$
+$$\underset{G}{min} \underset{D}{max} V(D,G) = \mathbb{E}_{x\sim p_{data}(x)} [logD(x)] + \mathbb{E}_{z\sim p_z(z)} [log(1-D(G(z)))]$$
 
     - 在完美的情况下， $D(x)=1, (1-D(G(z)))=1$ ，最后整个式子结果应该是0，即最大化$logD(x)$，最小化$D(G(z))$
+    
 6. 证明优化函数没问题：
 
     $$D^*_G(x)=\frac{p_{data}(x)}{p_{data}(x)+p_g(x)}$$
