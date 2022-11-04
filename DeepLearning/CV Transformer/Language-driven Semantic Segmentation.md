@@ -22,8 +22,11 @@
 
 # 三、设计的模型
 1. 模型总览图
+
     ![Lseg model](../pictures/Lseg%20model.png)
+    
     ![Lseg dimension](../pictures/Lseg%20dimension.png)
+    
     - 和CLIP模型总览图非常像
     - 图片->分割的模型->得到一个特征图->upscaling放大（保证输出和原图一致）
     - 图像编码器是DPT结构：ViT + decoder（本文作者之前的工作），decoder的作用就是把一个bottleneck feature，Upscale上去，就像psp和aspp这种层
@@ -46,7 +49,9 @@
     - 2个block很好，加到4个就崩了，作者也没说为什么
 # 四、实验结果
 1. 效果
+
     ![Lseg result](../pictures/Lseg%20result.png)
+    
     - 分割的非常的好
     - 没有的类，就不做检测
 2. 用的不是常见的数据集
