@@ -14,8 +14,11 @@
 - 设定好的类别让模型有局限性，要从文本里得到信号，可以拼凑出想要的结果
 - 模型和数据都不庞大
 - 训练速度太慢了，不选择GPT，选择对比学习
+
 # 二、做出的创新
+
 ![CLIP summary](../pictures/CLIP%20summary.png)
+
 - 输入图片和文本的配对(4个亿)进行训练，做对比学习
 - 训练对角线上都是正样本，其余都是负样本
 - 用自然语言的方法（弱监督），把单词组织成句子，与图片算cosine相似度
@@ -23,6 +26,7 @@
 # 三、设计的模型
 1. 用自然语言预训练方法，用在视觉模型上；做大了规模
 2. 文本当作监督信号，跨模态
+
 ![CLIP pseudocode](../pictures/CLIP%20pseudocode.png)
 
 3. 单模态->多模态
@@ -66,7 +70,9 @@
 # 六、代码
 
 # 七、应用
+
 ![CLIP together up](../pictures/CLIP%20together%20up.png)
+
 - 各个领域：
     - 分割：Lseg、GroupViT
     - 目标检测：ViLD、VLIP v1、VLIP v2
@@ -86,6 +92,7 @@
 [Grounded Language-Image Pre-training](../CV%20Transformer/Grounded%20Language-Image%20Pre-training.md)
 
 ![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
+
 - 三种用途：
     1. 改动最小的方式：利用CLIP学习到的文本和图像特征直接拿来用，然后与自己想要的特征融合一下（点乘或者拼接），之前的训练框架保持不动，只是加强之前模型的训练
     2. 改动居中的方式：把CLIP当作一个teacher，把CLIP的特征拿来做蒸馏，帮助现有的模型收敛更快
