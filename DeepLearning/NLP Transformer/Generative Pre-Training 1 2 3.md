@@ -19,7 +19,7 @@
 1. GPT1：
     1. 用 $u_i$ 前面 $k-1$ 个词的条件概率 $$L_1(u)=\sum_{i}logP(u_i|u_{i-k},...,u_{i-1};\phi)$$ $L_1$ 是第一个目标函数，且这个是应用Transformer的解码器，解码器与编码器的区别在于：编码器能看到全部的输入；解码器只能看到前面的部分
     2. GPT比BERT要难：因为BERT是能看到所有的输入，做完形填空；GPT是只能看到前面的信息，预测未来。显然GPT更难些
-    3. fine-tuning：softmax算概率：$$P(y|x^1,...,x^m)=softmax(h_{l}^{m}W_y)$$ 第二个目标函数： $$L_2(C)=\sum_{(x,y)}logP(y|x^1,...,x^m)$$ 训练一个模型，去预测句子中的下一个词和预测词的标号。第三个目标函数： $$L_3(C)=L_2(C)+\lambda \cdot L_1(C)$$
+    3. fine-tuning：softmax算概率： $$P(y|x^1,...,x^m)=softmax(h_{l}^{m}W_y)$$  第二个目标函数： $$L_2(C)=\sum_{(x,y)}logP(y|x^1,...,x^m)$$ 训练一个模型，去预测句子中的下一个词和预测词的标号。第三个目标函数： $$L_3(C)=L_2(C)+\lambda \cdot L_1(C)$$
 
     ![GPT1](../pictures/GPT1.png)
     - 开始符、分隔符、抽取符：特殊记号
