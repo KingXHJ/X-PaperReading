@@ -77,33 +77,35 @@
         =
         \begin{pmatrix} R_i & \mathbf{t}_{i} \\ 0 & 1 \end{pmatrix} 
         \begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}$$
+        
         $$ 
         \begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}=\frac{1}{R_1} 
         \begin{pmatrix} 1 & -\mathbf{t}_1 \\ 0 & R_1 \end{pmatrix}
         =
-        \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix} 
+        \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}
         $$
-        $$ 
-        \begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix}
+
+        $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix}
         =
         \begin{pmatrix} R_i & \mathbf{t}_i \\ 0 & 1 \end{pmatrix} 
         \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}
         =
-        \begin{pmatrix} R_{i} R_1^{-1} & \mathbf{t}_i-R_{i} R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix} 
-        $$
-        $$ H=K_i (R_i R_1^{-1} - \frac{(\mathbf{t}_i - R_i R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T}{d})K_1^{-1} $$
-        $$ H=K_i R_i (I - \frac{(R_i^{-1} \mathbf{t}_i - R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T R_1}{d})R_1^{-1} K_1^{-1} $$
-        - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\{ F_i \}^N_{i=1}$ 而不是从图像{I_i}^N_{i=1}中采样像素
+        \begin{pmatrix} R_{i} R_1^{-1} & \mathbf{t}_i-R_{i} R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}$$
+
+        $$H=K_i (R_i R_1^{-1} - \frac{(\mathbf{t}_i - R_i R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T}{d})K_1^{-1}$$
+
+        $$H=K_i R_i (I - \frac{(R_i^{-1} \mathbf{t}_i - R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T R_1}{d})R_1^{-1} K_1^{-1}$$
+        - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\{ F_i \} ^N_{i=1}$ 而不是从图像 $\{ I_i \} ^N_{i=1}$中采样像素
 
         2. 代价矩阵
             - 聚合多个特征体成为一个代价体$ C $
-            -  $ V=\frac{W}{4} \cdot \frac{H}{4} \cdot D \cdot F $
+            - $V=\frac{W}{4} \cdot \frac{H}{4} \cdot D \cdot F$
                 - W：图像宽度
                 - H：图像高度
                 - D：采样深度序号
                 - F：特征图的通道号
-            - $ C= \mathcal{m} (V_1, \dots ,V_N)=\frac{\sum{N}{i=1}(V_i-\bar{V_i})^2}{N}$
-                - $ \bar{V_i} $ 是所有特征体积中的平均体积，并且以上所有操作都是逐元素的。
+            - $C= \mathcal{m} (V_1, \dots ,V_N)=\frac{\sum{N}{i=1}(V_i-\bar{V_i})^2}{N}$
+                - $\bar{V_i}$ 是所有特征体积中的平均体积，并且以上所有操作都是逐元素的。
             - 设计理念：大多数传统的MVS方法以启发式（不断迭代最后找到局部最优解的方法）方式聚集参考图像和所有源图像之间的成对代价。相反，我们的度量设计遵循这样一种理念，即所有视图都应该对匹配成本做出同等贡献，并且不偏爱参考图像
             - 选择方差的原因：因为“均值”操作本身不提供关于特征差异的信息，并且它们的网络需要CNN前和后层来帮助推断相似性。
         3. 代价矩阵的正则化
@@ -119,12 +121,12 @@
         1. 初步估算
             - 问题：从概率体积P中检索深度图D的最简单方法是逐像素比较概率大小（赢家通吃）。但是，argmax运算无法产生亚像素估计，并且由于其不可区分性，无法使用反向传播进行训练
             - 方案：相反，我们计算沿深度方向的期望值，即所有假设的概率加权和.它是完全可微的，并且能够近似argmax结果
-            $$ D = \sum{d_{max}}{d=d_{min}} d \times P(d) $$
+            $$D = \sum{d_{max}}{d=d_{min}} d \times P(d)$$
             - 输出深度图，如图b，与2D图像特征图的大小相同，与输入图像相比，2D图像在每个维度上缩小了四倍
         2. 概率图
             - 影响因素：沿深度方向的概率分布也反映了深度估计质量
             - 问题：尽管多尺度3D CNN具有很强的能力将概率正则化为单峰分布，但我们注意到，对于那些错误匹配的像素，它们的概率分布是分散的，不能集中到一个峰值，如图c
-            - 方案：基于这一观察，我们将深度估计 $ \hat{d} $ 的质量定义为真实深度在估计附近的小范围内的概率。由于深度假设是沿着**视图平截锥体（camera frustum）**离散采样的，我们只需在四个最近的深度假设上取概率和来测量估计质量
+            - 方案：基于这一观察，我们将深度估计 $\hat{d}$ 的质量定义为真实深度在估计附近的小范围内的概率。由于深度假设是沿着**视图平截锥体(camera frustum)**离散采样的，我们只需在四个最近的深度假设上取概率和来测量估计质量
             - 效果：请注意，这里也可以使用其他统计测量，如标准差或熵，但在我们的实验中，我们观察到深度图过滤的这些测量没有显著改进。更重要的是，我们的概率和公式可以更好地控制异常值过滤的阈值参数
         3. 深度图优化
             - 问题：虽然从概率体中检索到的深度图是合格的输出，但由于正则化涉及的大感受野，类似于语义分割和图像抠图中的问题，重建边界可能会过度平滑
