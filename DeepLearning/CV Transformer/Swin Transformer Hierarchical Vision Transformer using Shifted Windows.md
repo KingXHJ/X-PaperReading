@@ -11,10 +11,11 @@
 2. 使用Transformer有尺度的问题
 3. 图像的分辨率太大了，需要减少序列程度
 # 二、做出的创新
-1. 用了移动窗口的层级Transformer，其实就是让ViT能像卷积神经网络一样，做层级的特征提取，**提供多尺寸特征**
-2. 引入**移动窗口**，减小分辨率，提供各个尺度的分辨率，还保证了层级之间的关系
+1. 用了移动窗口的层级Transformer，其实就是让ViT能像卷积神经网络一样，做层级的特征提取，***提供多尺寸特征***
+2. 引入***移动窗口***，减小分辨率，提供各个尺度的分辨率，还保证了层级之间的关系
 3. 类似池化的方法，`patch merging`
 # 三、设计的模型
+
 ![Swin Transformer Hierarchical](../pictures/Swin%20Transformer%20Hierarchical.png)
 
 - 类似池化的方法，`patch merging`
