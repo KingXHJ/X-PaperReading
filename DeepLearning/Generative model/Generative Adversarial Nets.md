@@ -30,13 +30,13 @@
 
 5. 总之就是训练D和G：
 
-    $$\underset{G}{min} \underset{D}{max} V(D,G) = \mathbb{E}_ {x \sim p_{data} (x)} [ log D(x) ] + \mathbb{E}_ {z \sim p_z (z)} [ log(1-D(G(z))) ]$$
+    $$\underset{G}{min} \underset{D}{max} V(D,G) = \mathbb{E}_ {x \sim p_ {data} (x)} [ log D(x) ] + \mathbb{E}_ {z \sim p_z (z)} [ log(1-D(G(z))) ]$$
 
     - 在完美的情况下， $D(x)=1, (1-D(G(z)))=1$ ，最后整个式子结果应该是0，即最大化 $logD(x)$ ，最小化 $D(G(z))$
     
 6. 证明优化函数没问题：
 
-    $$D^{*}_{G} (x) = \frac{p_{data}(x)}{p_{data}(x)+p_g(x)}$$
+    $$D ^ {\*} _ {G} (x) = \frac{p_ {data}(x)}{p_ {data}(x)+p_ g(x)}$$
     
     - '*'代表最优解
     ![GAN identify](../pictures/GAN%20identify.png)
