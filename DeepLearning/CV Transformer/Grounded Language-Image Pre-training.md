@@ -32,7 +32,6 @@
 3. loss该如何算
     1. Detection：
         - 给定一个图片，有这个图像的backbone，就可以得到region embedding。假如有n个bounding box，每个bounding box的维度是d，接下来要做的就是接一个分类头，看一下每个bounding box里面的物体到底是哪一类。分类头的矩阵就是W，维度是cxd，c就是有多少个类别。所以把region embedding的O和W一乘，就得到了这个分类最后的logic。再用mns把bounding box筛选一下，再去跟ground truth去算cross entropy loss，就能得到最终的分类loss
-        
         ![Glip detection loss](../pictures/Glip%20detection%20loss.png)
         
     2. Vision grouding
