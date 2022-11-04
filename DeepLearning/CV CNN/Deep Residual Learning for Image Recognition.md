@@ -6,6 +6,7 @@
 - 作者：Kaiming He；Xiangyu Zhang；Shaoqing Ren；Jian Sun-Microsoft Research
 - 实验环境：
 - 数据集：ILSVRC & COCO 2015 competitions
+- 
 # 一、解决的问题
 1. >Is learning better networks as easy as stacking more layers?
 发现网络越深，反倒准确率下降了，梯度爆炸或者消失
@@ -22,7 +23,7 @@
 
 3. 假定某神经网络的输入是x，期望输出是H(x)，如果我们直接把输入x传到输出作为初始结果，那么此时我们需要学习的目标就是F(x) = H(x) - x。一个残差学习单元（Residual Unit）如下图所示，ResNet相当于将学习目标改变了，不再是学习一个完整的输出H(x)，只是输出和输入的差别H(x) - x，即残差。
 4. ResNet has no hidden fc layers
-5. **用1X1的卷积做投影，保证通道数匹配，也可以降维**
+5. ***用1X1的卷积做投影，保证通道数匹配，也可以降维***
 
 # 四、实验结果
 ## 1、比之前模型的优势
