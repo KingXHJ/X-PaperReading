@@ -112,10 +112,10 @@
     - 用了更大的batch-size
 ### 所用方法
 ![SimCLR model](../pictures/SimCLR%20model.png)
-- 有一个mini-batch的图片 $x$ ，对这个mini batch所有的图片做数据增强，不同的数据增强得到$x_i$和$x_j$，这就是正样本，数量为N；负样本就是$(2N-1)$
+- 有一个mini-batch的图片 $x$ ，对这个mini batch所有的图片做数据增强，不同的数据增强得到 $x_i$ 和 $x_j$ ，这就是正样本，数量为N；负样本就是 $(2N-1)$
 - 进行编码，两个编码器共享参数
 - projection head $g(\cdot)$ 是一个MLP（降维），只有训练的时候用，下游任务的时候就给他扔掉。这是提点的关键，非常惊喜，非常正经，非常简单
-- 最后衡量正样本之间是否能达到最大一致性，用normalized temperature-scaled的交叉熵函数（L2归一化，loss上乘 $\tau$），和Info NCE loss非常接近
+- 最后衡量正样本之间是否能达到最大一致性，用normalized temperature-scaled的交叉熵函数（L2归一化，loss上乘 $\tau$ ），和Info NCE loss非常接近
 ### 研究贡献（看看人家的数据增强方法，和消融实验）
 1. 优势不在于单一的工作，而是把之前所有的工作结合在一起
 2. 做了非常精细的消融实验
@@ -161,7 +161,7 @@
 ![SwAV model](../pictures/SwAV%20model.png)
 - 特征做对比，做近似，浪费
 - 不和负样本比，和更简单的东西——聚类中心比（prototype），维度 $D\cdot K$ ，d就是特征的维度，k是聚类的数量
-- $q_1$和$q_2$可以互相预测
+- $q_1$ 和 $q_2$ 可以互相预测
 - 一个小trick->multi crop（对比学习和聚类结合没有太多用处，multi-crop是关键）
     - 相比于之前工作的两个crop，使用多个crop
     - 增加了正样本数量
@@ -199,7 +199,7 @@
 2. 负样本是一个约束，给模型学习动力，防止模型学到捷径
 ### 所用方法
 ![BYOL model](../pictures/BYOL%20model.png)
-- 一个mini batch的输入，经过两次数据增强，得到了$v$和$v^{'}$
+- 一个mini batch的输入，经过两次数据增强，得到了 $v$ 和 $v^{'}$
 - 通过编码器得到特征，两个编码器结构相同，更新不同，下面的是动量更新
 - projection head
 - 有趣的地方：
@@ -300,7 +300,7 @@ return -(p*z).sum(dim=1).mean()
     - loss大幅度震动，梯度也有波峰，产生在第一层的patch projection
     - patch projection：ViT，如何把图片打成patch，可训练的全连接层
     - 初始化知乎，冻住，不让它训练就解决了
-    - **tokenization的重要性**
+    - ***tokenization的重要性***
 ### 代码
 ```
 # f_q: encoder: backbone + proj mlp + pred mlp
