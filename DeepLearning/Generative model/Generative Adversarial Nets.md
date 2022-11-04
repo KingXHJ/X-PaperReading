@@ -36,7 +36,7 @@
     
 6. 证明优化函数没问题：
 
-    $$D^*_G (x) = \frac{p_{data}(x)}{p_{data}(x)+p_g(x)}$$
+    $$D^{*}_{G} (x) = \frac{p_{data}(x)}{p_{data}(x)+p_g(x)}$$
     
     - '*'代表最优解
     ![GAN identify](../pictures/GAN%20identify.png)
