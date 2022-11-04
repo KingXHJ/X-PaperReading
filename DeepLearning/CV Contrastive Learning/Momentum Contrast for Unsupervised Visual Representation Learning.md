@@ -58,11 +58,11 @@
     - 是什么呢：如果一个`query`和一个`key`，是同一个图片的不同视角（不同的随机裁剪得到的），就说这个`query`和`key`能配上对。
 
 5. Info NCE：
-    - $\frac{exp(z_k)}{\sum^{k}_ {i=0}exp(z_ {i})}$ 这是softmax
-    - $-log \frac{exp(z _ {k})}{\sum^{k}_ {i=0}exp(z_ {i})}$ 这是cross entropy loss
+    - $$\frac{exp(z_k)}{\sum^{k}_{i=0}exp(z_{i})}$$ 这是softmax
+    - $$-log \frac{exp(z _ {k})}{\sum^{k}_{i=0}exp(z_{i})}$$ 这是cross entropy loss
     - 这里的 $k$ 在有监督学习下，指的是这个数据集里***有多少类别***。在对比学习中，理论上好用，实际行不通。如果用`instance discrimination`当自监督信号的话，那么这里的 $k$ 将是非常巨大的数字，那就是有多少图片，就有多少类了。代表了***负样本数的多少***。softmax在有这么多类别的情况下工作不了
     - 所以引进了NCE（noise contrastive estimation） loss：把这么多类简化成二分类任务，data sa
-    - 但是二分类可能对模型学习不友好，在那么多噪声中，大家可能不是一个类，看成多分类比较好，NCE loss变成了Info NCE loss $$\mathcal{L} _ {q} = -log \frac{exp(q \cdot k _ {+} / \tau)}{\sum^{K}_ {i=0}exp(q \cdot k_ {i} / \tau)}$$
+    - 但是二分类可能对模型学习不友好，在那么多噪声中，大家可能不是一个类，看成多分类比较好，NCE loss变成了Info NCE loss $$\mathcal{L} _ {q} = -log \frac{exp(q \cdot k _ {+} / \tau)}{\sum^{K}_{i=0}exp(q \cdot k_{i} / \tau)}$$
         - $\tau$ 是温度的超参数，控制分布形状
         - $q\cdot k$ 类比于softmax用的 $z$ ，是logit
 
