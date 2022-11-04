@@ -117,7 +117,7 @@
 
 - 学习率是算出来的：
 
-$$lrate=d_{model}^{-0.5} \cdot min(step_num^{-0.5},step_num \cdot warmup_steps^{-1.5})$$
+$$lrate = d_{model}^{-0.5} \cdot min(step_num^{-0.5},step_num \cdot warmup_steps^{-1.5})$$
 
 - Residual dropout
 
