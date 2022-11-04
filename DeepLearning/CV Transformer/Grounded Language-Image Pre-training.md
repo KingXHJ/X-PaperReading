@@ -36,7 +36,6 @@
         
     2. Vision grouding
         - 算了一个匹配的分数 $S_{ground}$ ，就是想看看图像中的区域，和句子里的单词是怎么匹配上的。图像的处理还是一样的，有image backbone，得到了一些region feature，但是接下来不是分类头，而是像ViLD一样，换成了一个文本编码器，通过已知的prompt，就能得到文本的embedding，和图像的embedding去算u你similarity，就可以得到region word alignment score $S_{ground}$ ，如果画成图，就是ViLD里的ViLD text分支，一模一样
-        
         ![Glip vision ground](../pictures/Glip%20vision%20ground.png)
         
     3. 结合
@@ -50,7 +49,6 @@
     - 将detection和grouding数据集合并，获得更大的数据集
     - 但是这样也逃不过corner case
     - 又引入了图像文本对，用伪标签（即GLIP-T（C）直接在Cap4M上做推理，把推理得到的bounding box当作ground truth，虽然有错误，但是不影响伪标签的有效性，有利于模型的效果和稳健性）
-    
     ![Glip dataset](../pictures/Glip%20dataset.png)     
     
 # 三、设计的模型
@@ -72,7 +70,6 @@
 2. 数值结果
 
     ![Glip result](../pictures/Glip%20result.png)
-    
     - zero-shot很强
     - 不算是完全公平的比较，训练数据集和trick都不一样
 ## 1、比之前模型的优势
