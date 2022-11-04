@@ -31,7 +31,7 @@
     - DETR任何时候都会输出N个预测框（文章中 $N=100$ ）
     ![DETR loss](../pictures/DETR%20loss.png)
     
-    $$\mathbf{L}_{Hungarian}(y,\hat{y})=\sum_{i=1}^{N}[-log\hat{p}_ {\hat{\sigma}(i)}(c_i)+\mathbb{1}_ {\{c_i\neq \varnothing \}}\mathbf{L}_{box}(b_i,\hat{b}_ {\hat{\sigma}}(i))]$$
+    $$\mathbf{L}_ {Hungarian}(y,\hat{y})= \sum ^ {N} _ {i=1} [-log\hat{p}_ {\hat{\sigma}(i)}(c_i)+\mathbb{1}_ {\lbrace c_i\neq \varnothing \rbrace} \mathbf{L}_{box}(b_i,\hat{b}_ {\hat{\sigma}}(i))]$$
     - 分类的loss和匹配框的loss
     - 一定要得到一对一的结果
     - 先算最优匹配，再在上面算loss
