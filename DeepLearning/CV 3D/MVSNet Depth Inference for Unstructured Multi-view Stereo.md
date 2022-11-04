@@ -47,7 +47,7 @@
 2. 其次，我们的方法将MVS重建分割成逐视图深度图估计的小问题，这使得大规模重建成为可能
 3. 摄像机参数在网络中被编码为投影操作，以形成代价体
 4. 3D CNN用于分类体素是否属于曲面
-5. 相比之下，我们的网络专注于**每次生成一个**参考图像的深度图，这允许我们直接自适应地重建大型场景
+5. 相比之下，我们的网络专注于 **每次生成一个** 参考图像的深度图，这允许我们直接自适应地重建大型场景
 
 
 # 三、设计的模型
@@ -58,7 +58,7 @@
 
     1. 每次选择一个参考图像和几个原图像作为输入
     2. 首先提取深度视觉图像特征
-    3. 这里的关键是**可微分单应性扭曲（differentiable homography warping）**操作，该操作隐式编码网络中的相机几何结构，以根据2D图像特征构建3D代价体，并实现端到端训练
+    3. 这里的关键是 **可微分单应性扭曲(differentiable homography warping)** 操作，该操作隐式编码网络中的相机几何结构，以根据2D图像特征构建3D代价体，并实现端到端训练
     4. 为了适应输入中任意数量的源图像，我们提出了一种基于方差的度量，将多个特征映射到体积中的一个成本特征
     5. 然后，该成本体积经历多尺度3D卷积，并回归初始深度图
     6. 最后，利用参考图像对深度图进行细化，以提高边界区域的精度
@@ -73,35 +73,20 @@
         - 意义：与简单地对原始图像执行密集匹配相比，提取的特征图显著提高了重建质量
     2. 代价体
         1. 可微的单应性变换：
-        $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix}
-        =
-        \begin{pmatrix} R_i & \mathbf{t}_{i} \\ 0 & 1 \end{pmatrix} 
-        \begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}$$
+            $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_i & \mathbf{t}_{i} \\ 0 & 1 \end{pmatrix} \begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}$$
 
-        $$ 
-        \begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}=\frac{1}{R_1} 
-        \begin{pmatrix} 1 & -\mathbf{t}_1 \\ 0 & R_1 \end{pmatrix}
-        =
-        \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}
-        $$
+            $$\begin{pmatrix} R_1 & \mathbf{t}_1 \\ 0 & 1 \end{pmatrix}^{-1}=\frac{1}{R_1} \begin{pmatrix} 1 & -\mathbf{t}_1 \\ 0 & R_1 \end{pmatrix} = \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}$$
 
-        $$
-        \begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix}
-        =
-        \begin{pmatrix} R_i & \mathbf{t}_i \\ 0 & 1 \end{pmatrix} 
-        \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}
-        =
-        \begin{pmatrix} R_{i} R_1^{-1} & \mathbf{t}_i-R_{i} R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}
-        $$
+            $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_i & \mathbf{t}_i \\ 0 & 1 \end{pmatrix} \begin{pmatrix} R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_{i} R_1^{-1} & \mathbf{t}_i-R_{i} R_1^{-1}\mathbf{t}_1 \\ 0 & 1 \end{pmatrix}$$
 
-        $$H=K_i (R_i R_1^{-1} - \frac{(\mathbf{t}_i - R_i R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T}{d})K_1^{-1}$$
+            $$H=K_i (R_i R_1^{-1} - \frac{(\mathbf{t}_i - R_i R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T}{d})K_1^{-1}$$
 
-        $$H=K_i R_i (I - \frac{(R_i^{-1} \mathbf{t}_i - R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T R_1}{d})R_1^{-1} K_1^{-1}$$
+            $$H=K_i R_i (I - \frac{(R_i^{-1} \mathbf{t}_i - R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T R_1}{d})R_1^{-1} K_1^{-1}$$
 
-        - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\{ F_i \} ^N_{i=1}$ 而不是从图像 $\{ I_i \} ^N_{i=1}$中采样像素
+        - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\lbrace F_i \rbrace ^N_{i=1}$ 而不是从图像 $\lbrace I_i \rbrace ^N_{i=1}$ 中采样像素
 
         2. 代价矩阵
-            - 聚合多个特征体成为一个代价体$ C $
+            - 聚合多个特征体成为一个代价体 $C$
             - $V=\frac{W}{4} \cdot \frac{H}{4} \cdot D \cdot F$
                 - W：图像宽度
                 - H：图像高度
