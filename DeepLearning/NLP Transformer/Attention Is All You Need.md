@@ -47,11 +47,14 @@
   - 加权和是通过value的key和query的相似度（compatibility function）计算得到的
   
   ![Transformer Attention calculate](../pictures/Transformer%20Attention%20calculate.png)
-  - q和k维度相同为$d_k$，做内积，再除以长度开根号，最后通过softmax算出来权重（非负，加和为1）；v的维度是$d_v$；完整计算：$$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+  - q和k维度相同为 $d_k$ ，做内积，再除以长度开根号，最后通过softmax算出来权重（非负，加和为1）；v的维度是 $d_v$ ；完整计算：
+  
+  $$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+  
   - 和其他注意力机制的区别：
-    - 一种叫加型的注意力机制，用于处理query不等长的情况；还用一种点积的注意力机制，和本文的类似，除了本文除以了$\sqrt{d_k}$
+    - 一种叫加型的注意力机制，用于处理query不等长的情况；还用一种点积的注意力机制，和本文的类似，除了本文除以了 $\sqrt{d_k}$
     - 点乘比较简单
-    - 除以$\sqrt{d_k}$，在长度较小的时候没什么差距；在值比较大的时候，如果直接做softmax，由于较大的值之间差距大，做完后大的更靠近于1，小的更靠近于0，导致梯度很小，容易跑不动。因此要除以长度，避免这种i情况
+    - 除以 $\sqrt{d_k}$ ，在长度较小的时候没什么差距；在值比较大的时候，如果直接做softmax，由于较大的值之间差距大，做完后大的更靠近于1，小的更靠近于0，导致梯度很小，容易跑不动。因此要除以长度，避免这种i情况
 
 ![Transfomer Attention](../pictures/Transformer%20Attention.png)
 4. Multi-Head Attention
@@ -62,9 +65,12 @@
     - 输出向量全部合并在一起（concatenate）
     - 再做一个线性层回到原来的样子
   - 目的是：点积的Attention没什么好学的东西，但是Linear投影有参数是可以学习的，学习不同的投影方式，来匹配不同的相似函数。
+  
   $$MultiHead(Q,K,V)=Concat(head_1,...,head_h)W^O$$
-  $$where\quad head_i=Attention(QW^Q_i,KW^K_i,VW^V_i)$$
-  $$Where\quad the\quad projections\quad are\quad parameter\quad matrices\quad W^Q_i\in \mathbb{R}^{d_{model}×d_k}, W^K_i\in \mathbb{R}^{d_{model}×d_k}, W^V_i\in \mathbb{R}^{d_{model}×d_v}andW^O\in \mathbb{R}^{hd_v×d_{model}}$$
+  
+  $$where \quad head_i=Attention(QW^Q_i,KW^K_i,VW^V_i)$$
+  
+  $$Where \quad the \quad projections \quad are \quad parameter \quad matrices \quad W^Q_i\in \mathbb{R}^{d_{model}×d_k}, W^K_i\in \mathbb{R}^{d_{model}×d_k}, W^V_i\in \mathbb{R}^{d_{model}×d_v}andW^O\in \mathbb{R}^{hd_v×d_{model}}$$
 
 5. Transformer如何使用注意力的：
   - Encoder（Multi-Head Attention）：
@@ -84,17 +90,21 @@
 6. point-wise feed-forward network
   - 本质就是MLP
   - 每个词是一个点，对每个词作用一次就是point-wise
+  
   $$FFN(x)=max(0,xW_1+b_1)W_2+b_2$$
+  
   $$d_{model}=512,\quad d_{ff}=2048$$
 
 7. Embeddings and Softmax
   - Embedding(encoder decoder softmax的embedding权重相同，训练方便)就是去学习一个向量去表示一个词
-  - 权重乘了一个$\sqrt{d_{model}}$，因为学习到的参数都比较小，为了能和Position Encoder相加的时候，不会被忽略
+  - 权重乘了一个 $\sqrt{d_{model}}$ ，因为学习到的参数都比较小，为了能和Position Encoder相加的时候，不会被忽略
 
 8. Position Encoding
   - Attention是不会有时序信息的，所以要加入时序信息
   - 用512长度去表示一个位置
+  
   $$PE_{(pos,2i)}=sin(pos/10000^{2i/d_{model}})$$
+  
   $$PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{model}})$$
 
 # 四、实验结果
@@ -106,6 +116,7 @@
 - 可见Transformer的效率还是很高的
 
 - 学习率是算出来的：
+
 $$lrate=d_{model}^{-0.5} \cdot min(step_num^{-0.5},step_num \cdot warmup_steps^{-1.5})$$
 
 - Residual dropout
