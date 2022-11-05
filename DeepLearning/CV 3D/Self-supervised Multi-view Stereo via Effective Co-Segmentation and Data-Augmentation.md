@@ -202,11 +202,11 @@ $\qquad$ Initialize non-negative matrices P and Q such that $P \ge 0$ , $Q \ge 0
 
 $\qquad$ **for** each iterative step $\mathcal{v}$ , $1 \le \mathcal{v} \le ite_{max}$ **do**
 
-$\qquad \qquad$ $Q^{\mathcal{v} + 1}_{[i,j]} \gets Q^{\mathcal{v}}_{[i,j]} \frac{((P^{\mathcal{v}})^{\mathcal{t}} A)_{[i,j]}}{((P^{\mathcal{v}})^{\mathcal{t}} P^{\mathcal{v}} Q^{\mathcal{v}})_{[i,j]}}$
+$\qquad \qquad$ $Q^{\mathcal{v} + 1}_ {[i,j]} \gets Q^{\mathcal{v}}_ {[i,j]} \frac{((P^{\mathcal{v}})^{\mathcal{t}} A)_ {[i,j]}}{((P^{\mathcal{v}})^{\mathcal{t}} P^{\mathcal{v}} Q^{\mathcal{v}})_ {[i,j]}}$
 
-$\qquad \qquad$ $P^{\mathcal{v} + 1}_{[i,j]} \gets P^{\mathcal{v}}_{[i,j]} \frac{(A (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}{(P^{\mathcal{v}} Q^{\mathcal{v} + 1} (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}$
+$\qquad \qquad$ $P^{\mathcal{v} + 1}_ {[i,j]} \gets P^{\mathcal{v}}_ {[i,j]} \frac{(A (Q^{\mathcal{v} + 1})^{\mathcal{t}})_ {[i,j]}}{(P^{\mathcal{v}} Q^{\mathcal{v} + 1} (Q^{\mathcal{v} + 1})^{\mathcal{t}})_ {[i,j]}}$
 
-$\qquad \qquad$ **if** $||A - P^{\mathcal{v} + 1} Q^{\mathcal{v} + 1}||_{F} \le tol$ **then**
+$\qquad \qquad$ **if** $||A - P^{\mathcal{v} + 1} Q^{\mathcal{v} + 1}||_ {F} \le tol$ **then**
 
 $\qquad \qquad \qquad$ $P = P^{\mathcal{v} + 1},Q = Q^{\mathcal{v} + 1}$ , stop the iterative process
 
