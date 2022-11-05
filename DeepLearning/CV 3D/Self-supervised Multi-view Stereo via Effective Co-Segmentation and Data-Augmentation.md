@@ -75,12 +75,12 @@
             - 这里 $f(S_{1,j}) = onehot(argmax(S_{i,j}))$ 并且 $M_i$ 是指示从第i个邻域帧到参考帧的有效像素的二进制掩码。
 4. 数据增强(Data-Augmentation)
     1. 使用原因：
-        - 方案：一个随机的向量 $\theta$ 被用于在图像I上，参数化一个任意的数据增强 $\tau_{\theta} : I \to \hat{I}_{\tau_{\theta}}$
+        - 方案：一个随机的向量 $\theta$ 被用于在图像I上，参数化一个任意的数据增强 $\tau_{\theta} : I \to \hat{I}_ {\tau_{\theta}}$
         - 思想：对比学习中的一些最新研究证明了数据增强在自监督学习中的益处。数据增强带来了具有挑战性的样本，这增强了无监督损失的可靠性，从而提供了对变化的鲁棒性
         - 问题：数据增强很少使用在自监督学习中，因为自然颜色波动在数据增强图像中，会干扰到自监督的颜色一致性约束
         - 措施：本文通过对比原始数据和增强数据的输出作为正则化项，而非优化原始数据
     2. 数据增强一致性损失
-        - 原始数据I的深度估计图D；数据增强图 $\hat{I}_{\tau_{\theta}}$ 的深度估计图 $\hat{D}_{\tau_{\theta}}$
+        - 原始数据I的深度估计图D；数据增强图 $\hat{I}_ {\tau_{\theta}}$ 的深度估计图 $\hat{D}_ {\tau_{\theta}}$
         - 在对比学习方法中，是要最小化两者的差异：
 
         $$\mathbb{L}_{DA} = \frac{1}{||M_{\tau_{\theta}}||_1} \sum||(D - \hat{D}_{\tau_{\theta}}) \odot M_{\tau_{\theta}}||_2$$
@@ -107,7 +107,7 @@
         - 数据增强分支
     2. 目标：处理自监督MVS中的颜色恒定模糊问题
     3. 除了基于光度一致性 $\mathbb{L}_ {PC}$ 的基本自我监督信号之外，我们将语义一致性 $\mathbb{L}_ {SC}$ 和数据增强一致性 $\mathbb{L}_ {DA}$ 这两个额外的自我监督信号添加到框架中。除上述损失外，还应用了（Mahjourian，Wicke，and Angelova 2018；Khot et al.2019）提出的用于深度估计的一些常见正则化术语，如结构化相似性 $\mathbb{L}_ {SSIM}$ 和深度平滑度 $\mathbb{L}_ {Smooth}$ 
-    4. 最终目标可构建如下： $$\mathbb{L} = \lambda_1 \mathbb{L}_{PC} + \lambda_2 \mathbb{L}_{SC} + \lambda_3 \mathbb{L}_{DA} + \lambda_4 \mathbb{L}_{SSIM} + \lambda_5 \mathbb{L}_{Smooth}$$ 这里权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
+    4. 最终目标可构建如下： $$\mathbb{L} = \lambda_1 \mathbb{L}_ {PC} + \lambda_2 \mathbb{L}_ {SC} + \lambda_3 \mathbb{L}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth}$$ 这里权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
 
 
 # 四、实验结果
@@ -172,7 +172,7 @@
         ![JDACS-MS illustration](../pictures/JDACS-MS%20illustration.png)
 
         - 损失函数：
-            $$\mathbb{L}_{JDACS-MS} = \sum^{5}_{s=1} (\lambda_1 \mathbb{L}^{s}_{PC} + \lambda_2 \mathbb{L}^{s}_{SC} + \lambda_3 \mathbb{L}^{s}_{DA} + \lambda_4 \mathbb{L}_{SSIM} + \lambda_5 \mathbb{L}_{Smooth})$$ 
+            $$\mathbb{L}_ {JDACS-MS} = \sum^{5}_{s=1} (\lambda_1 \mathbb{L}^{s}_ {PC} + \lambda_2 \mathbb{L}^{s}_ {SC} + \lambda_3 \mathbb{L}^{s}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth})$$ 
             这里，s表示多级MVSNet的每个阶段，默认情况下，它分为5个阶段；权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
     3. 数据增强一致性
         - 采用各种变换来生成具有挑战性的样本，如遮挡掩模、高斯噪声、模糊、亮度、颜色和对比度的随机抖动。在具有单级MVSNet主干的JDACS中，输入是原始多视图图像，并对每个视图应用不同的随机化变换。在具有多级MVSNet主干的JDACS-MS中，输入是多尺度的图像金字塔，并且在每个视图的图像金字塔的不同级别上添加不同的变换
