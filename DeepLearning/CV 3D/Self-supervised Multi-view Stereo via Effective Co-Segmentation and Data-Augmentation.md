@@ -42,7 +42,7 @@
     1. 可以使用任意一个此前的MVS网络的结构，本文采用MVSNet作为主干网络(backbone)
     2. 光度一致性(Photometric Consistency)
         - 目的是最小化原图于合成图在相同视角下的差异
-        - 算法：取参考帧的像素，投影到邻域帧上，获得对应信息；从邻域帧到参考帧的扭曲变化图像可以由邻域帧可微双线性抽样得到 $$I^'_i(p_j)=I_i(p^'_j)$$
+        - 算法：取参考帧的像素，投影到邻域帧上，获得对应信息；从邻域帧到参考帧的扭曲变化图像可以由邻域帧可微双线性抽样得到 $$I^{\prime}_i(p_j)=I_i(p^{\prime}_j)$$
 3. 协同分割(Co-Segmentation)
     1. 原因：由于场景的巨大变化和MVS中手动注释的昂贵成本，手工标注的效率太低，选择通过无监督的共同分割从多视图图像中挖掘隐含的公共片段
     2. 目标：协同分割旨在定位给定图像集合的公共对象的前景像素。且NMF具有固有的聚类特性，应用在训练的CNN层的激活函数中，可以用来寻找图像间的语义关系
@@ -55,7 +55,6 @@
         - 在协同分割结构中，引入了预训练的VGG网络用于特征提取。N个视角中提取到的特征图，每一个的维度都是(H,W,C)
         - 之后多视角特征图被连接(concatenate)在一起，并且重塑成矩阵A，维度是(NHW,C)
         - 根据乘法更新规则(multiplicative update rule in (Ding, He, and Simon 2005))求解NMF，矩阵A被分解成维度为(NHW,K)的矩阵P和维度为(K,C)的矩阵Q。其中，K是NMF代表语义聚类数量的因子
-
     ![JDACS-MS NMF](../pictures/JDACS-MS%20NMF.png)
 
     5. Q矩阵
@@ -68,11 +67,11 @@
         - 目的：由于协同分割图S是从矩阵P中提取的，基于语义一致性，构建自监督约束
         - 思想：借鉴光度一致性的思想并通过多视角扩展到分割图上
             - 首先计算参考帧每个像素p与邻域帧上的匹配点坐标p'
-            - 再通过双线性采样从邻域帧映射到参考帧，得到扭曲变换的分割图 $S^'_i$ ，再每个像素计算交叉熵 
+            - 再通过双线性采样从邻域帧映射到参考帧，得到扭曲变换的分割图 $S^{\prime}_i$ ，再每个像素计算交叉熵 
             
-            $$S^'_i(p_j)=S_i(p^'_j)$$
+            $$S^{\prime}_i(p_j)=S_i(p^{\prime}_j)$$
 
-            $$\mathbb{L}_{SC} = - \sum^N_{i=2}[\frac{1}{||M_i||_1} \sum^{HW}_{j=1}f(S_{1,j}) log(S^'_{i,j})M_{i,j}]$$
+            $$\mathbb{L}_{SC} = - \sum^N_{i=2}[\frac{1}{||M_i||_1} \sum^{HW}_{j=1}f(S_{1,j}) log(S^{\prime}_{i,j})M_{i,j}]$$
             - 这里 $f(S_{1,j}) = onehot(argmax(S_{i,j}))$ 并且 $M_i$ 是指示从第i个邻域帧到参考帧的有效像素的二进制掩码。
 4. 数据增强(Data-Augmentation)
     1. 使用原因：
@@ -108,7 +107,7 @@
         - 数据增强分支
     2. 目标：处理自监督MVS中的颜色恒定模糊问题
     3. 除了基于光度一致性 $\mathbb{L}_{PC}$ 的基本自我监督信号之外，我们将语义一致性 $\mathbb{L}_{SC}$ 和数据增强一致性 $\mathbb{L}_{DA}$ 这两个额外的自我监督信号添加到框架中。除上述损失外，还应用了（Mahjourian，Wicke，and Angelova 2018；Khot et al.2019）提出的用于深度估计的一些常见正则化术语，如结构化相似性 $\mathbb{L}_{SSIM}$ 和深度平滑度 $\mathbb{L}_{Smooth}$ 
-    4. 最终目标可构建如下： $$\mathbb{L} = \lambda _1 \mathbb{L}_{PC} + \lambda _2 \mathbb{L}_{SC} + \lambda _3 \mathbb{L}_{DA} + \lambda _4 \mathbb{L}_{SSIM} + \lambda _5 \mathbb{L}_{Smooth}$$ 这里权重根据经验设置为： $\lambda _1 = 0.8, \lambda _2 = 0.1, \lambda _3 = 0.1, \lambda _4 = 0.2, \lambda _5 = 0.0067$
+    4. 最终目标可构建如下： $$\mathbb{L} = \lambda_1 \mathbb{L}_{PC} + \lambda_2 \mathbb{L}_{SC} + \lambda_3 \mathbb{L}_{DA} + \lambda_4 \mathbb{L}_{SSIM} + \lambda_5 \mathbb{L}_{Smooth}$$ 这里权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
 
 
 # 四、实验结果
@@ -167,22 +166,14 @@
 1. 实施补充细节
     1. NMF的实施
         - NMF在JDACS框架的共分割分支中扮演着重要角色。我们使用乘法更新规则迭代计算NMF的解
-        - 算法逻辑：
-            **Algorithm 1** Multiplicative Update Rule Based NMF
-                Set the number of segments as K;
-                Set the number of maximum iterations as $ite_{max}$ and the tolerance constant as tol;
-                Initialize non-negative matrices P and Q such that $P \ge 0$ , $Q \ge 0$;
-                **for** each iterative step $\mathcal{v}$ , $1 \le \mathcal{v} \le ite_{max}$ **do**
-                    $$Q^{\mathcal{v} + 1}_{[i,j]} \gets Q^{\mathcal{v}}_{[i,j]} \frac{((P^{\mathcal{v}})^{\mathcal{t}} A)_{[i,j]}}{((P^{\mathcal{v}})^{\mathcal{t}} P^{\mathcal{v}} Q^{\mathcal{v}})_{[i,j]}}$$
-                    $$P^{\mathcal{v} + 1}_{[i,j]} \gets P^{\mathcal{v}}_{[i,j]} \frac{(A (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}{(P^{\mathcal{v}} Q^{\mathcal{v} + 1} (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}$$
-                    **if** $||A - P^{\mathcal{v} + 1} Q^{\mathcal{v} + 1}||_{F} \le tol$ **then**
-                        $P = P^{\mathcal{v} + 1},Q = Q^{\mathcal{v} + 1}$ , stop the iterative process
-                    **end if**
-                **end for**
+        - 算法逻辑，见代码部分
+    
     2. JDACS-MS的实现
         ![JDACS-MS illustration](../pictures/JDACS-MS%20illustration.png)
+
         - 损失函数：
-            $$\mathbb{L}_{JDACS-MS} = \sum^{5}_{s=1} (\lambda _1 \mathbb{L}^{s}_{PC} + \lambda _2 \mathbb{L}^{s}_{SC} + \lambda _3 \mathbb{L}^{s}_{DA} + \lambda _4 \mathbb{L}_{SSIM} + \lambda _5 \mathbb{L}_{Smooth})$$ 这里,s表示多级MVSNet的每个阶段，默认情况下，它分为5个阶段；权重根据经验设置为： $\lambda _1 = 0.8, \lambda _2 = 0.1, \lambda _3 = 0.1, \lambda _4 = 0.2, \lambda _5 = 0.0067$
+            $$\mathbb{L}_{JDACS-MS} = \sum^{5}_{s=1} (\lambda_1 \mathbb{L}^{s}_{PC} + \lambda_2 \mathbb{L}^{s}_{SC} + \lambda_3 \mathbb{L}^{s}_{DA} + \lambda_4 \mathbb{L}_{SSIM} + \lambda_5 \mathbb{L}_{Smooth})$$ 
+            这里，s表示多级MVSNet的每个阶段，默认情况下，它分为5个阶段；权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
     3. 数据增强一致性
         - 采用各种变换来生成具有挑战性的样本，如遮挡掩模、高斯噪声、模糊、亮度、颜色和对比度的随机抖动。在具有单级MVSNet主干的JDACS中，输入是原始多视图图像，并对每个视图应用不同的随机化变换。在具有多级MVSNet主干的JDACS-MS中，输入是多尺度的图像金字塔，并且在每个视图的图像金字塔的不同级别上添加不同的变换
     4. 如何避免GPU内存溢出？
@@ -201,7 +192,30 @@
         - 如主论文中的表5和图8所示，共分割结果只能提供不超过4个语义聚类的粗粒度语义特征。原因是语义质心是从专门用于分类任务的预训练VGG的特征空间中聚类的，其中只有粗粒度语义才足以构建可区分的线索。然而，在直觉上，细粒度语义可以为自监督提供更有效的通信先验。未来，需要更准确、更精细的语义特征来进一步提高自我监督的性能
     2. 无纹理区域的限制
         - 尽管我们提出的方法可以处理颜色变化巨大的具有挑战性的情况，但它仍然无法推广到无纹理区域。所有自我监督重建损失的收敛仅在彩色区域有效。因为无纹理区域中的任何像素共享相同的颜色强度，导致自监督损失固定为0，变得毫无意义。然而，无纹理区域通常出现在现实场景中，自监督可能会被混淆，无法生成。探索处理无纹理区域可能是未来的一个潜在方向
-        
+
+# 七、代码
+**Algorithm 1** Multiplicative Update Rule Based NMF
+
+$\qquad$ Set the number of segments as K;
+
+$\qquad$ Set the number of maximum iterations as $ite_{max}$ and the tolerance constant as tol;
+
+$\qquad$ Initialize non-negative matrices P and Q such that $P \ge 0$ , $Q \ge 0$;
+
+$\qquad$ **for** each iterative step $\mathcal{v}$ , $1 \le \mathcal{v} \le ite_{max}$ **do**
+
+$\qquad \qquad$ $Q^{\mathcal{v} + 1}_{[i,j]} \gets Q^{\mathcal{v}}_{[i,j]} \frac{((P^{\mathcal{v}})^{\mathcal{t}} A)_{[i,j]}}{((P^{\mathcal{v}})^{\mathcal{t}} P^{\mathcal{v}} Q^{\mathcal{v}})_{[i,j]}}$
+
+$\qquad \qquad$ $P^{\mathcal{v} + 1}_{[i,j]} \gets P^{\mathcal{v}}_{[i,j]} \frac{(A (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}{(P^{\mathcal{v}} Q^{\mathcal{v} + 1} (Q^{\mathcal{v} + 1})^{\mathcal{t}})_{[i,j]}}$
+
+$\qquad \qquad$ **if** $||A - P^{\mathcal{v} + 1} Q^{\mathcal{v} + 1}||_{F} \le tol$ **then**
+
+$\qquad \qquad \qquad$ $P = P^{\mathcal{v} + 1},Q = Q^{\mathcal{v} + 1}$ , stop the iterative process
+
+$\qquad \qquad$ **end if**
+
+$\qquad$ **end for**
+
 # 读者角度（挖掘文章中没有提到的）：
 1. 总结文章发现问题的思路
 2. 总结文章改进的思想
