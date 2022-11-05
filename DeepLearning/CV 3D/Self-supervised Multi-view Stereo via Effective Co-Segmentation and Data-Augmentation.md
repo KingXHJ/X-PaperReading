@@ -85,9 +85,7 @@
 
         $$\mathbb{L}_{DA} = \frac{1}{||M_{\tau_{\theta}}||_1} \sum||(D - \hat{D}_{\tau_{\theta}}) \odot M_{\tau_{\theta}}||_2$$
         - 这里 $M_{\tau_{\theta}}$ 代表变换下的遮挡信息 $\tau_{\theta}$
-        - 由于不同视图之间的对极约束，我们框架中的集成增强方法不应改变像素的空间位置。
-
-    ***下面将展示我们的方法中使用的一些增强方法，如下所示：***
+        - 由于不同视图之间的对极约束，我们框架中的集成增强方法不应改变像素的空间位置。***下面将展示我们的方法中使用的一些增强方法，如下所示：***
     3. 交叉视图掩码：
         - 为了模拟多视图场景中的遮挡幻觉，我们随机生成一个二元裁剪遮罩 $1 - M_{\tau_{\theta_1}}$ ，以遮挡参考视图上的一些区域
         - 然后将遮挡掩码投影到其他视图，以遮蔽图像中的相应区域
@@ -172,7 +170,7 @@
         ![JDACS-MS illustration](../pictures/JDACS-MS%20illustration.png)
 
         - 损失函数：
-            $$\mathbb{L}_ {JDACS-MS} = \sum^{5}_{s=1} (\lambda_1 \mathbb{L}^{s}_ {PC} + \lambda_2 \mathbb{L}^{s}_ {SC} + \lambda_3 \mathbb{L}^{s}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth})$$ 
+            $$\mathbb{L}_ {JDACS-MS} = \sum^{5}_ {s=1} (\lambda_1 \mathbb{L}^{s}_ {PC} + \lambda_2 \mathbb{L}^{s}_ {SC} + \lambda_3 \mathbb{L}^{s}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth})$$ 
             这里，s表示多级MVSNet的每个阶段，默认情况下，它分为5个阶段；权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
     3. 数据增强一致性
         - 采用各种变换来生成具有挑战性的样本，如遮挡掩模、高斯噪声、模糊、亮度、颜色和对比度的随机抖动。在具有单级MVSNet主干的JDACS中，输入是原始多视图图像，并对每个视图应用不同的随机化变换。在具有多级MVSNet主干的JDACS-MS中，输入是多尺度的图像金字塔，并且在每个视图的图像金字塔的不同级别上添加不同的变换
