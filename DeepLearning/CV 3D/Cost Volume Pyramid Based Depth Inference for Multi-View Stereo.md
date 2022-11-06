@@ -63,22 +63,22 @@
             - 最大深度 $d_{max}$
             - 采样深度 $d = d_{min} + m(d_{max} - d_{min}) / M , m \in \lbrace 0,1,2,...,M-1 \rbrace$ 代表一个平面，其法线 $n_0$ 是参考相机的主轴
         - 单应性变换 $\mathbf{H} _{i}(d)$ 在深度d处的第i个源视图和参考视图之间的关系(好像直接抄的MVSNet的公式，但是那个应该是错的吧) $$\mathbf{H} _{i}(d) = \mathbf{K}^{L} _{i}\mathbf{R} _{i}(\mathbf{I} - \frac{(\mathbf{t} _{0} - \mathbf{t} _{i})\mathbf{n}^{T} _{0}}{d})\mathbf{R}^{-1} _{0}(\mathbf{K}^{L} _{0})^{-1}$$ 其中 $\mathbf{I}$ 是单位矩阵， $\mathbf{K}^{L} _{i}$ 和 $\mathbf{K}^{L} _{0}$ 是 $\mathbf{K} _{i}$ 和 $\mathbf{K} _{i}$ 在第L级放缩后的内参矩阵
-            - 每个单应性变化指明了一组从参考帧 $x$ 到邻域帧 $\tilde{x} _{i}$ 的映射 $\lambda_{i} \tilde{x} _{i} = \mathbf{H} _{i}(d)x$ 其中 $\lambda_{i}$ 代表了像素 $\tilde{x}$ 在邻域帧中的深度
+            - 每个单应性变化指明了一组从参考帧 $x$ 到邻域帧 $\tilde{x}_ {i}$ 的映射 $\lambda_{i} \tilde{x}_ {i} = \mathbf{H}_ {i}(d) x$ 其中 $\lambda_{i}$ 代表了像素 $\tilde{x}$ 在邻域帧中的深度
         - 有了 $\tilde{x}$ 和 $\lbrace \mathbf{f}^{L} _{i} \rbrace^{N} _{i=1}$ 通过双线性插值，重塑从邻域帧到参考帧的扭曲变换 $\lbrace \tilde{\mathbf{f}}^{L} _{i,d} \rbrace^{N} _{i=1}$ 。深度d处的所有像素的成本被定义为其来自N+1个视图的特征的方差 $\mathbf{C}^{L} _{d} = \frac{1}{(N+1)} \sum^{N} _{i=0}(\tilde{\mathbf{f}}^{L} _{i,d} - \bar{\mathbf{f}}^{L} _{d})^{2}$ 其中 $\tilde{\mathbf{f}}^{L} _{d} = \mathbf{f}^{L} _{0}$ 是参考矩阵的特征图， $\bar{\mathbf{f}}^{L} _{d}$ 是所有视图( $\lbrace \tilde{\mathbf{f}}^{L} _{i,d} \rbrace^{N} _{i=1} \cup \mathbf{f}^{L} _{0}$ )的特征体的平均值。该度量鼓励每个像素的正确深度具有最小的特征方差，这与光度一致性约束相对应。计算每个深度假设的成本图，并将这些成本图连接到单个成本体 $\mathbf{C}^{L} \in \mathbb{R}^{W / 2^l \times H / 2^l \times M \times F}$
         - 获得良好深度估计精度的关键参数是深度采样分辨率M
     
     2. 多尺度深度残差推断的成本体
         - 最终的目的是获得参考帧 $T_{0}$ 的深度图 $\mathbf{D} =  \mathbf{D}^{0}$
         - 流程：从第（l+1）级的给定深度估计 $\mathbf{D}^{l+1}$ 开始迭代，以获得下一级 $\mathbf{D}^{l}$ 的精细深度图，直到到达底层
-            - 首先上采样 $\mathbf{D}^{l+1}$ 到下一个层级 $\mathbf{D}^{l+1} _{\uparrow}$ 通过 ***双三次插值*** 
-            - 然后构建部分成本体，以回归定义为 $\Delta D^{l}$ 以获得精细深度图 $D^{l} =  D^{l+1} _{\uparrow} + \Delta D^{l}$ 第l级的 $D^{l}$
+            - 首先上采样 $\mathbf{D}^{l+1}$ 到下一个层级 $\mathbf{D}^{l+1}_ {\uparrow}$ 通过 ***双三次插值*** 
+            - 然后构建部分成本体，以回归定义为 $\Delta D^{l}$ 以获得精细深度图 $D^{l} =  D^{l+1}_ {\uparrow} + \Delta D^{l}$ 第l级的 $D^{l}$
         - 改进：虽然与Point-MVSNet分享了类似的见解，以迭代预测深度残差，但我们认为，不是在点云上执行卷积，而是通过多尺度3D卷积，在深度残差上构建常规3D成本体，可以实现更紧凑、更快和更高精度的深度推断
         - 原因：是相邻像素的深度位移是相关的，这表明常规的的多尺度3D卷积将为深度残差估计提供有用的上下文信息。因此，将深度位移假设安排在规则的3D空间中，并 ***如下计算成本体积***
-            - 给定相机参数 $\lbrace \mathbf{K} _{i} \mathbf{R} _{i} \mathbf{t} _{i} \rbrace^{N} _{i=0}$ 和上采样深度估计 $\mathbf{D}^{l+1} _{\uparrow}$ 。当前每个像素 $\mathbf{p}=(u,v)$ 被定义为 $d_{\mathbf{p}} = \mathbf{D}^{l+1} _{uparrow}(u,v)$ ，设每个深度残差假设区间为 $\Delta d_{\mathbf{p}} = s_{\mathbf{p}} / M$ ，其中 $s_{\mathbf{p}}$ 表示深度搜索范围在p的时候，M代表采样的深度残差序号
+            - 给定相机参数 $\lbrace \mathbf{K}_ {i} \mathbf{R}_ {i} \mathbf{t}_ {i} \rbrace^{N}_ {i=0}$ 和上采样深度估计 $\mathbf{D}^{l+1}_ {\uparrow}$ 。当前每个像素 $\mathbf{p}=(u,v)$ 被定义为 $d_{\mathbf{p}} = \mathbf{D}^{l+1}_ {uparrow}(u,v)$ ，设每个深度残差假设区间为 $\Delta d_{\mathbf{p}} = s_{\mathbf{p}} / M$ ，其中 $s_{\mathbf{p}}$ 表示深度搜索范围在p的时候，M代表采样的深度残差序号
 
             ![CVP-MVSNet reprojection](../pictures/CVP-MVSNet%20reprojection.png)
-            - 考虑对应的假设3D点与深度的投影 $(D^{l+1} _{\uparrow}(u,v) + m \Delta d_{\mathbf{p}})$ 在邻域帧中是 $$\lambda_i x^{\prime} _{i} = \mathbf{K}^{l} _{i} (\mathbf{R} _{i} \mathbf{R}^{-1} _{0} ((\mathbf{K}^{i} _{0})^{-1} (u,v,1)^{T} (d_{\mathbf{p}} + m \Delta d_{\mathbf{p}}) - \mathbf{t} _{0}) + \mathbf{t} _{i})$$ 其中 $\lambda_i$ 代表在邻域帧i中的相关深度， $m \in \lbrace -M / 2,...,M/2 - 1 \rbrace$ 
-            - 然后，该像素在每个深度残差假设下的代价类似地基于公式 $\mathbf{C}^{L} _{d}$ ，最终获得部分代价体  $\mathbf{C}^{L} \in \mathbb{R}^{W / 2^l \times H / 2^l \times M \times F}$
+            - 考虑对应的假设3D点与深度的投影 $(D^{l+1}_ {\uparrow}(u,v) + m \Delta d_{\mathbf{p}})$ 在邻域帧中是 $$\lambda_i x^{\prime}_ {i} = \mathbf{K}^{l}_ {i} (\mathbf{R}_ {i} \mathbf{R}^{-1}_ {0} ((\mathbf{K}^{i}_ {0})^{-1} (u,v,1)^{T} (d_{\mathbf{p}} + m \Delta d_{\mathbf{p}}) - \mathbf{t}_ {0}) + \mathbf{t}_ {i})$$ 其中 $\lambda_i$ 代表在邻域帧i中的相关深度， $m \in \lbrace -M / 2,...,M/2 - 1 \rbrace$ 
+            - 然后，该像素在每个深度残差假设下的代价类似地基于公式 $\mathbf{C}^{L}_ {d}$ ，最终获得部分代价体  $\mathbf{C}^{L} \in \mathbb{R}^{W / 2^l \times H / 2^l \times M \times F}$
             - 在下一节中，我们将介绍我们的解决方案，以确定所有像素的深度搜索间隔和范围 $s_{\mathbf{p}}$ ，这对于获得准确的深度估计至关重要
     
     3. 深度图推断
@@ -91,15 +91,15 @@
             - 为了确定每个像素当前深度估计周围的深度残差的局部搜索范围
                 - 首先将其3D点投影到邻域视图中，沿着两个方向的 ***对极线*** 找到距离投影两个像素的点（见图CVP-MVSNet reprojection “ 2像素长度 ”），然后将这两个点反向投影到3D射线中。这两条光线与参考帧中的视觉光线的相交决定了当前级别上深度细化的搜索范围
         2. 深度图估计器
-            - 同MVSNet一样，采用3D卷积建立代价体金字塔 $\lbrace \mathbf{C}^{l} \rbrace^{L} _{l=0}$ ，聚合上下文信息并输出置信度体 $\lbrace \mathbf{P}^{l} \rbrace^{L} _{l=0}$ ，其中  $\mathbf{P}^{l} \in  \mathbb{R}^{H / 2^l \times W / 2^l \times M}$ 
+            - 同MVSNet一样，采用3D卷积建立代价体金字塔 $\lbrace \mathbf{C}^{l} \rbrace^{L}_ {l=0}$ ，聚合上下文信息并输出置信度体 $\lbrace \mathbf{P}^{l} \rbrace^{L}_ {l=0}$ ，其中  $\mathbf{P}^{l} \in  \mathbb{R}^{H / 2^l \times W / 2^l \times M}$ 
             - ***详细的3D卷积网络设计见" Supp. Mat"***
-            - 注意： $\mathbf{}^L$ 和 $\lbrace \mathbf{P}^{l} \rbrace^{L - 1} _{l=0}$ 分别在绝对深度和残差深度上生成
+            - 注意： $\mathbf{}^L$ 和 $\lbrace \mathbf{P}^{l} \rbrace^{L - 1}_ {l=0}$ 分别在绝对深度和残差深度上生成
                 - 首先将soft-argmax应用于 $\mathbf{P}^L$ 以获得粗略的深度图
-                - 然后，通过将软argmax应用于 $\lbrace \mathbf{P}^{l} \rbrace^{L - 1} _{l=1}$ 来迭代细化所获得的深度图，以获得更高分辨率的深度残差。
-            - 由于采样深度 $d = d_{min} + m(d_{max} - d_{min}) / M , m \in \lbrace 0,1,2,...,M-1 \rbrace$ 在第L层。因此，为每个像素的深度估计计算公式为： $$D^{L}(\mathbf{p}) = \sum^{M-1} _{m=0}d \mathbf{P}^{L}_{\mathbf{p}}(d)$$
-            - 为了进一步细化当前估计，即粗深度图或第（l+1）级的细化深度，我们估计残差深度。假设 $r_{\mathbf{p}} = m \cdot \Delta d^{l}_{\mathbf{p}}$ 表示深度残差假设。计算下一层的更新深度为： $$\mathbf{D}^{l}(\mathbf{p}) = \mathbf{D}^{l + 1} _{\uparrow}(\mathbf{p}) + \sum^{(M - 2) / 2} _{m = -M/2} r_{\mathbf{p}} \mathbf{P}^{l} _{\mathbf{p}}(r_{\mathbf{p}})$$ 其中， $l \in \lbrace L-1,L-2,...,0 \rbrace$ 在本文的实验中，在进一步需要金字塔深度估计以获得良好结果之后，并没有观察到深度图细化
+                - 然后，通过将软argmax应用于 $\lbrace \mathbf{P}^{l} \rbrace^{L - 1}_ {l=1}$ 来迭代细化所获得的深度图，以获得更高分辨率的深度残差。
+            - 由于采样深度 $d = d_{min} + m(d_{max} - d_{min}) / M , m \in \lbrace 0,1,2,...,M-1 \rbrace$ 在第L层。因此，为每个像素的深度估计计算公式为： $$D^{L}(\mathbf{p}) = \sum^{M-1}_ {m=0}d \mathbf{P}^{L}_ {\mathbf{p}}(d)$$
+            - 为了进一步细化当前估计，即粗深度图或第（l+1）级的细化深度，我们估计残差深度。假设 $r_{\mathbf{p}} = m \cdot \Delta d^{l}_ {\mathbf{p}}$ 表示深度残差假设。计算下一层的更新深度为： $$\mathbf{D}^{l}(\mathbf{p}) = \mathbf{D}^{l + 1}_ {\uparrow}(\mathbf{p}) + \sum^{(M - 2) / 2}_ {m = -M/2} r_{\mathbf{p}} \mathbf{P}^{l}_ {\mathbf{p}}(r_{\mathbf{p}})$$ 其中， $l \in \lbrace L-1,L-2,...,0 \rbrace$ 在本文的实验中，在进一步需要金字塔深度估计以获得良好结果之后，并没有观察到深度图细化
     4. 损失函数
-        - 采用监督学习策略，并构建地面真实深度 $\lbrace \mathbf{D}^{l} _{GT} \rbrace^{L} _{l=0}$ 的金字塔作为监督信号。与现有的MVSNet框架类似，我们使用 $l_1$ 范数测量真值和估计深度之间的绝对差异。对于每个培训样本，损失是： $$Loss = \sum^{L} _{l=0} \sum _{\mathbf{p} \in \omega}||\mathbf{D}^{l} _{GT}(\mathbf{p}) - \mathbf{D}^{l}(\mathbf{p})||_{1}$$ 其中， $\omega$ 是具有真值测量值的有效像素集
+        - 采用监督学习策略，并构建地面真实深度 $\lbrace \mathbf{D}^{l}_ {GT} \rbrace^{L}_ {l=0}$ 的金字塔作为监督信号。与现有的MVSNet框架类似，我们使用 $l_1$ 范数测量真值和估计深度之间的绝对差异。对于每个培训样本，损失是： $$Loss = \sum^{L}_ {l=0} \sum_ {\mathbf{p} \in \omega}||\mathbf{D}^{l}_ {GT}(\mathbf{p}) - \mathbf{D}^{l}(\mathbf{p})||_ {1}$$ 其中， $\omega$ 是具有真值测量值的有效像素集
         
 # 四、实验结果
 1. 我们的方法在准确性、完整性和总分方面优于当前所有基于学习的方法。与基于几何的方法相比，只有Galliani等人提出的方法[12]在平均精度方面提供了稍好的结果
@@ -109,7 +109,7 @@
     - 我们的方法能够重建比Point-MVSNet更多的细节。与R-MVSNet和Point-MVSNet相比，正如我们在法线贴图中看到的那样，我们的结果在曲面上更平滑，同时在边缘区域捕获更多高频细节。
 3. Tanks and Temples的结果
     - 在DTU上训练，不经过任何下游微调，在新数据集上进行点云重建
-    - 为了公平比较，我们使用了MVSNet的相同相机参数、深度范围和视图。为了进行比较，我们考虑了四个基线，并评估了f-score。我们的方法得出的平均f-score比Point-MVSNet高5%，这是DTU数据集的最佳基线，仅比P-MVSNet[26]低1%。请注意，P-MVSNet[26]对点云融合应用了比我们更多的深度过滤过程，这只是遵循MVSNet提供的简单融合过程
+    - 为了公平比较，我们使用了MVSNet的相同相机参数、深度范围和视图。为了进行比较，我们考虑了四个基线，并评估了f-score。我们的方法得出的平均f-score比Point-MVSNet高5%，这是DTU数据集的最佳基线，仅比P-MVSNet低1%。请注意，P-MVSNet对点云融合应用了比我们更多的深度过滤过程，这只是遵循MVSNet提供的简单融合过程
 4. 消融实验
     1. 训练金字塔级别
         - 首先分析了金字塔层数对重建质量的影响。为此，我们对图像进行下采样，以形成具有四个不同级别的金字塔。建议的2级金字塔是最好的。随着金字塔级别的增加，最粗糙级别的图像分辨率降低。对于超过2个级别的图像，该分辨率太小，无法生成要细化的良好初始深度图
