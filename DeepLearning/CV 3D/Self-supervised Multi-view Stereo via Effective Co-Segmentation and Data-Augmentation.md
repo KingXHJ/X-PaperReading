@@ -104,7 +104,7 @@
         - 共分割分支
         - 数据增强分支
     2. 目标：处理自监督MVS中的颜色恒定模糊问题
-    3. 除了基于光度一致性 $\mathbb{L}_ {PC}$ 的基本自我监督信号之外，我们将语义一致性 $\mathbb{L}_ {SC}$ 和数据增强一致性 $\mathbb{L}_ {DA}$ 这两个额外的自我监督信号添加到框架中。除上述损失外，还应用了（Mahjourian，Wicke，and Angelova 2018；Khot et al.2019）提出的用于深度估计的一些常见正则化术语，如结构化相似性 $\mathbb{L}_ {SSIM}$ 和深度平滑度 $\mathbb{L}_ {Smooth}$ 
+    3. 除了基于光度一致性（颜色） $\mathbb{L}_ {PC}$ 的基本自我监督信号之外，我们将语义一致性（分类） $\mathbb{L}_ {SC}$ 和数据增强一致性 $\mathbb{L}_ {DA}$ 这两个额外的自我监督信号添加到框架中。除上述损失外，还应用了（Mahjourian，Wicke，and Angelova 2018；Khot et al.2019）提出的用于深度估计的一些常见正则化术语，如结构化相似性（评价两个图象的图像框相似性） $\mathbb{L}_ {SSIM}$ 和深度平滑度（用深度梯度代表RGB梯度） $\mathbb{L}_ {Smooth}$ 
     4. 最终目标可构建如下： $$\mathbb{L} = \lambda_1 \mathbb{L}_ {PC} + \lambda_2 \mathbb{L}_ {SC} + \lambda_3 \mathbb{L}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth}$$ 这里权重根据经验设置为： $\lambda_1 = 0.8, \lambda_2 = 0.1, \lambda_3 = 0.1, \lambda_4 = 0.2, \lambda_5 = 0.0067$
 
 
