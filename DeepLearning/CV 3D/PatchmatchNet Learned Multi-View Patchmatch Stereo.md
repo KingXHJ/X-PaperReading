@@ -72,7 +72,7 @@
             - 我们的自适应方案倾向于从同一表面的像素收集假设——对于有纹理的对象和无纹理的区域——使我们能够有效地收集比仅使用静态模式更有前景的深度假设
         2. 我们将自适应传播的实现基于可变形卷积网络。由于每个解析阶段的方法相同，我们省略了表示该阶段的子索引
             - 为了聚集参考帧中像素 $\mathbf{p}$ 的深度假设 $K_p$ ，我们的模型学习了额外的2D偏移量 $\lbrace \Delta \mathbf{o}_ {i}(\mathbf{p}) \rbrace^{K_{p}}_ {i=1}$ 其应用于固定2D偏移 $\lbrace \mathbf{o}_ {i} \rbrace^{K_{p}}_ {i=1}$ 的顶部，并组织为网格
-            - 我们在参考特征图 $\mathbf{F}_0$ 上应用2D CNN以学习每个像素 $\mathbf{p}$ 的附加2D偏移，并通过双线性插值获得深度假设 $\mathbf{D}_ {p}(\mathbf{p})$ ，如下所示： $$\mathbf{D}_ {p}(\mathbf{p}) = \lbrace \mathbf{D}(\mathbf{p} + \mathbf{o}_ {i} + \Delta \mathbf{o}_ {i}(\mathbf{p})) \rbrace^{K_p}_ {i=1}$$ 其中 $\mathbf{D}$ 是上一次迭代的深度图，可能是从更粗糙的阶段上采样的
+            - 我们在参考特征图 $\mathbf{F}_ {0}$ 上应用2D CNN以学习每个像素 $\mathbf{p}$ 的附加2D偏移，并通过双线性插值获得深度假设 $\mathbf{D}_ {p}(\mathbf{p})$ ，如下所示： $$\mathbf{D}_ {p}(\mathbf{p}) = \lbrace \mathbf{D}(\mathbf{p} + \mathbf{o}_ {i} + \Delta \mathbf{o}_ {i}(\mathbf{p})) \rbrace^{K_p}_ {i=1}$$ 其中 $\mathbf{D}$ 是上一次迭代的深度图，可能是从更粗糙的阶段上采样的
 
     4. 自适应评估
         - 自适应评估模块执行以下步骤：可微分扭曲、匹配成本计算、自适应空间代价聚合和深度回归。由于该方法在每个解析阶段都是相同的，因此我们省略了子索引以便于记法
@@ -82,7 +82,7 @@
             - 对于多视图立体，这一步骤必须将来自任意数量的邻域视图的信息集成到单个像素代价 $\mathbf{p}$ 和深度假设 $d_j$ 中。为此，我们通过逐组相关性计算每个假设的代价，并使用逐像素视图权重对视图进行聚合。通过这种方式，我们可以在代价聚合期间使用可见性信息并获得鲁棒性。最后，通过一个小网络，将每个组的代价预测为单个数字，每个参考像素和假设
             - 分别让 $\mathbf{F}_ {0}(\mathbf{p}) , \mathbf{F}_ {i}(\mathbf{p}_ {i,j}) \in \mathbb{R}^{C}$ 作为参考帧和邻域帧的特征。在把它们的特征通道分成G组后， $\mathbf{F}_ {0}(\mathbf{p}^{g})$ 和 $\mathbf{F}_ {i}(\mathbf{p}_ {i,j})^{g}$ ，以及第g个组的相似度 $\mathbf{S}_ {i}(\mathbf{p} , j)^{g} \in \mathbb{R}$ 的计算： $$\mathbf{S}_ {i}(\mathbf{p} , j)^{g} = \frac{G}{C} \langle \mathbf{F}_ {0}(\mathbf{p})^{g} , \mathbf{F}_ {i}(\mathbf{p}_ {i,j})^{g} \rangle$$ 其中， $\langle \cdot , \cdot \rangle$ 是内积。我们使用 $\mathbf{S}_ {i}(\mathbf{p} , j) \in \mathbb{R}^{G}$ 表示相应的组相似性向量。假设和像素的聚合提供了张量 $\mathbf{S}_ {i} \in \mathbb{R}^{W \times H \times D \times G}$
             - 要查找逐像素视图权重， $\lbrace \mathbf{w}_ {i}(\mathbf{p}) \rbrace^{N-1}_ {i=1}$ ，我们在第3阶段的第一次迭代中利用了初始深度假设集的多样性。我们打算用 $\mathbf{w}_ {i}(\mathbf{p})$ 表示源图像 $\mathbf{I}_ {i}$ 中像素 $\mathbf{p}$ 的可见性信息。权重计算一次，并保持固定，并为更精细的阶段进行上采样
-            - 一个简单的逐像素视图权重网络，由具有1×1×1核和Sigmoid形非线性的3D卷积层组成，采用初始相似度集 $\mathbf{S}_ {i}$ 来输出每个像素0到1之间的数字，并采用深度假设来生成 $\mathbf{P}_{i} \in \mathbb{R}^{W \times H \times D}$ 。像素 $\mathbf{p}$ 和邻域图像 $\mathbf{I}_ {i}$ 的视图权重由下式给出： $$\mathbf{w}_ {i}(\mathbf{p}) = max \lbrace \mathbf{P}_ {i}(\mathbf{p} , j) | j = 0,1,...,D-1 \rbrace$$ 其中， $\mathbf{P}_ {i}(\mathbf{p} , j)$ 直观地表示 $\mathbf{p}$ 处第j深度假设所覆盖范围的可见性置信度
+            - 一个简单的逐像素视图权重网络，由具有1×1×1核和Sigmoid形非线性的3D卷积层组成，采用初始相似度集 $\mathbf{S}_ {i}$ 来输出每个像素0到1之间的数字，并采用深度假设来生成 $\mathbf{P}_ {i} \in \mathbb{R}^{W \times H \times D}$ 。像素 $\mathbf{p}$ 和邻域图像 $\mathbf{I}_ {i}$ 的视图权重由下式给出： $$\mathbf{w}_ {i}(\mathbf{p}) = max \lbrace \mathbf{P}_ {i}(\mathbf{p} , j) | j = 0,1,...,D-1 \rbrace$$ 其中， $\mathbf{P}_ {i}(\mathbf{p} , j)$ 直观地表示 $\mathbf{p}$ 处第j深度假设所覆盖范围的可见性置信度
             - 像素 $\mathbf{p}$ 和第j个假设的最终每组相似性 $\bar{\mathbf{S}}(\mathbf{p} , j)$ 是权重之和 $\mathbf{S}_ {i}(\mathbf{p} , j)$ 和视图权重 $\mathbf{w}_ {i}(\mathbf{p})$ ： $$\bar{\mathbf{S}}(\mathbf{p} , j) = \frac{\sum^{N-1}_ {i=1} \mathbf{w}_ {i}(\mathbf{p}) \cdot \mathbf{S}_ {i}(\mathbf{p} , j)}{\sum^{N-1}_ {i=1} \mathbf{w}_ {i}(\mathbf{p})}$$
             - 最后，我们将所有像素和假设的 $\bar{\mathbf{S}}(\mathbf{p} , j)$ 合成为 $\bar{\mathbf{S}} \in \mathbb{R}^{W \times H \times D \times G}$ ，并应用具有3D卷积和1×1×1核的小网络，以获得单个成本 $\mathbf{C} \in \mathbb{R}^{W \times H \times D}$ ，每像素和深度假设
         3. 自适应空间代价聚合
@@ -95,11 +95,11 @@
             - 使用softmax，我们将（负）代价 $\tilde{\mathbf{C}}$ 转换为概率 $\mathbf{P}$ ，用于亚像素深度回归和测量估计置信度。像素 $\mathbf{p}$ 处的回归深度值 $\mathbf{D}(\mathbf{p})$ 被发现为假设的预期w.r.t. $\mathbf{P}$ ： $$\mathbf{D}(\mathbf{p}) = \sum^{D-1}_ {j=0} d_j \cdot \mathbf{P}(\mathbf{p},j)$$
     5. 深度贴图细化
         - 我们发现，与其在最佳分辨率级别（阶段0）上使用Patchmatch，不如直接向上采样（从分辨率 $\frac{W}{2} \times \frac{H}{2}$ 到 $W \times H$ ），并用RGB图像细化我们的估计
-        - 基于MSG-Net，我们设计了深度残差网络。为了避免对某个深度标度产生偏差，我们将输入深度图预缩放到范围[0，1]，并在细化后将其转换回。我们的细化网络学习输出残差，该残差被添加到Patchmatch， $\mathbf{D}$ 的（上采样）估计中，以获得细化的深度图 $\mathbf{D}_{ref}$ 
+        - 基于MSG-Net，我们设计了深度残差网络。为了避免对某个深度标度产生偏差，我们将输入深度图预缩放到范围[0，1]，并在细化后将其转换回。我们的细化网络学习输出残差，该残差被添加到Patchmatch， $\mathbf{D}$ 的（上采样）估计中，以获得细化的深度图 $\mathbf{D}_ {ref}$ 
         - 该网络独立地从 $\mathbf{D}$ 和 $\mathbf{I}_ {0}$ 提取特征图 $\mathbf{F}_ {D}$ 和 $\mathbf{F}_ {I}$ ，并对 $\mathbf{F}_ {D}$ 应用反卷积，以将特征图上采样到图像大小。多个2D卷积层应用于两个特征图（深度图和图像）的级联(concatenation)之上，以提供深度残差
 
     6. 损失函数
-        - 损失函数 $L_{total}$ 将所有深度估计和具有相同分辨率的真值情况之间的损失视为总和： $$L_{total} = \sum^{3}_ {k=1} \sum^{n_k}_ {i=1} L^{k}_ {i} + L^{0}_ {ref}$$ 我们为 $L^{k}_ {i}$ 、阶段 $k(k=1,2,3)$ 上Patchmatch的第i次迭代的损失和 $L^{0}_ {ref}$ ，以及最终细化深度图采用了平滑L1损失
+        - 损失函数 $L_ {total}$ 将所有深度估计和具有相同分辨率的真值情况之间的损失视为总和： $$L_ {total} = \sum^{3}_ {k=1} \sum^{n_k}_ {i=1} L^{k}_ {i} + L^{0}_ {ref}$$ 我们为 $L^{k}_ {i}$ 、阶段 $k(k=1,2,3)$ 上Patchmatch的第i次迭代的损失和 $L^{0}_ {ref}$ ，以及最终细化深度图采用了平滑L1损失
 
 # 四、实验结果
 1. 稳健的训练策略
@@ -127,6 +127,7 @@
         - 回想一下，在训练期间，我们不包括第1阶段Patchmatch的自适应传播。因此，我们也将第1阶段的迭代次数保持为1。Patchmatch的更多迭代通常会提高性能，但是，在“2,2,1”迭代之后，改进会停滞
         
         ![PatchMatchNet error distribution](../pictures/PatchMatchNet%20error%20distribution.png)
+        
         我们进一步可视化了图中设置“2,2,1,1”的反向深度范围内的归一化绝对误差分布。我们观察到，在所有阶段的Patchmatch5次迭代之后，误差会收敛。与使用大量邻居进行传播的Gipuma相比，我们将Patchmatch嵌入了一个从粗到细的框架中，以加快远程交互。除此之外，我们学习的自适应传播、多样的初始化和局部扰动都有助于更快的收敛
     3. 像素视图权重（Pixel-wise View Weight VW）和稳健训练策略（Robust Training Strategy RT）
         - 在这个实验中，我们放弃了逐像素视图加权（w/o VW），并没有遵循我们的策略，而是选择四个最佳源视图进行训练（w/oRT）。为了研究泛化性能，我们进一步测试了Tanks&Temples和ETH3D。我们观察到在没有像素视图权重或稳健训练策略的其他数据集上的性能下降。这证明了这两个模块提高了鲁棒性和更好的泛化性能
@@ -164,7 +165,7 @@
 3. 为什么不包括阶段1上Patchmatch的最后一次迭代的传播？
     - 与MVSNet类似，点云重构主要包括光度一致性滤波、几何一致性滤波和深度融合。光度一致性过滤用于过滤掉那些具有低置信度的深度假设。基于MVSNet，我们将置信度定义为在估计附近的小范围内的深度假设的概率和。我们使用阶段1上Patchmatch最后一次迭代的概率P $\mathbf{D}(\mathbf{p}) = \sum^{D-1}_ {j=0} d_j \cdot \mathbf{P}(\mathbf{p},j)$ 进行滤波。在这个迭代中，我们只执行局部扰动，而没有自适应传播。在第1阶段，以四分之一的图像分辨率运行，并且算法几乎收敛，通过从空间邻居传播获得的假设通常与当前解决方案非常相似。概率空间的这种不规则采样导致回归中的偏差，并且估计在大多数传播样本所在的当前解处变得过于自信。相反，通过仅执行局部扰动，深度假设在逆深度范围内均匀分布。与之前的迭代相反，我们通过使用基于soft-argmin运算的逆深度回归计算像素 $\mathbf{p}$ 处的估计深度 $\mathbf{D}(\mathbf{p})$ ： $$\mathbf{D}(\mathbf{p}) = (\sum^{D-1}_ {j=0} \frac{1}{d_j} \cdot \mathbf{P}(\mathbf{p},j))^{-1}$$ 其中， $\mathbf{P}(\mathbf{p},j)$ 是像素 $\mathbf{p}$ 在第j层深度的概率。然后我们计算最接近估计的四个深度假设的概率和，以测量置信度
 4. 自适应空间成本聚集中的加权
-    1. 回想一下，在本文的等式 $\tilde{C}(\mathbf{p},j) = \frac{1}{\sum^{K_e}_ {k=1}w_{k}d_{k}} \sum^{K_e}_ {k=1}w_{k}d_{k} \mathbf{C}(\mathbf{p} + \mathbf{p}_ {k} + \Delta \mathbf{p}_ {k},j)$ 中，我们使用两个权重来聚合我们的空间成本，基于空间特征相似性的 $\lbrace w_ {k} \rbrace^{K_e}_ {k=1}$ 和基于深度假设的相似性的 $\lbrace d_ {k} \rbrace^{K_e}_ {k=1}$ 。像素 $\mathbf{p}$ 处的特征权重 $\lbrace w_ {k} \rbrace^{K_e}_ {k=1}$ 基于在参考特征图 $\mathbf{F}_ {0}$ 中测量的 $\mathbf{p}$ 周围的采样位置处的特征相似性 $\lbrace \mathbf{p} + \mathbf{p}_ {k} + \Delta \mathbf{p}_ {k} \rbrace^{K_e}_ {k=1}$ ，我们通过双线性插值从 $\mathbf{F}_ {0}$ 中提取相应的特征。然后，我们在每个采样位置的特征和 $\mathbf{p}$ 之间应用逐组相关。结果被连接到一个体积中，我们在该体积上应用具有1×1×1核和Sigmoid非线性的3D卷积层，以输出描述每个采样点和 $\mathbf{p}$ 之间相似性的归一化权重
+    1. 回想一下，在本文的等式 $\tilde{C}(\mathbf{p},j) = \frac{1}{\sum^{K_e}_ {k=1} w_{k} d_{k}} \sum^{K_e}_ {k=1}w_{k}d_{k} \mathbf{C}(\mathbf{p} + \mathbf{p}_ {k} + \Delta \mathbf{p}_ {k},j)$ 中，我们使用两个权重来聚合我们的空间成本，基于空间特征相似性的 $\lbrace w_ {k} \rbrace^{K_e}_ {k=1}$ 和基于深度假设的相似性的 $\lbrace d_ {k} \rbrace^{K_e}_ {k=1}$ 。像素 $\mathbf{p}$ 处的特征权重 $\lbrace w_ {k} \rbrace^{K_e}_ {k=1}$ 基于在参考特征图 $\mathbf{F}_ {0}$ 中测量的 $\mathbf{p}$ 周围的采样位置处的特征相似性 $\lbrace \mathbf{p} + \mathbf{p}_ {k} + \Delta \mathbf{p}_ {k} \rbrace^{K_e}_ {k=1}$ ，我们通过双线性插值从 $\mathbf{F}_ {0}$ 中提取相应的特征。然后，我们在每个采样位置的特征和 $\mathbf{p}$ 之间应用逐组相关。结果被连接到一个体积中，我们在该体积上应用具有1×1×1核和Sigmoid非线性的3D卷积层，以输出描述每个采样点和 $\mathbf{p}$ 之间相似性的归一化权重
     2. 如第1节所述，在整个估计过程中，相邻像素将被分配不同的深度值。对于像素 $\mathbf{p}$ 和第j个深度假设，我们的深度权重 $\lbrace d_ {k} \rbrace^{K_e}_ {k=1}$ 考虑了这一点，并降低了具有较大深度差的样本的影响，特别是当位于深度不连续性上时。为此，我们使用第j个假设收集每个采样点和像素 $\mathbf{p}$ 之间的反向深度绝对差，并通过对反向差应用Sigmoid函数进行归一化来获得权重
 
 5. 多级深度估计的评价
