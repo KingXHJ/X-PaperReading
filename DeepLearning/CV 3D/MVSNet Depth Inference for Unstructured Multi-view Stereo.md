@@ -129,7 +129,7 @@
 
             $$H=K_i R_i (I - \frac{(R_i^{-1} \mathbf{t}_i - R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T R_1}{d})R_1^{-1} K_1^{-1}$$
 
-        - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\lbrace F_i \rbrace ^N_{i=1}$ 而不是从图像 $\lbrace I_i \rbrace ^N_{i=1}$ 中采样像素
+            - 扭曲过程类似于经典的平面扫描立体，除了可微分双线性插值用于从特征图 $\lbrace F_i \rbrace ^N_{i=1}$ 而不是从图像 $\lbrace I_i \rbrace ^N_{i=1}$ 中采样像素
 
         2. 代价矩阵
             - 聚合多个特征体成为一个代价体 $C$
