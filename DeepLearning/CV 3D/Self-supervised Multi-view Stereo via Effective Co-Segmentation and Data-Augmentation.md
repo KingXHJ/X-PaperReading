@@ -71,7 +71,7 @@
             
             $$S^{\prime}_i(p_j)=S_i(p^{\prime}_j)$$
 
-            $$\mathbb{L}_ {SC} = - \sum^N_ {i=2}[\frac{1}{||M_i||_ {1} \sum^{HW}_ {j=1}f(S_{1,j}) log(S^{\prime}_ {i,j})M_ {i,j}]$$
+            $$\mathbb{L}_ {SC} = - \sum^{N}_ {i=2} [\frac{1}{||M_i||_ {1}} \sum^{HW}_ {j=1}f(S_{1,j}) log(S^{\prime}_ {i,j})M_ {i,j}]$$
             - 这里 $f(S_{1,j}) = onehot(argmax(S_{i,j}))$ 并且 $M_i$ 是指示从第i个邻域帧到参考帧的有效像素的二进制掩码。
 4. 数据增强(Data-Augmentation)
     1. 使用原因：
