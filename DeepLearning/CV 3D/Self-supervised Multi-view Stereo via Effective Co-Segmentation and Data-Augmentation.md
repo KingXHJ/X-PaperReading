@@ -34,10 +34,10 @@
 # 三、设计的模型
 ![JDACS-MS struct](../pictures/JDACS-MS%20struct.png)
 
-1. 一共三个分支
-    - 深度估计(Depth Estimation)
-    - 协同分割(Co-Segmentation)
-    - 数据增强(Data-Augmentation)
+1. 一共三个分支，两次反向传播
+    - 深度估计(Depth Estimation)：与协同分割的loss一块做反向传播，共有四个loss：分割、光度一致性、SSIM和Smooth
+    - 协同分割(Co-Segmentation)：与深度估计的loss一块更新CVP-MVSNet为主干网络的参数
+    - 数据增强(Data-Augmentation)：单独一个分支，用深度估计的结果做GroudTruth，进行反向传播
 2. 深度估计(Depth Estimation)
     1. 可以使用任意一个此前的MVS网络的结构，本文采用MVSNet作为主干网络(backbone)
     2. 光度一致性(Photometric Consistency)
