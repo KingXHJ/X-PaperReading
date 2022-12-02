@@ -82,26 +82,26 @@
             0 & 1 
             \end{pmatrix} = 
             \begin{pmatrix} 
-            R_i & \mathbf{t}_{i} \\ 
+            R_ {i} & \mathbf{t}_ {i} \\ 
             0 & 1 
             \end{pmatrix} 
             \begin{pmatrix} 
-            R_1 & \mathbf{t}_1 \\ 
+            R_ {1} & \mathbf{t}_ {1} \\ 
             0 & 1 
             \end{pmatrix}^{-1}
             $$
 
             $$
             \begin{pmatrix} 
-            R_1 & \mathbf{t}_1 \\ 
+            R_ {1} & \mathbf{t}_ {1} \\ 
             0 & 1 
-            \end{pmatrix}^{-1} = \frac{1}{R_1} 
+            \end{pmatrix}^{-1} = \frac{1}{R_ {1}} 
             \begin{pmatrix} 
-            1 & -\mathbf{t}_1 \\ 
-            0 & R_1 
+            1 & -\mathbf{t}_ {1} \\ 
+            0 & R_ {1} 
             \end{pmatrix} = 
             \begin{pmatrix} 
-            R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 
+            R_ {1}^{-1} & -R_ {1}^{-1}\mathbf{t}_ {1} \\ 
             0 & 1 
             \end{pmatrix}
             $$
@@ -112,15 +112,15 @@
             0 & 1 
             \end{pmatrix} = 
             \begin{pmatrix} 
-            R_i & \mathbf{t}_i \\ 
+            R_ {i} & \mathbf{t}_ {i} \\ 
             0 & 1 
             \end{pmatrix} 
             \begin{pmatrix} 
-            R_1^{-1} & -R_1^{-1}\mathbf{t}_1 \\ 
+            R_ {1}^{-1} & -R_ {1}^{-1}\mathbf{t}_ {1} \\ 
             0 & 1 
             \end{pmatrix} = 
             \begin{pmatrix} 
-            R_{i} R_1^{-1} & \mathbf{t}_i-R_{i} R_1^{-1}\mathbf{t}_1 \\ 
+            R_ {i} R_ {1}^{-1} & \mathbf{t}_ {i}-R_ {i} R_ {1}^{-1}\mathbf{t}_ {1} \\ 
             0 & 1 
             \end{pmatrix}
             $$
