@@ -75,56 +75,7 @@
         - 意义：与简单地对原始图像执行密集匹配相比，提取的特征图显著提高了重建质量
     2. 代价体
         1. 可微的单应性变换：
-            - 目的：是取src图像中，对应ref视角像素的信息
-
-            $$
-            \begin{pmatrix} 
-            R & \mathbf{t} \\ 
-            0 & 1 
-            \end{pmatrix} = 
-            \begin{pmatrix} 
-            R_ {i} & \mathbf{t}_ {i} \\ 
-            0 & 1 
-            \end{pmatrix} 
-            \begin{pmatrix} 
-            R_ {1} & \mathbf{t}_ {1} \\ 
-            0 & 1 
-            \end{pmatrix}^{-1}
-            $$
-
-            $$
-            \begin{pmatrix} 
-            R_ {1} & \mathbf{t}_ {1} \\ 
-            0 & 1 
-            \end{pmatrix}^{-1} = \frac{1}{R_ {1}} 
-            \begin{pmatrix} 
-            1 & - \mathbf{t}_ {1} \\ 
-            0 & R_ {1} 
-            \end{pmatrix} = 
-            \begin{pmatrix} 
-            R_ {1}^{-1} & - R_ {1}^{-1} \mathbf{t}_ {1} \\ 
-            0 & 1 
-            \end{pmatrix}
-            $$
-
-            $$
-            \begin{pmatrix} 
-            R & \mathbf{t} \\ 
-            0 & 1 
-            \end{pmatrix} = 
-            \begin{pmatrix} 
-            R_ {i} & \mathbf{t}_ {i} \\ 
-            0 & 1 
-            \end{pmatrix} 
-            \begin{pmatrix} 
-            R_ {1}^{-1} & - R_ {1}^{-1} \mathbf{t}_ {1} \\ 
-            0 & 1 
-            \end{pmatrix} = 
-            \begin{pmatrix} 
-            R_ {i} R^{-1}_ {1} & \mathbf{t}_ {i} - R_ {i} R^{-1}_ {1} \mathbf{t}_ {1} \\ 
-            0 & 1 
-            \end{pmatrix}
-            $$
+            - 目的：是取src图像中，对应ref视角像素的信息 $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_ {i} & \mathbf{t}_ {i} \\ 0 & 1 \end{pmatrix} \begin{pmatrix} R_ {1} & \mathbf{t}_ {1} \\ 0 & 1 \end{pmatrix}^{-1}$$ $$\begin{pmatrix} R_ {1} & \mathbf{t}_ {1} \\ 0 & 1 \end{pmatrix}^{-1} = \frac{1}{R_ {1}} \begin{pmatrix} 1 & - \mathbf{t}_ {1} \\ 0 & R_ {1} \end{pmatrix} = \begin{pmatrix} R_ {1}^{-1} & - R_ {1}^{-1} \mathbf{t}_ {1} \\ 0 & 1 \end{pmatrix}$$ $$\begin{pmatrix} R & \mathbf{t} \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_ {i} & \mathbf{t}_ {i} \\ 0 & 1 \end{pmatrix} \begin{pmatrix} R_ {1}^{-1} & - R_ {1}^{-1} \mathbf{t}_ {1} \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} R_ {i} R^{-1}_ {1} & \mathbf{t}_ {i} - R_ {i} R^{-1}_ {1} \mathbf{t}_ {1} \\ 0 & 1 \end{pmatrix}$$
 
             $$H=K_i (R_i R_1^{-1} - \frac{(\mathbf{t}_i - R_i R_1^{-1} \mathbf{t}_1)\mathbf{n}_1^T}{d})K_1^{-1}$$
 
