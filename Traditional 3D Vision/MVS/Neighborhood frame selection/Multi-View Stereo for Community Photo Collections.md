@@ -1,7 +1,7 @@
 # 论文信息
 - 时间：2007
 - 期刊：ICCV
-- 算法名称：Multi-View Stereo for Community Photo Collections
+- 算法名称：用于社区照片集的多视图立体
 - 意义：指导邻域帧的选取
 - 作者：Michael Goesele1,2, Noah Snavely1, Brian Curless1, Hugues Hoppe3, Steven M. Seitz1; University of Washington1; TU Darmstadt2; Microsoft Research3
 - 实验环境：
