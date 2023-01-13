@@ -39,15 +39,13 @@
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
-| [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/Traditional%203D%20Vision/MVS/Neighborhood%20frame%20selection/Multi-View%20Stereo%20for%20Community%20Photo%20Collections.md)      | 2007 | [用于社区照片集的多视图立体](https://hhoppe.com/mvscpc.pdf
-) | 指导邻域帧的选取                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fb59964ff729bbde324af83743cd3cf424ce69758%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Multi-View-Stereo-for-Community-Photo-Collections-Goesele-Snavely/b59964ff729bbde324af83743cd3cf424ce69758) |
+| [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/Traditional%203D%20Vision/MVS/Neighborhood%20frame%20selection/Multi-View%20Stereo%20for%20Community%20Photo%20Collections.md)      | 2007 | [用于社区照片集的多视图立体](https://hhoppe.com/mvscpc.pdf) | 指导邻域帧的选取                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fb59964ff729bbde324af83743cd3cf424ce69758%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Multi-View-Stereo-for-Community-Photo-Collections-Goesele-Snavely/b59964ff729bbde324af83743cd3cf424ce69758) |
 
 ### PatchMatch
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
-| [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/Traditional%203D%20Vision/MVS/Neighborhood%20frame%20selection/Multi-View%20Stereo%20for%20Community%20Photo%20Collections.md)      | 2007 | [用于社区照片集的多视图立体](https://hhoppe.com/mvscpc.pdf
-) | 指导邻域帧的选取                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fb59964ff729bbde324af83743cd3cf424ce69758%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Multi-View-Stereo-for-Community-Photo-Collections-Goesele-Snavely/b59964ff729bbde324af83743cd3cf424ce69758) |
+| [✅](https://github.com/KingXHJ/X-PaperReading/blob/main/Traditional%203D%20Vision/PatchMatch/PatchMatch%20A%20Randomized%20Correspondence%20Algorithm%20for%20Structural%20Image%20Editing.md)      | 2009 | [PatchMatch](https://3dvar.com/Barnes2009PatchMatch.pdf) | Adobe图像修复算法                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F744293fb92aa3dde3a5001885cf61eb7165eb95b%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/PatchMatch%3A-a-randomized-correspondence-algorithm-Barnes-Shechtman/744293fb92aa3dde3a5001885cf61eb7165eb95b) |
 
 ## 深度学习论文
 
