@@ -123,9 +123,9 @@
     \hat{G}_ {h} = &P_ {h} exp(d_ {h}(P))
     \end{align}$$
 
-- 每个函数 $d_ {*}(P)$（其中 $*$ 是 $x,y,h,w$ 之⼀）被建模为提案 $P$ 的 $pool_ {5}$ 特征的线性函数，⽤ $\phi _{5}(P)$ 表⽰。（隐式假设了 $\phi _{5}(P)$ 对图像数据的依赖性。）因此我们有 $d_ {*}(P) = \mathbb{w}^ {T}_ {*} \phi _{5}(P)$ ，其中 $\mathbb{w}_ {*}$ 是可学习模型参数的向量。我们通过优化正则化最⼩⼆乘⽬标（岭回归）来学习 $\mathbb{w}_ {*}$ ：
+- 每个函数 $d_ {*}(P)$（其中 $*$ 是 $x,y,h,w$ 之⼀）被建模为提案 $P$ 的 $pool_ {5}$ 特征的线性函数，⽤ $\phi _{5}(P)$ 表⽰。（隐式假设了 $\phi _{5}(P)$ 对图像数据的依赖性。）因此我们有 $d_ {*}(P) = \mathbf{w}^ {T}_ {*} \phi _{5}(P)$ ，其中 $\mathbf{w}_ {*}$ 是可学习模型参数的向量。我们通过优化正则化最⼩⼆乘⽬标（岭回归）来学习 $\mathbf{w}_ {*}$ ：
     $$\begin{align}
-    \mathbb{w}_ {*} = \underset{\hat{\mathbb{w}}_ {*}}{argmin} \sum^ {N}_ {i}(t^{i}_ {*} - \hat{\mathbb{w}}^{T}_ {*} \phi _{5}(P^{i}))^{2} + \lambda||\hat{\mathbb{w}}_ {*}||^{2}
+    \mathbf{w}_ {*} = \underset{\hat{\mathbf{w}}_ {*}}{argmin} \sum^ {N}_ {i}(t^{i}_ {*} - \hat{\mathbf{w}}^{T}_ {*} \phi _{5}(P^{i}))^{2} + \lambda||\hat{\mathbf{w}}_ {*}||^{2}
     \end{align}$$
 
 - 训练对 $(P, G)$ 的回归⽬标 $t_ {*}$ 定义为
