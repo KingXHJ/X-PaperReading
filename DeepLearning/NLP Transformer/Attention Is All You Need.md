@@ -33,7 +33,7 @@
 
   - layer normalization：
     - batch noralization 是在每次的mini-batch里面把每个特征学习成均值为0，方差为1，对全局去算。相当于样本-特征矩阵中的一列（对一个特征做操作）
-    - layer normalization 是把每个样本学习成均值为0，方差为1，对样本去算。相当于样本-特征矩阵中的一列（对一个样本做操作）
+    - layer normalization 是把每个样本学习成均值为0，方差为1，对样本去算。相当于样本-特征矩阵中的一行（对一个样本做操作）
     - layer normalization 在时序用的多是因为样本的sequence长度不一样，对全局算的话，对新的预测样本来说，如果长度发生大的变化，那么之前算过的均值和方差就不会特别好使；但是layer norm对每个样本去算就会好很多。
 
 2. Decoder：
