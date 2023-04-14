@@ -120,6 +120,8 @@
 
 ### 计算机视觉-ObjectDetection
 
+#### [目标检测网络对比综述](https://github.com/KingXHJ/X-PaperReading/blob/main/DeepLearning/CV%20Object%20Detection/Comparison%20of%20Object%20Detection%20Networks.md)
+
 | 笔记 | 年份 | 名字                                              | 简介         | 引用 |
 | ------ | ---- | ------------------------------------------------- | ------------ | ------------------------------------------------------------ |
 |        | 2008 | [DPM](http://people.csail.mit.edu/torralba/courses/6.870/papers/FelzenszwalbMcAllesterRamanan.pdf)         |                       |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F860a9d55d87663ca88e74b3ca357396cd51733d0%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/860a9d55d87663ca88e74b3ca357396cd51733d0)  |
