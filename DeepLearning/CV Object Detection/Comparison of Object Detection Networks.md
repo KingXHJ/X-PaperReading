@@ -9,6 +9,9 @@
 - [YOLOv2](#yolov2)
 - [YOLOv3](#yolov3)
 - [YOLOv3 SPP](#yolov3-spp)
+- [YOLOv4](#yolov4)
+- [YOLOv5](#yolov5)
+- [YOLOX](#yolox)
 
 
 # R-CNN
@@ -333,6 +336,264 @@
 - 检测精度没完全赶上R-CNN系列
 
 
+
+# YOLOv4
+
+## 1. 优势/历史地位
+- 不是原作者的工作了
+- mAP提升10%
+- FPS提升12%
+- 和YOLOv3提升并不大
+
+## 2. 算法流程
+1. 网络结构
+![YOLOv4 structure drawio.png](../pictures/YOLOv4%20structure%20drawio.png)
+
+- Backbone: CSPDarknet53
+- Neck: SPP, PAN
+- Head:YOLOv3
+
+    1. CSPDarkNet53
+        - Strengthening learning ability of a CNN
+        - Removing computational bottlenecks
+        - Reducing memory costs
+
+        ![YOLOv4 CSPDenseNet structure.png](../pictures/YOLOv4%20CSPDenseNet%20structure.png)
+
+        ![YOLOv4 CSPDenseNet structure by code.png](../pictures/YOLOv4%20CSPDenseNet%20structure%20by%20code.png)
+
+        ![YOLOv4 CSPDenseNet structure all.png](../pictures/YOLOv4%20CSPDenseNet%20structure%20all.png)
+
+    1. SPP
+        ![YOLOv4 CSPDenseNet SPP.png](../pictures/YOLOv4%20CSPDenseNet%20SPP.png)
+
+    1. PAN(Path Aggregation Network)
+        - PAN其实就是在Upsampling之后，再做一个downsampling
+        - 对之前的PAN做的更改是
+            - 把融合过程的addition变成了concatenation
+        ![YOLOv4 CSPDenseNet PAN.png](../pictures/YOLOv4%20CSPDenseNet%20PAN.png)
+
+
+2. 优化策略
+- Eliminate grid sensitivity
+- Mosaic data augmentation
+- IoU threshold(match positive sample)
+- Optimizered Anchors
+- CIoU
+
+    1. Eliminate grid sensitivity
+        ![YOLOv4 Eliminate grid sensitivity1.png](../pictures/YOLOv4%20Eliminate%20grid%20sensitivity1.png)
+
+        ![YOLOv4 Eliminate grid sensitivity2.png](../pictures/YOLOv4%20Eliminate%20grid%20sensitivity2.png)
+
+        - Sigmoid的问题：当gt box的中心点坐标在grid cell的左上角点时，需要预测的参数 $t_ {x}, t_ {y}$ 都是0，但是Sigmoid要在负无穷的情况才能趋于0，这恶鬼条件非常难以达到
+        - 解决方法：引入缩放因子
+
+    1. Mosaic data augmentation
+        ![YOLOv4 Mosaic data augmentation.png](../pictures/YOLOv4%20Mosaic%20data%20augmentation.png)
+
+    1. IoU threshold(match positive sample)
+        ![YOLOv4 IoU threshold1.png](../pictures/YOLOv4%20IoU%20threshold1.png)
+
+        ![YOLOv4 IoU threshold2.png](../pictures/YOLOv4%20IoU%20threshold2.png)
+
+        ![YOLOv4 IoU threshold3.png](../pictures/YOLOv4%20IoU%20threshold3.png)
+
+        - 原作者的意思是，首先取大于阈值的anchor模板，且只取最大的
+            - 但是这样的话，正样本数量就太少了
+        - 所以现在普遍的做法是，取所有大于阈值的anchor模板，都当成正样本，并匹配上对应的gt
+        - 相当于从gt和模板的一对一映射，变成了gt对anchor是一对多
+        - YOLOv4取阈值算IoU的步骤都一样，但是取正样本的时候，领域的grid cell对应的AT(anchor template)也被认为是正样本
+            - 只会取上下左右四个方向的grid cell，不取左上、左下、右上、右下四个方向
+
+    1. Optimizered Anchors
+        ![YOLOv4 Optimizered Anchors.png](../pictures/YOLOv4%20Optimizered%20Anchors.png)
+
+        - YOLOv3 的尺寸是通过聚类得到的
+        - YOLOv4针对512x512优化了一下
+        - 但是YOLOv5用的还是YOLOv3的anchor尺寸
+
+    1. CIoU
+        ![YOLOv4 CIoU.png](../pictures/YOLOv4%20CIoU.png)
+
+        - 和YOLOv3 SPP一样
+    
+## 3. 缺点
+
+
+# YOLOv5
+- 距离YOLOv4出来很近
+- 迭代版本很多
+- YOLOv5根据大小升序分为(n, s, m, l, x)，图像尺寸640x640，最大下采样32倍，预测特征层3层
+    - (n6, s6, m6, l6, x6)，图像尺寸1280x1280，下采样率64倍，预测特征层有4层
+
+## 1. 优势/历史地位
+![YOLOv5 ability.png](../pictures/YOLOv5%20ability.png)
+
+## 2. 算法流程
+- 绘制的是l大小模型的图
+![YOLOv5 directory.png](../pictures/YOLOv5%20directory.png)
+
+
+1. 网络结构
+    - Backbone：New CSP Darknet53
+    - Neck：SPPF，New CSP-PAN
+    - Head：YOLOv Head
+
+    - 补充：
+        - 将6.1之前的Focus模块替换成了6行的普通卷积层。两者功能相同，但后者效率更高
+        ![YOLOv5 focus.png](../pictures/YOLOv5%20focus.png)
+
+        - SPP -> SPPF：结果等价，效率更高，UP的实验说快了两倍左右
+        ![YOLOv5 SPPF.png](../pictures/YOLOv5%20SPPF.png)
+
+2. 数据增强
+    1. Mosaic
+    2. Copy Paste
+        - 注意：必须有对应实例的标签，不然没法启用
+        - 本质就是将不同实例拼接到不同图像上，相当于机器PS
+    3. Random affine
+        - 随机仿射变换
+        - 随机旋转、平移、缩放、错切
+    4. MixUP
+        - 两张图片按透明程度混合成一张新的图片
+
+    5. Albumentations(一个包)
+        - 滤波、直方图均衡化以及改变图片质量等等
+
+    6. Augment HSV(Hue, Saturation, Value)
+        - 调色度、饱和度和明度
+
+    7. Random horizontal flip
+        - 按一定比例，随机的水平翻转
+
+
+3. 训练策略(策略很多，UP只罗列了一部分)
+    1. Multi-scale training(0.5~1.5x)
+        - 一定都是32的整数倍
+
+    1. Auto Anchor(For training custom data)
+        - 根据自定义数据集，重新自动聚类生成新的anchor template的大小
+
+    1. Warmup and Cosine LR scheduler
+        - 训练初期，让学习率从一个很小的值，慢慢增长到我们设定的值
+        - cosine的形式慢慢降低学习率
+
+    1. EMA(Exponential Moving Average)
+        - 学习变量加了一个动量，让训练更加平滑
+
+    1. Mixed precision(含有TensorCores的GPU才支持混合精度训练)
+        - 混合精度训练
+        - 减少GPU显存占用
+        - 加速网络训练
+
+    1. Evolve hyper-parameters(炼丹)
+        - 建议使用默认
+
+
+4. 损失计算
+    1. Classes loss，分类损失，采用的是BCE loss，注意只计算正样本的分类损失。
+    2. Objectness loss，obj损失，采用的依然是BCE loss，注意这里的obj指的是网络预测的目标边界框与GT Box的CIoU。这里计算的是所有样本的obj损失。
+        - 很多人之前实现YOLOv3和YOLOv4，把obj设置为，有目标为1，无目标为0
+        - 但是在YOLOv5中，obj是CIoU
+    3. Location loss，定位损失，采用的是CIoU loss，注意只计算正样本的定位损失。
+    4. 平衡不同尺度损失
+        - 针对三个预测特征层（P3, P4, P5）上的obj损失采用不同的权重
+
+5. 消除Grid敏感度
+    - 和YOLOv4的[算法流程 -> 优化策略 -> Eliminate grid sensitivity]差不多
+    - 将计算公式革新了
+        ![YOLOv5 GRID.png](../pictures/YOLOv5%20GRID.png)
+        - 指数不受限，很容易出现指数爆炸的情况
+
+6. 匹配正样本
+    - 计算gt和at的长宽比值 -> 计算比例差异，越接近于1，差异越小 -> 找到宽度/高度差异最大的比值
+    - 差异小于阈值则匹配成功
+        ![YOLOv5 find at.png](../pictures/YOLOv5%20find%20at.png)
+
+    - 和YOLOv4一样去扩充正样本
+
+## 3. 缺点
+
+
+
+# YOLOX
+
+## 1. 优势/历史地位
+- 借鉴于FCOS
+- 与之前的网络最大的区别就是Anchor-Free
+- 解耦检测头：decoupled detection head
+- 更先进的正负样本匹配：advanced label assigning strategy(SimOTA)
+- 获得了Streaming Perception Challenge的第一名
+## 2. 算法流程
+- 整体论文结构
+![YOLOX introduction.png](../pictures/YOLOX%20introduction.png)
+
+1. 前言
+    - 主要对比YOLOv5
+    - 数据集分辨率很高的话，建议使用YOLOv5，应为YOLOX也只是640x640
+    ![YOLOX effect.png](../pictures/YOLOX%20effect.png)
+
+1. YOLOX网络结构
+    - 使用网络结构(YOLOX-L)绘制的图
+    ![YOLOX structure1.png](../pictures/YOLOX%20structure1.png)
+
+    - YOLOX是基于YOLOv5的v5.0构建的，网络结构到PAN之前都一样，只有Head不一样(上面的YOLOv5是v6.1，和v5.0还有出入)
+    - 区别：
+        1. Focus -> 6x6的卷积(原理一样)
+        1. YOLOv5是SPPF，但是YOLOX是SPP，而且YOLOX的摆放位置和YOLOv5也是一样的
+        1. YOLOv5的检测头是1x1的卷积层，在YOLOX中改成如下的形式：
+            ![YOLOX structure2.png](../pictures/YOLOX%20structure2.png)
+            
+            - 作者认为YOLOv5这么做是一个耦合的检测头，耦合的检测头对网络是有害的。但是如果换成解耦的检测头，可以加速收敛，提升AP
+            - 检测类别和检测定位以及obj的卷积层是分开的。检测三个项目的检测头是参数不共享的，而且不同的预测特征层的检测头参数也是不共享的。FCOS是共享的
+
+1. Anchor-Free
+    ![YOLOX Anchor Free.png](../pictures/YOLOX%20Anchor%20Free.png)
+    
+    - 这里预测的 $x_ {center}, y_{center}, w, h$ 都是在预测特征层上的尺度，再恢复到原图上还要计算缩放问题
+    - 仔细看这个公式，之前的YOLO公式是要乘上对应ancher的尺寸，这里公式里不再使用anchor尺寸了，所以是anchor free
+
+1. 损失计算
+    ![YOLOX Loss.png](../pictures/YOLOX%20Loss.png)
+
+1. 正负样本匹配SimOTA
+    - 论文消融实验都是和YOLOv3做对比
+
+    ![YOLOX SimOTA1.png](../pictures/YOLOX%20SimOTA1.png)
+
+    ![YOLOX SimOTA2.png](../pictures/YOLOX%20SimOTA2.png)
+
+    ![YOLOX SimOTA3.png](../pictures/YOLOX%20SimOTA3.png)
+
+    - 在FCOS网络中，落入sub-box中的所有anchor point视为正样本，除此之外都是负样本
+    - 在YOLOX中也是做了一个预筛选，首先找在GT box或者fixed center area(类似sub-box)范围之内的anchor point(fixed center area由一个参数，center_radius=2.5)
+    - 可以将YOLOX中的点细分为两个部分：
+        1. 既落入GT box，又落入fixed center box
+        2. 除了上面之外的点
+    - 从损失(cost)公式中，可以看到，前两项是正常的分类损失和定位损失，后一项就是除了GT box和fixed center box交集区域以外的点，给了一个很大的权重，迫使降低这个部分的错误率
+
+    ![YOLOX SimOTA4.png](../pictures/YOLOX%20SimOTA4.png)
+
+    - 筛选IoU最大的10个，或者更少的anchors
+
+    ![YOLOX SimOTA5.png](../pictures/YOLOX%20SimOTA5.png)
+
+    - dynamic_ks代表论文中的Dynamic k Estimation Stragegy，意思是，每个GT分配的正样本的个数不一样，需要动态计算
+    - 计算方法就是：对GT分配的正样本的IoU矩阵，对IoU的值进行求和，再向下取正
+
+    ![YOLOX SimOTA6.png](../pictures/YOLOX%20SimOTA6.png)
+
+    - 根据dynamic_ks确定anchors的最终个数，根据cost的升序排列，选最小的dynamic_ks个anchors
+
+    ![YOLOX SimOTA7.png](../pictures/YOLOX%20SimOTA7.png)
+
+    - 如果出现一个anchor被分配给了多个GT，那就看它跟哪个GT的cost最小，将其分配给对应的GT
+        - 注意：这一步是在确定了每个GT最小的dynamic_ks个anchors，意味着冲突竞争中失败的GT们，最终获得的anchors数量会减少
+
+    ![YOLOX SimOTA8.png](../pictures/YOLOX%20SimOTA8.png)
+
+## 3. 缺点
 
 # 题目
 
