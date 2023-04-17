@@ -76,7 +76,7 @@
     - 我们还探索了 Lin 等⼈最近提出的另⼀个更有效的主⼲。 [Feature Pyramid Networks for Object Detection](https://www.semanticscholar.org/reader/b9b4e05faa194e5022edd9eb9dd07e3d675c2b36)，称为 Feature Pyra mid Network (FPN)。 FPN 使⽤具有横向连接的⾃顶向下架构，从单尺度输⼊构建⽹络内特征⾦字塔。 Faster R-CNN with an FPN back bone 根据其规模从特征⾦字塔的不同层级提取 RoI 特征，但除此之外，该⽅法的其余部分类似于 vanilla ResNet。使⽤ ResNet-FPN 主⼲与 Mask R CNN 进⾏特征提取可在准确性和速度⽅⾯获得出⾊的收益。有关 FPN 的更多详细信息，我们建议读者参阅[Feature Pyramid Networks for Object Detection](https://www.semanticscholar.org/reader/b9b4e05faa194e5022edd9eb9dd07e3d675c2b36)。
 
     - 对于⽹络头，我们密切遵循之前⼯作中提出的架构，我们在其中添加了完全卷积掩码预测分⽀。具体来说，我们从 ResNet 和 FPN 论⽂中扩展了 Faster R-CNN box heads 。详细信息如图 4 所⽰。ResNet -C4 ⻣⼲⽹的头部包括 ResNet 的第 5 级（即 9 层“res5” ），这是计算密集型的。对于 FPN，主⼲已经包含 res5，因此允许使⽤更少过滤器的更⾼效的头部。
-        ![Mask R-CNN.png](../pictures/Mask%20R-CNN4.png)
+        ![Mask R-CNN4.png](../pictures/Mask%20R-CNN4.png)
 
     - 我们注意到我们的掩码分⽀具有简单的结构。更复杂的设计有可能提⾼性能，但不是这项⼯作的重点。
 
