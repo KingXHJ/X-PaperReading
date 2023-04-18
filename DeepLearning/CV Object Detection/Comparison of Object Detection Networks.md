@@ -1,5 +1,7 @@
 # 目标检测网络综述
 
+该综述吸收于B站UP主[霹雳吧啦Wz](https://space.bilibili.com/18161609)([GitHub](https://github.com/WZMIAOMIAO/deep-learning-for-image-processing))和B站UP主[Tsiu-Hinghiok](https://space.bilibili.com/111391089)的内容学习而来
+
 ## 目录
 
 - [R-CNN](#r-cnn)
@@ -17,6 +19,7 @@
 - [YOLOv4](#yolov4)
 - [YOLOv5](#yolov5)
 - [YOLOX](#yolox)
+- [YOLOR](#yolor)
 
 
 # R-CNN
@@ -843,6 +846,184 @@
     ![YOLOX SimOTA8.png](../pictures/YOLOX%20SimOTA8.png)
 
 ## 3. 缺点
+
+
+# YOLOR
+
+- 专注于某个感官的时候，其他感官的感受性可能会降低
+
+## 1. 面临的挑战
+1. 一般训练中的问题
+    ![YOLOR notation](../pictures/YOLOR%20notation.png)
+
+    - 训练网络的过程大致如下：
+        ![YOLOR general learning process](../pictures/YOLOR%20general%20learning%20process.png)
+
+    - 我们对事物的关注点如下：
+        ![YOLOR attention map](../pictures/YOLOR%20attention%20map.png)
+
+    - 为什么我们会产生这样的原因呢？
+        ![YOLOR Formula](../pictures/YOLOR%20Formula.png)
+
+    - 学习的时候，其实我们只学习不同类别之间有区分的地方，相似的地方我们不关注。就像下面的activation map上，猫和狗的身体在map上都不显现，因为靠猫和狗的身体无法帮助我们区分猫还是狗
+        ![YOLOR activation map](../pictures/YOLOR%20activation%20map.png)
+
+    - 这也就带来一个问题：就像下面的皮卡丘，它们相似的部分我们不关注。这就会导致，它改变了颜色，改变了公母，改变了帽子，我们都不会关注，因为我们忽略它们形状类似的部分。
+    - 导致这件事情的原因就是，在训练网络的Formula里的error，我们只把它们当成一个简单的error数值，却没去考虑它和原图有这个不同的点具体是什么？没有追根溯源
+        ![YOLOR Limitation](../pictures/YOLOR%20Limitation.png)
+
+1. 多任务训练的问题
+    - 最简单的想法就是，一个任务训练疑个model。但是这会消耗大量的资源，而且最后的结果也并不一定是最好的。
+        ![YOLOR one model for one task](../pictures/YOLOR%20one%20model%20for%20one%20task.png)
+    
+    - 现在我们希望，所有的任务共用一个网络，就是backbone，这样我们可以在real time的时间里，做出相应的结果
+    - 但是会发现，有的任务采取这种方法，效果还不错。但是有的任务就训练不起来
+    - 这是因为不同任务需要的特征不一样，而且对特征的需求可能是冲突的。比如对目标检测任务检测宝可梦，希望宝可梦们的特征尽可能的相似；而对宝可梦的性别分析，可能要分析尾巴的花纹。那么这对特征提取就会有一定的冲突
+        ![YOLOR shared backbone](../pictures/YOLOR%20shared%20backbone.png)
+
+    - 现在的一些解决方案是上述两种方案的折中：训练多个特征提取器，但是之间互相share一些weights，不共享的权重，用于提取特别需要的特征。
+    - 但是问题是，怎么有效率的去甄别要共享哪些权重呢？
+        ![YOLOR soft parameter sharing](../pictures/YOLOR%20soft%20parameter%20sharing.png)
+
+## 2. 解决方案
+1. Manifold Learning
+    - 在高维度上评估距离是不可靠的。就像第二幅图，可能红色之间的距离，甚至比红色和蓝色之间的距离都要远
+    - 但是如果降维到低维度上，就可以更好的使用距离error方法
+        ![YOLOR manifold](../pictures/YOLOR%20manifold.png)
+
+    - 常用的Manifold Learning方法是t-SNE方法
+    - 找到一个合适的Manifold Learning的方法是很重要的
+        ![YOLOR t-SNE](../pictures/YOLOR%20t-SNE.png)
+
+    - 来看一个例子
+    - x轴上代表了狗的姿势，y轴上代表了狗的种类
+        ![YOLOR reduce manifold space of the representation1](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation1.png)
+
+    - 通过reduce维度，我们可以将复杂的问题投影到低维度上，变成一个简单的问题来处理
+    - 如果reduce其中一个dimension的话，可以只提取一个种类的但是不同姿势的狗
+        ![YOLOR reduce manifold space of the representation2](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation2.png)
+
+    - 如果reduce另一个dimension的话，可以只提取一个姿势的但是不同种类的狗
+        ![YOLOR reduce manifold space of the representation3](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation3.png)
+        
+
+1. Model the Error Term
+    - 对error建模，让模型知道为什么error了
+    - 希望我们的任务输出，在high dimension上，每个维度上的数据是有关联性的
+
+    - 此前我们是把属于同一类的error，映射到低维度的时候，都压缩成一个类别，压缩之后就丢失了这个类别的属性信息了，也没办法进一步知道它们具体error的点
+        ![YOLOR minimize the error term](../pictures/YOLOR%20minimize%20the%20error%20term.png)
+
+    - 现在我们不对维度进行压缩了，我们映射到更高的维度，寻找一个新的方式进行映射压缩，这个方式压缩后，可以反映出为什么会产生error
+        ![YOLOR relax the error term](../pictures/YOLOR%20relax%20the%20error%20term.png)
+
+    - 那么我们就要对error进行一个建模
+    - 获得了error在高维的投影，我们就可以根据error种类的需要，去做不同的Manifold，获得对应压缩后的结果
+        ![YOLOR model the error term](../pictures/YOLOR%20model%20the%20error%20term.png)
+
+    - 在结合这些explicit和implicit上面，可以有很多运算操作：addition, multiplication, concatenation
+        ![YOLOR operation](../pictures/YOLOR%20operation.png)
+
+1. Disentangle the Representation of Input and Tasks
+    - 根据输入和任务去做裁剪
+    - 相同的输入，但是在不同的想法下，是有不同的答案的
+        ![YOLOR observation](../pictures/YOLOR%20observation.png)
+
+    - 需要找到只跟输入有关，但是跟任务无关的 $P(x)$
+    - 需要找到只跟任务有关，但是跟输入无关的 $P(c)$
+    - 最好还能找到基于任务的输入的关系，这样就能解释为什么通过这个输入能够得到这样的输出
+        ![YOLOR posterior](../pictures/YOLOR%20posterior.png)
+
+## 3. YOLOR for Object Detection
+1. YOLOR
+    - 中间的Analyzer是只跟Input有关
+    - 根据输入可以得到一定的explicit Knowledge
+    - 以及一些网络中没有输入的Implicit Kownledge
+    - 通过Discriminator用来分辨任务种类
+        ![YOLOR YOLOR](../pictures/YOLOR%20YOLOR.png)
+
+1. Explicit Kownledge
+    ![YOLOR explicit kownledge](../pictures/YOLOR%20explicit%20kownledge.png)
+
+1. Implicit Kownledge
+    - 在论文中，我们更关注Implicit Kownledge
+    ![YOLOR our focus](../pictures/YOLOR%20our%20focus.png)
+
+    - 举一个之前在object detection上常见的问题
+    - 高分辨率的图像，所包含的信息是很多的
+    - 低分辨率的图像，包含信息很少
+        ![YOLOR kernel space alignment1](../pictures/YOLOR%20kernel%20space%20alignment1.png)
+
+    - 但是我们很容易把多个分辨率的图像，都reduce到信息最少的低分辨率图像上
+    - 原因就是之前的目标检测error都压缩了很多信息，所以即使高分辨率图像包含了大量信息，但是由于低分辨率图像上没有，取交集之后，就相当于映射到了低分辨率图像的信息集上
+        ![YOLOR kernel space alignment2](../pictures/YOLOR%20kernel%20space%20alignment2.png)
+
+    - 近几年非常流行的FPN网络就在解决这个问题
+    - 不同分支可以对不同物件分析不同的信息
+        ![YOLOR kernel space alignment3](../pictures/YOLOR%20kernel%20space%20alignment3.png)
+
+    - 但是这样会导致，不同分支产生的特征彼此之间很难去映射
+    - 大的特征图信息多，小的特征图信息少，映射很困难
+        ![YOLOR kernel space alignment4](../pictures/YOLOR%20kernel%20space%20alignment4.png)
+
+    - 这时候Implicit Knowledge的作用就显现出来了
+    - Implicit Knowledge的加入，对原始特征图上的特征都做了不同程度的偏移，从而使多个特征图放在一块的时候可以进行一个比较
+        ![YOLOR kernel space alignment5](../pictures/YOLOR%20kernel%20space%20alignment5.png)
+
+## 4. 实验的结果和结论
+1. YOLOR + YOLO
+    - combine explicit knowledge and implicit knowledge
+    - addition：把不同特征通过加法做结合
+    - multiplication：类似attention的机制
+    - concatenation：类似给定一个条件去做condition的运算
+        ![YOLOR combine explicit knowledge and implicit knowledge](../pictures/YOLOR%20combine%20explicit%20knowledge%20and%20implicit%20knowledge.png)
+    
+    - 对最后的特征图使用加法或者乘法
+        ![YOLOR implicit representation1](../pictures/YOLOR%20implicit%20representation1.png)
+
+    - 最后得到的一些准度的结果
+        ![YOLOR performance1](../pictures/YOLOR%20performance1.png)
+    
+    - 很显然，implicit knowledge在初始化为1附近采样的情况下，能够根据anchors的尺寸，学习到周期性的内容，也能根据数据集中每个类别样本数量的多少做出调整
+        ![YOLOR physical meaning](../pictures/YOLOR%20physical%20meaning.png)
+
+    - 在中间层添加了implicit knowledge后，也会产生数值上的一些区分
+        ![YOLOR implicit representation2](../pictures/YOLOR%20implicit%20representation2.png)
+
+    - feature special alignment效果还是不错的
+    - 实验结果是，略微增加了参数量(基数很大，百分比很小)，但是提高了0.5%的精度
+        ![YOLOR performance2](../pictures/YOLOR%20performance2.png)
+        
+    - 做了很对不同的implicit knowledge model
+    - Neural network：认为得到的z中的每个维度彼此是关联的
+    - 矩阵分解：认为得到的z中的每个维度彼此是独立的，但是每个维度也有很多不同的变因导致最后的结果，通过乘以一个权重c，进行每个维度的加权和
+    - 结果是，不管采用哪种方法，最后都是提升
+        ![YOLOR model explicit knowledge and implicit knowledge](../pictures/YOLOR%20model%20explicit%20knowledge%20and%20implicit%20knowledge.png)
+
+    - 最后提升了88%的速度和3.8%的精度
+
+
+1. YOLOR + Multiple Tasks
+    ![YOLOR Faster R-CNN](../pictures/YOLOR%20Faster%20R-CNN.png)
+
+    ![YOLOR Mask R-CNN](../pictures/YOLOR%20Mask%20R-CNN.png)
+
+    ![YOLOR ATSS](../pictures/YOLOR%20ATSS.png)
+
+    ![YOLOR FCOS](../pictures/YOLOR%20FCOS.png)
+
+    ![YOLOR sparse R-CNN](../pictures/YOLOR%20sparse%20R-CNN.png)
+
+    ![YOLOR multiple task performance](../pictures/YOLOR%20multiple%20task%20performance.png)
+
+## 5. Q&A
+- $z$ 是implicit的部分
+- $x$ 是explicit的部分
+- $z$ 是加在channel轴上
+- $z$ 是被训练出来的
+- 矩阵分解的方法中， $c$ 是coeffience
+- 比attention based方法，参数量更少，但是效果更好
+
 
 # 题目
 
