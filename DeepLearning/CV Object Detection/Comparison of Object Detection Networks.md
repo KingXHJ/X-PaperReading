@@ -20,6 +20,9 @@
 - [YOLOv5](#yolov5)
 - [YOLOX](#yolox)
 - [YOLOR](#yolor)
+- [YOLOv6](#yolov6)
+- [YOLOv7](#yolov7)
+- [YOLOv8](#yolov8)
 
 
 # R-CNN
@@ -1023,6 +1026,121 @@
 - $z$ 是被训练出来的
 - 矩阵分解的方法中， $c$ 是coeffience
 - 比attention based方法，参数量更少，但是效果更好
+
+
+# YOLOv6
+
+## 1. 概述
+YOLOv6是美团视觉智能部研发的一款目标检测框架。致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano在COCO上的精度可达35.0%AP，在T4上推理速度可达1242FPS；YOLOv6-s在COCO上精度可达43.1%AP，在T4上推理速度可达520FPS。在部署方面，YOLOv6支持GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。
+
+### 精度与速度远超YOLOv5和YOLOX的新框架
+目标检测作为计算机视觉领域的一项基础性技术，在工业界得到了广泛的应用，其中YOLO系列算法因其较好的综合性能，逐渐成为大多数工业应用时的首选框架。至今，业界已衍生出许多YOLO检测框架，其中以YOLOv5、YOLOX和PP-YOLOE最具代表性，但在实际使用中，我们发现上述框架在速度和精度方面仍有很大的提升空间。基于此，我们通过研究并借鉴了业界已有的先进技术，开发了一套新的目标检测框架——YOLOv6。该框架支持模型训练、推理及多平台部署等全链条的工业应用需求，并在网络结构、训练策略等算法层面进行了多项改进和优化，在COCO数据集上，YOLOv6在精度和速度方面均超越其他同体量算法，相关结果如下：
+    ![YOLOv6 comparison1](../pictures/YOLOv6%20comparison1.png)
+
+展示了不同尺寸网络下各检测算法的性能对比，曲线上的点分别表示该检测算法在不同尺寸网络下(s/tiny/nano)的模型性能，从图中可以看到，YOLOv6在精度和速度方面均超越其他YOLO系列同体量算法。
+    ![YOLOv6 comparison2](../pictures/YOLOv6%20comparison2.png)
+
+图 展示了输入分辨率变化时各检测网络模型的性能对比，曲线上的点从左往右分别表示图像分辨率依次增大时(384/448/512/576/640)该模型的性能，从图中可以看到，YOLOv6在不同分辨率下，仍然保持较大的性能优势。
+
+## 2. YOLOv6关键技术介绍
+YOLOv6主要在Backbone、Neck、Head以及训练策略等方面进行了诸多的改进：
+- 我们统一设计了更高效的Backbone和Neck：受到硬件感知神经网络设计思想的启发，基于RepVGG style设计了可重参数化、更高效的骨干网络EfficientRep Backbone和Rep-PAN Neck
+- 优化设计了更简洁有效的Efficient Decoupled Head，在维持精度的同时，进一步降低了一般解耦头带来的额外延时开销。
+- 在训练策略上，我们采用Anchor-free无锚范式，同时辅以SimOTA标签分配策略以及SIoU边界框回归算是来进一步提高检测精度。
+
+### 2.1 Hardware-friendly的骨干网络设计
+YOLOv5/YOLOX使用的Backbone和Neck都基于CSPNet搭建，采用了多分支的方式和残差结构。对于GPU等硬件来说，这种结构会一定程度上增加延时，同时减小内存带宽利用率。下图 为计算机体系结构领域中的Roofline Model介绍图，显示了硬件中计算能力和内存带宽之间的关联关系
+    ![YOLOv6 memory and compute](../pictures/YOLOv6%20memory%20and%20compute.png)
+
+于是，我们基于硬件感知神经网络设计的思想，对Backbone和Neck进行了重新设计和优化。该思想基于硬件的特性、推理框架/编译框架的特点，以硬件和编译友好的结构作为设计原则，在网络构建时，综合考虑硬件计算能力、内存带宽、编译优化特性、网络表征能力等，进而获得又快又好的网络结构。对上述重新设计的两个检测部件，我们在YOLOv6中分别称为EfficientRep Backbone和Rep-PAN Neck，其主要贡献点在于：
+1. 引入了RepVGG style结构
+    ![YOLOv6 RepVGG](../pictures/YOLOv6%20RepVGG.png)
+
+2. 基于硬件感知思想重新设计了Backbone和Neck
+RepVGG Style结构时一种在训练时具有多分支拓扑，而在实际部署时可以等效融合为单个3x3卷积的一种可重参数化的结构(融合过程如下图所示)。通过融合成的3x3的卷积结构，可以有效利用计算密集型硬件计算能力(比如GPU)，同时也可获得GPU/CPU上已经高度优化的NVIDIA cuDNN和Intel MKL编译框架的帮助。
+
+实验表明，通过上述策略，YOLOv6减少了在硬件上的延时，并显著提升了算法的精度，让检测网络更快更强。以nano尺寸模型为例，对比YOLOv5-nano采用的网络结构，本方法在速度上提升了21%，同时精度提升3.6%AP。
+    ![YOLOv6 fusion](../pictures/YOLOv6%20fusion.png)
+
+**Efficient Backbone:** 在Backbone设计方面，我们基于以上Rep算子设计了一个高效的Backbone。相比于YOLOv5采用的CSP-Backbone，该Backbone能够高效利用硬件(如GPU)算力的同时，还具有较强的表征能力
+
+下图 为EfficientRep Backbone具体设计结构图，我们将Backbone中stride=2的普通Conv层替换成了stride=2的RepConv层。同时，将原始的CSP-Block都重新设计为RepBlock，其中RepBlock的第一个RepConv会做channel维度的变换和对齐。另外，我们还将原始的SPPF优化设计为更加高效的SimSPPF。
+    ![YOLOv6 backbone](../pictures/YOLOv6%20backbone.png)
+
+**Rep-PAN:** 在Neck设计方面，为了让其在硬件上推理更加高效，以达到更好的精度与速度的平衡，我们基于硬件感知神经网络设计思想，为YOLOv6设计了一个更有效地特征融合网络结构。
+
+Rep-PAN基于PAN拓扑方式，用RepBlock替换了YOLOv5中使用的CSP-Block，同时对整体Neck中的算子进行了调整，目的是在硬件上达到了高效推理二点同时，保持较好的多尺度特征融合能力(Rep-PAN结构图如下图)
+    ![YOLOv6 Rep-PAN](../pictures/YOLOv6%20Rep-PAN.png)
+
+### 2.2 更简洁高效的Decoupled Head
+在YOLOv6中，我们采用了解耦检测头(Decoupled Head)结构，并对其进行了精简设计。原始YOLOv5的检测头是通过分类和回归分支融合共享的方式来实现的，而YOLOX的检测头则是将分类和回归分支进行解耦，同时新增了两个额外的3x3的卷积层，虽然提升了检测精度，但一定程度上增加了网络延时。
+
+因此，我们对解耦头进行了精简设计，同时综合考虑到相关算子表征能力和硬件上计算开销这两者的平衡，采用Hybrid Channels策略重新设计了一个更高效的解耦头结构，在维持精度的同时将低了延时，缓解了解耦头中3x3卷积带来的额外延时开销。通过在nano尺寸模型上进行消融实验，对比相同通道数的解耦头结构，精度提升0.2%AP的同时，速度提升6.8%。
+    ![YOLOv6 YOLOv5 decoupled head](../pictures/YOLOv6%20YOLOv5%20decoupled%20head.png)
+    ![YOLOv6 YOLOx YOLOv6 decoupled head](../pictures/YOLOv6%20YOLOx%20YOLOv6%20decoupled%20head.png)
+
+### 2.3 更有效的训练策略
+为了进一步提升检测精度，我们吸收借鉴了学术界和工业界其他检测框架的先进研究进展：Anchor-free无锚范式、SImOTA标签分配策略以及SIoU边界框回归损失。
+
+**Anchor-free无锚范式**
+
+YOLOv6采用了更简洁的Anchor-free检测方法。由于Anchor-based检测器需要在训练之前进行聚类分析以确定最佳Anchor集合，这会一定程度提高检测器的复杂度；同时，在一些边缘端的应用中，需要在硬件之间搬运大量检测结果的步骤，也会带来额外的延时。而Anchor-free无锚范式因其泛化能力强，解码逻辑更简单，在近几年中应用比较广泛。经过对Anchor-free的实验调研，我们发现，相较于Anchor-based
+    ![YOLOv6 anchor](../pictures/YOLOv6%20anchor.png)
+
+检测器的复杂度而带来的额外延时，Anchor-free检测器在速度上有51%的提升。
+    ![YOLOv6 anchor free](../pictures/YOLOv6%20anchor%20free.png)
+
+**SimOTA标签分配策略(基本上就是继承了YOLOX的思想)**
+
+为了获得更多高质量的正样本，YOLOv6引入了SimOTA算法动态分配正样本，进一步提高检测精度。YOLOv5的标签分配策略是基于Shape匹配，并通过跨网格匹配策略增加正样本数量，从而使得网络快速收敛，但是该方法属于静态分配方法，并不会随着网络训练的过程而调整。
+
+近年来，也出现不少基于动态标签分配的方法，此类方法会根据训练过程中的网络数出来分配正样本，从而可以产生更多高质量的正样本，接入又促进网络的正向优化。例如，OTA通过将样本匹配建模成最佳传输问题，求得全局信息下的最佳样本匹配策略以提升精度，但OTA由于使用了Sinkhorn-Knopp算法导致训练时间加长，而SimOTA算法使用Top-K近似策略来得到样本最佳匹配，大大加快了寻来你速度。故YOLOv6采用了SimOTA动态分配策略，并结构无锚范式，在nano尺寸模型上平均检测精度提升1.3%AP。
+
+SimOTA的流程：
+1. 确定正样本候选区域
+2. 计算anchor与gt的iou
+3. 在候选区域内计算cost
+4. 使用iou确定每个gt的dymanic_k
+5. 为每个gt去cost排名那个最小的前dynamic_k个anchor作为正样本，其余为负样本。
+6. 使用正负样本计算loss
+
+**SIoU边界框回归损失**
+
+为了京一部提升回归精度，YOLOv6采用了SIoU边界框回归损失函数来监督网络的学习。目标检测网络的训练一般需要至少定义两个损失函数：分类损失和边界框回归损失，而损失函数的定义往往对检测精度以及寻来你速度产生较大的影响。
+
+近年来，常用的边界框回归损失包括IoU、GIoU、CIoU、DIoU loss等等，这些损失函数通过考虑预测框与目标框之间的重叠程度、中心点距离、纵横比等因素来衡量两者之间的差距，从而指导网络最小化损失，以提升回归精度。但是这些方法都没有考虑到预测框与目标框之间方向的匹配性。SIoU损失函数通过引入了所需回归之间的向量角度，重新定义了距离损失，有效降低了回归的自由度，加快网络收敛，进一步提升了回归精度。通过在YOLOv6s上采用SIoU loss进行实验，对比CIoU loss，平均检测精度提升0.3%AP。
+    ![YOLOv6 SIoU](../pictures/YOLOv6%20SIoU.png)
+
+SIoU:
+- Angle cost
+- Distance cost
+- Shape cost
+- IoU cost
+
+## 3. 实验结果
+经过以上优化策略和改进，YOLOv6在多个不同尺寸下的模型均取得了卓越表现。下表1展示了YOLOv6-nano的消融实验结果，从实验结果可以看出，我们自主设计的检测网络在精度和速度上都带来了很大的增益。
+    ![YOLOv6 result1](../pictures/YOLOv6%20result1.png)
+
+- YOLOv6-nano在COCO val上取得了35.0%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到1242FPS的性能，相较于YOLOv5-nano精度提升7%AP，速度提升85%
+- YOLOv6-tiny在COCO val上取得了41.3%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到602FPS的性能，相较于YOLOv5-s精度提升3.9%AP，速度提升29.4%
+- YOLOv6-s在COCO val上取得了41.3%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到520FPS的性能，相较于YOLOX-s精度提升2.6%AP，速度提升29.4%；相较于PP-YOLOE-s精度提升20.4%AP的条件下，在T4上使用TRT FP16 进行单batch推理，速度提升71.3%
+
+# YOLOv7
+
+## 1. 优势/历史地位
+
+## 2. 算法流程
+
+## 3. 缺点
+
+
+# YOLOv8
+
+## 1. 优势/历史地位
+
+## 2. 算法流程
+
+## 3. 缺点
 
 
 # 题目
