@@ -9,9 +9,17 @@
 
 
 
-> **前言** 本文首先分析了现代实时目标检测器中NMS对推理速度的影响，并建立了端到端的速度基准。为了避免NMS引起的推理延迟，作者提出了一种实时检测Transformer（RT-DETR），这是第一个实时端到端目标检测器。具体而言，设计了一种高效的混合编码器，通过解耦尺度内交互和跨尺度融合来高效处理多尺度特征，并提出了IoU感知的查询选择，以提高目标查询的初始化。此外，本文提出的检测器支持通过使用不同的解码器层来灵活调整推理速度，而不需要重新训练，这有助于实时目标检测器的实际应用。
+> 最近，基于Transformer的端到端检测器（DETR）已经取得了显著的性能。然而，DETR的高计算成本问题尚未得到有效解决，这限制了它们的实际应用，并使它们无法充分利用无后处理的好处，如非最大值抑制（NMS）。
+> 
+> 本文首先分析了现代实时目标检测器中NMS对推理速度的影响，并建立了端到端的速度基准。为了避免NMS引起的推理延迟，作者提出了一种实时检测Transformer（RT-DETR），这是第一个实时端到端目标检测器。
+> 
+> 具体而言，设计了一种高效的混合编码器，通过解耦尺度内交互和跨尺度融合来高效处理多尺度特征，并提出了IoU感知的查询选择，以提高目标查询的初始化。
+> 
+> 此外，本文提出的检测器支持通过使用不同的解码器层来灵活调整推理速度，而不需要重新训练，这有助于实时目标检测器的实际应用。
 > 
 > RTDETR-L在COCO val2017上实现了53.0%的AP，在T4 GPU上实现了114 FPS，而RT-DETR-X实现了54.8%的AP和74 FPS，在速度和精度方面都优于相同规模的所有YOLO检测器。
+> 
+> 此外，RTDETR-R50实现了53.1%的AP和108 FPS，在精度上比DINO-Deformable-DETR-R50高出2.2%的AP，在FPS上高出约21倍。
 
   
 
@@ -44,7 +52,7 @@
 
 RT-DETR-L在COCO val2017上实现了53.0%的AP，在NVIDIA Tesla T4 GPU上实现了114 FPS，而RT-DETR-X实现了54.8%的AP和74 FPS，在速度和精度方面都优于相同规模的所有YOLO检测器。因此，RT-DETR成为了一种用于实时目标检测的新的SOTA，如图1所示。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBoLTopicdXib25pQF5M5wjuzz6b9caBKEtETvu0e8wl57NrPCMdYgbeVg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT COCO AP](../pictures/RT-DERT%20COCO%20AP.png)
 
 此外，提出的RT-DETR-R50实现了53.1%的AP和108 FPS，而RT-DETR-R101实现了54.3%的AP和74 FPS。其中，RT-DETR50在准确度上优于DINO-Deformable-DETR-R50 2.2%的AP（53.1%的AP对50.9%的AP），在FPS（108 FPS对5 FPS）上优于DINO-Deformable-DETR-R5约21倍。
 
@@ -103,13 +111,13 @@ NMS是检测中广泛采用的后处理算法，用于消除检测器输出的�
 
 特别地，分数低于分数阈值的预测框被直接过滤掉，并且每当2个预测框的IoU超过IoU阈值时，分数较低的框将被丢弃。重复执行此过程，直到每个类别的所有框都已处理完毕。因此，NMS的执行时间主要取决于输入预测框的数量和两个超参数。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBwbCVNsOImrE1zWk5Crdwgb9SYRiawULD8OjmL1xe8aUC9U8FEkpGFsg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT num of box](../pictures/RT-DERT%20num%20of%20box.png)
 
 为了验证这一观点，作者利用YOLOv5和YOLOv8进行实验。首先计算在输出框被相同输入图像的不同得分阈值滤波后剩余的预测框的数量。采样了0.001到0.25的一些分数作为阈值，对两个检测器的剩余预测框进行计数，并将其绘制成直方图，直观地反映了NMS易受其超参数的影响，如图2所示。
 
 此外，以YOLOv8为例，评估了不同NMS超参数下COCO val2017的模型准确性和NMS操作的执行时间。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtB9PmXiaAyKY7DvREFNHI9nxLvRIetHoWka6iaqJkqr9XmCMDAc6OopQaQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT IoU and NMS](../pictures/RT-DERT%20IoU%20and%20NMS.png)
 
 注意，在实验中采用的NMS后处理操作是指TensorRT efficientNMSPlugin，它涉及多个CUDA内核，包括EfficientNMSFilter、RadixSort、EfficientNMS等，作者只报告了EfficientNMS内核的执行时间。在T4 GPU上测试了速度，上述实验中的输入图像和预处理是一致的。使用的超参数和相应的结果如表1所示。
 
@@ -121,7 +129,7 @@ NMS是检测中广泛采用的后处理算法，用于消除检测器输出的�
 
 测试结果如表2所示。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtB5TP1eyMlvQjzBibsGC0rCS3ribZ9qLYlgrEoKZWibDh94ia5329iawD96vA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT end to end result](../pictures/RT-DERT%20end%20to%20end%20result.png)
 
 根据结果得出结论，对于需要NMS后处理的实时检测器，Anchor-Free检测器在同等精度上优于Anchor-Base的检测器，因为前者的后处理时间明显少于后者，这在以前的工作中被忽略了。这种现象的原因是，Anchor-Base的检测器比Anchor-Free的检测器产生更多的预测框（在测试的检测器中是3倍多）。
 
@@ -131,7 +139,7 @@ NMS是检测中广泛采用的后处理算法，用于消除检测器输出的�
 
 所提出的RT-DETR由Backbone、混合编码器和带有辅助预测头的Transformer解码器组成。模型体系结构的概述如图3所示。
 
-![图片](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![RT-DERT structure](../pictures/RT-DERT%20structure.png)
 
 具体来说：
 
@@ -154,36 +162,36 @@ NMS是检测中广泛采用的后处理算法，用于消除检测器输出的�
 
 从包含关于图像中的对象的丰富语义信息的低级特征中提取高级特征。直观地说，对连接的多尺度特征进行特征交互是多余的。如图5所示，为了验证这一观点，作者重新思考编码器结构，并设计了一系列具有不同编码器的变体。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBk947LqpUuLr1QQrTgIdOHvtwficXfEIibJ9lhEVPDicYGqRxwV4jvaeicQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT encoder and its changable status](../pictures/RT-DERT%20encoder%20and%20its%20changable%20status.png)
 
 该组变体通过将多尺度特征交互解耦为尺度内交互和跨尺度融合的两步操作，逐步提高模型精度，同时显著降低计算成本。首先删除了DINO-R50中的多尺度变换编码器作为基线A。接下来，插入不同形式的编码器，以产生基于基线A的一系列变体，具体如下：
 
-1. A→ B：变体B插入一个单尺度Transformer编码器，该编码器使用一层Transformer Block。每个尺度的特征共享编码器，用于尺度内特征交互，然后连接输出的多尺度特征。
+1. A $\to$ B：变体B插入一个单尺度Transformer编码器，该编码器使用一层Transformer Block。每个尺度的特征共享编码器，用于尺度内特征交互，然后连接输出的多尺度特征。
     
-2. B→ C：变体C引入了基于B的跨尺度特征融合，并将连接的多尺度特征输入编码器以执行特征交互。
+2. B $\to$ C：变体C引入了基于B的跨尺度特征融合，并将连接的多尺度特征输入编码器以执行特征交互。
     
-3. C→ D：变体D解耦了多尺度特征的尺度内交互和跨尺度融合。首先，使用单尺度Transformer编码器进行尺度内交互，然后使用类PANet结构进行跨尺度融合。
+3. C $\to$ D：变体D解耦了多尺度特征的尺度内交互和跨尺度融合。首先，使用单尺度Transformer编码器进行尺度内交互，然后使用类PANet结构进行跨尺度融合。
     
-4. D→ E：变体E进一步优化了基于D的多尺度特征的尺度内交互和跨尺度融合，采用了设计的高效混合编码器。
+4. D $\to$ E：变体E进一步优化了基于D的多尺度特征的尺度内交互和跨尺度融合，采用了设计的高效混合编码器。
     
 
 #### 2、Hybrid design
 
 基于上述分析，作者重新思考了编码器的结构，并提出了一种新的高效混合编码器。如图3所示，所提出的编码器由两个模块组成，即基于注意力的尺度内特征交互（AIFI）模块和基于神经网络的跨尺度特征融合模块（CCFM）。
 
-AIFI进一步减少了基于变体D的计算冗余，变体D仅在上执行尺度内交互。作者认为，将自注意力操作应用于具有更丰富语义概念的高级特征可以捕捉图像中概念实体之间的联系，这有助于后续模块对图像中目标的检测和识别。
+AIFI进一步减少了基于变体D的计算冗余，变体D仅在 $S_ {5}$ 上执行尺度内交互。作者认为，将自注意力操作应用于具有更丰富语义概念的高级特征可以捕捉图像中概念实体之间的联系，这有助于后续模块对图像中目标的检测和识别。
 
-同时，由于缺乏语义概念以及与高级特征的交互存在重复和混淆的风险，较低级别特征的尺度内交互是不必要的。为了验证这一观点，只对变体D中的进行了尺度内相互作用，实验结果见表3，见行。与变体D相比，显著降低了延迟（快35%），但提高了准确性（AP高0.4%）。这一结论对实时检测器的设计至关重要。
+同时，由于缺乏语义概念以及与高级特征的交互存在重复和混淆的风险，较低级别特征的尺度内交互是不必要的。为了验证这一观点，只对变体D中的 $S_ {5}$ 进行了尺度内相互作用，实验结果见表3，见行。与变体D相比， $D_ {S_ {5}}$ 显著降低了延迟（快35%），但提高了准确性（AP高0.4%）。这一结论对实时检测器的设计至关重要。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBlZWdytIhzqdZRFw3SzxfYWJllFqOibuGWonNqibEiakmmsSSJWWRMbrdw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT fusion block in CCFM](../pictures/RT-DERT%20fusion%20block%20in%20CCFM.png)
 
 CCFM也基于变体D进行了优化，在融合路径中插入了几个由卷积层组成的融合块。融合块的作用是将相邻的特征融合成一个新的特征，其结构如图4所示。融合块包含N个RepBlock，两个路径输出通过元素相加进行融合。
 
 可以将这个过程表述如下：
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBUxDHwyN7HyibxLbYPEU5ARSyLbc5ZNuRxr4tW230bOeR5rsxNlCIrxg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT attention function](../pictures/RT-DERT%20attention%20function.png)
 
-其中表示多头自注意力，表示将特征的形状恢复到与相同的形状，这是的inverse操作。
+其中 $Attn$ 表示多头自注意力， $Reshape$ 表示将特征的形状恢复到与相同的形状，这是 $Flatten$ 的inverse操作。
 
 ### 4.3、IoU-Aware查询选择
 
@@ -193,15 +201,15 @@ DETR中的目标查询是一组可学习的嵌入，这些嵌入由解码器优�
 
 将检测器的优化目标重新表述如下：
 
-![图片](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![RT-DERT optimizer target](../pictures/RT-DERT%20optimizer%20target.png)
 
-其中和表示预测和GT，和。和分别表示类别和边界框。将IoU分数引入分类分支的目标函数（类似于VFL），以实现对正样本分类和定位的一致性约束。
+其中 $\hat{y}$ 和 $y$ 表示预测和GT， $\hat{y} = \lbrace \hat{c}, \hat{b} \rbrace$ 和 $y = c, b$ 。$c$ 和 $b$ 分别表示类别和边界框。将IoU分数引入分类分支的目标函数（类似于VFL），以实现对正样本分类和定位的一致性约束。
 
 #### 有效性分析
 
 为了分析所提出的IoU感知查询选择的有效性，在val2017上可视化了查询选择所选择的编码器特征的分类分数和IoU分数，如图6所示。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBRRF6nl8ID9emwnAAHJx5uTbQVLDysMhCC9ReOYL5VfhzuVnTKIWuibg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT IoU score and Classification score](../pictures/RT-DERT%20IoU%20score%20and%20Classification%20score.png)
 
 具体来说，首先根据分类得分选择前K个（在实验中K=300）编码器特征，然后可视化分类得分大于0.5的散点图。红点和蓝点是根据分别应用普通查询选择和IoU感知查询选择训练的模型计算的。点越靠近图的右上角，对应特征的质量就越高，即分类标签和边界框更有可能描述图像中的真实对象。
 
@@ -221,16 +229,16 @@ DETR中的目标查询是一组可学习的嵌入，这些嵌入由解码器优�
 
 ### 5.1、与SOTA比较
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBibgJkpUm6QJYcPm6Mh5NyiaGABrunL2icYxJXXXsE5qD4wVafFibYJiawHw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT compared with SOTA](../pictures/RT-DERT%20compared%20with%20SOTA.png)
 
 ### 5.2、混合编码器的消融实验研究
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBfprZsjmLSrGtb0QHq8Kck4AFhxVN8kc3vfNkc8Vjt5BHHI33rDuXjg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT fusion experiment](../pictures/RT-DERT%20fusion%20experiment.png)
 
 ### 5.3、IoU感知查询选择的消融研究
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBibfgZtFBJibdvpvMdg5UDfjiagw8aoMjY1jIqf3JJFbbsR5cwPxibJKa7w/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT IoU-aware fusion experiment](../pictures/RT-DERT%20IoU-aware%20fusion%20experiment.png)
 
 ### 5.4、解码器的消融研究
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/5ooHoYt0tgnvbAOHskO98LgK5ndgAVtBtnobUzHapUiblibTIg3B8v8Vh8SYVFSiafdWqmvlBibRibd3ydaN8gV9ORA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![RT-DERT decoder fusion experiment](../pictures/RT-DERT%20decoder%20fusion%20experiment.png)
