@@ -20,7 +20,8 @@
 - [YOLOv5](#yolov5)
 - [YOLOX](#yolox)
 - [YOLOR](#yolor)
-- [YOLOv6](#yolov6)
+- [YOLOv6](#yolov6-美团官方解读--qa)
+- [YOLOv6](#yolov6-总结)
 - [YOLOv7](#yolov7)
 - [YOLOv8](#yolov8)
 
@@ -1028,7 +1029,210 @@
 - 比attention based方法，参数量更少，但是效果更好
 
 
-# YOLOv6
+# YOLOv6 美团官方解读 + QA
+
+## 1. 算法演进技术讲解
+![YOLOv6 meituan0.png](../pictures/YOLOv6%20meituan0.png)
+
+- 目录
+    ![YOLOv6 meituan1.png](../pictures/YOLOv6%20meituan1.png)
+
+- 背景
+    ![YOLOv6 meituan2.png](../pictures/YOLOv6%20meituan2.png)
+
+    ![YOLOv6 meituan3.png](../pictures/YOLOv6%20meituan3.png)
+
+- YOLOv6的诞生——由于工业的需求
+    ![YOLOv6 meituan4.png](../pictures/YOLOv6%20meituan4.png)
+
+- YOLOv6的性能
+    - BS = batch_size
+        ![YOLOv6 meituan5.png](../pictures/YOLOv6%20meituan5.png)
+
+- 改进部分
+    ![YOLOv6 meituan6.png](../pictures/YOLOv6%20meituan6.png)
+
+- 网络结构设计
+    ![YOLOv6 meituan7.png](../pictures/YOLOv6%20meituan7.png)
+
+    - 整体网络框架
+        ![YOLOv6 meituan8.png](../pictures/YOLOv6%20meituan8.png)
+
+        - 结构
+            - Backbone
+            - Neck
+            - Head
+        - 结构重参数化思想设计了两个模块
+            - RepBlock
+                - 在推理的时候，将训练时候的多分支结构等效成一个3x3的卷积
+                - 保证训练的时候能够学习更多的特征
+                - 保证在推理的时候有足够的速度
+            - CSPStackRep Block
+
+    - 网络的设计思路
+        ![YOLOv6 meituan9.png](../pictures/YOLOv6%20meituan9.png)
+    
+    - 实验
+        - Backbone部分采用不同网路的对比实验
+            ![YOLOv6 meituan10.png](../pictures/YOLOv6%20meituan10.png)
+
+        - 结构重参数化和激活函数
+            ![YOLOv6 meituan11.png](../pictures/YOLOv6%20meituan11.png)
+
+    - 检测头设计
+        ![YOLOv6 meituan12.png](../pictures/YOLOv6%20meituan12.png)
+
+- 先进目标检测算法探索
+    ![YOLOv6 meituan13.png](../pictures/YOLOv6%20meituan13.png)
+    
+    - 标签分配策略
+        ![YOLOv6 meituan14.png](../pictures/YOLOv6%20meituan14.png)
+
+        - ATSS有一个问题，一旦网络配置和数据集确定了之后，那么正负样本的选择就是固定下来的，没办法随着训练的过程进行改变
+        - SimOTA是根据OTA演化而来的。SimOTA在训练中容易不稳定，训练速度也会慢一些
+
+    - 消融实验
+        ![YOLOv6 meituan15.png](../pictures/YOLOv6%20meituan15.png)
+
+    - 损失函数
+        ![YOLOv6 meituan16.png](../pictures/YOLOv6%20meituan16.png)
+
+        - 目标损失可有可无
+
+    - 损失函数消融实验
+        ![YOLOv6 meituan17.png](../pictures/YOLOv6%20meituan17.png)
+
+        - DFL的思想是将连续的坐标回归问题，转化成了离散的分类问题解决的，所以在预测阶段，比常规坐标预测多16个维度的tensor输出，多的计算量会对小模型影响较大
+        - DFL虽然能够带来一定的精度提升，但是会对速度有一定影响，会变慢
+        - 引入目标损失，网络的精度反而下降了。原因可能是，目标分支的引入和之前正负样本的分配策略、TAL的任务对齐存在冲突。之前TAL只需要对齐分类和回归，但是现在增加了目标分支，对其内容从两个变成了三个，任务增大，学习难度增加，从而因修改那个效果
+
+- 工业遍历技巧
+    ![YOLOv6 meituan18.png](../pictures/YOLOv6%20meituan18.png)
+
+    - 自蒸馏训练
+        ![YOLOv6 meituan19.png](../pictures/YOLOv6%20meituan19.png)
+
+        - 因为教师网络和学习网络都是同样的网络结构，所以称为自蒸馏
+        - 训练的时候，教师网络提供的软标签带有更多的信息，可以更方便学生网络的拟合
+
+    - 实验
+        ![YOLOv6 meituan20.png](../pictures/YOLOv6%20meituan20.png)
+
+        - 小网络没用DFL，因为影响速度
+        - 小网络的分类分支做了蒸馏，但是效果还不如多训练100轮效果好
+            - 多轮训练还是有助于模型收敛的
+        - 在训练的最后15轮关闭Mosica预处理策略，能够提升模型精度
+        - 加入灰边有助于提升精度
+
+- 总结与展望
+    ![YOLOv6 meituan21.png](../pictures/YOLOv6%20meituan21.png)
+
+    - 模型选择
+        ![YOLOv6 meituan22.png](../pictures/YOLOv6%20meituan22.png)
+
+    - 模型指标
+        ![YOLOv6 meituan23.png](../pictures/YOLOv6%20meituan23.png)
+
+    - 未来
+        ![YOLOv6 meituan24.png](../pictures/YOLOv6%20meituan24.png)
+
+## 2. 量化部署实战指南
+![YOLOv6 meituan25.png](../pictures/YOLOv6%20meituan25.png)
+
+- 目录
+    ![YOLOv6 meituan26.png](../pictures/YOLOv6%20meituan26.png)
+
+- 背景
+    ![YOLOv6 meituan27.png](../pictures/YOLOv6%20meituan27.png)
+
+    - 模型量化在实际业务部署中，是最有效最广泛的模型压缩方法
+    - PTQ在实际业务中，使用很广泛，因为不需要额外的训练过程，也容易上手，但是不可避免的又精度损失
+    - QAT在训练过程中引入量化操作，通过训练消除量化误差
+
+    ![YOLOv6 meituan28.png](../pictures/YOLOv6%20meituan28.png)
+
+    - 为什么YOLOv6不大量使用QAT结构弥补精度？
+        - 因为YOLOv6使用了大量重参数化结构
+        - 重参数化结构是一个两阶段的模式，多分支结构
+        - 如果在这时加入伪量化算子，进行QAT训练的话，在训练结束之后，每一个支路的scale参数是不一样的，不一样就没办法融合，进行性能上的提升
+
+    - 如果使用Deploy模式(所有分支都融合的情况)，进行QAT，这时候模型是没有边的，没有边的模型是很难训练的，很容易崩掉
+
+- 量化问题解决
+    - Backbone替换
+        ![YOLOv6 meituan29.png](../pictures/YOLOv6%20meituan29.png)
+
+        - RepOpt使用优化器重参数化的方法，代替原来的结构重参数化
+        - Rep难题主要是在结构重参数化的过程中，导致kernel的分布过差(实际有待考证)
+        - RepOpt训练有；两个阶段
+            - 超参搜索：搜索各个层的scale参数，用来初始化第二阶段的一个Optimizer
+            - 正常的网络训练过程
+
+    - COCO复现结果
+        ![YOLOv6 meituan30.png](../pictures/YOLOv6%20meituan30.png)
+
+    - 部分量化改善精度
+        ![YOLOv6 meituan31.png](../pictures/YOLOv6%20meituan31.png)
+
+        - 对部分层进行量化，把敏感的层剔除
+        - 如何去寻找敏感层很关键，提出四种方法
+        - 获得了各层的敏感性排序，把最敏感的6层进行跳过，虽然精度有影响，但是能够极大的提升量化精度
+
+    - QAT量化
+        ![YOLOv6 meituan32.png](../pictures/YOLOv6%20meituan32.png)
+
+    - 其他方法
+        ![YOLOv6 meituan33.png](../pictures/YOLOv6%20meituan33.png)
+    
+    - 图优化(TensorRT部署流程)
+        ![YOLOv6 meituan34.png](../pictures/YOLOv6%20meituan34.png)
+
+        - TensorRT可以自动对带有PTQ和QAT量化算子的模型进行融合，但是有的情况下自动融合算子是无法实现的，比如两个输入有不同的scale，为了实现数值的精度，它就必须在它附近的算子进行量化和反量化。让精度保持一致，这部分就会导致性能损失
+            - 解决方案就是对不同输入手动置成相同的scale，美团采用两者中最大的scale
+
+    - 部署优化
+        ![YOLOv6 meituan35.png](../pictures/YOLOv6%20meituan35.png)
+
+        - 提高GPU并发的利用率
+
+    - 结果
+        ![YOLOv6 meituan36.png](../pictures/YOLOv6%20meituan36.png)
+
+### 3. Q&A
+1. 为什么DFL对小模型影响很大？
+    - DFL的思想是将连续的坐标回归问题，转化成了离散的分类问题解决的，所以在预测阶段，比常规坐标预测多16个维度的tensor输出，多的计算量会对模型性能影响较大
+
+2. 自己训练也要400个epoch吗？是不是太多了
+    - 多训练有助于模型收敛。不过要看曲线图，如果能提前收敛当然好
+
+3. YOLOv6的量化现在已经做的比主流的PTQ和QAT都要复杂了，那是不是太难操作了？
+    - 主要难点在Backbone换成了RepOpt，虽然效果很好，但是目前还持有质疑，期待后续工作发布
+
+4. 自蒸馏网络的教师网络使用正常训练，给学生的网络训练前期使用，后期就不直接用硬GT了嘛？
+    - 权重衰减只是对蒸馏的Loss进行权重衰减，实际还是会有一些权重的，后期还是会有蒸馏的Loss，但是会比硬标签的Loss相对小一些
+
+5. 增加灰边是在训练的时候还是推理的时候？
+    - 在推理的时候进行训练的策略。训练开启Mosica，也相当于做了灰边处理
+
+6. 量化中采用图优化是不是要了解每一个算子，图优化增么解决超多算子？
+    - 使用图优化本质上是为了提高模型性能，所以会对精度有影响。或者说本质上因为QAT对性能不是很优化，实际有采用QAT的模型，PTQ的方式去部署
+
+7. 数据量少如何选模型？
+    - 建议Fine-tune，然后根据自己需求，选速度优势的小网络，或者精度优势的大网络
+
+8. 不同数据量化跳过的层是不一样的？
+    - 根据不同业务进行不同的跳过。
+
+9. 自蒸馏训练？
+    - 两阶段训练。先训练教师网络，常规训练，然后在训练蒸馏过程
+
+10. 使用RepConv计算量，参数量？
+    - 推理转化成了正常的卷积，所以推理过程的参数量和计算量是一样的
+
+11. 为什么不用更大的网络作为教师网络？
+    - 自蒸馏就是用了同样的网络结构。更大的网络训练成本更高，
+
+# YOLOv6 总结
 
 ## 1. 概述
 YOLOv6是美团视觉智能部研发的一款目标检测框架。致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano在COCO上的精度可达35.0%AP，在T4上推理速度可达1242FPS；YOLOv6-s在COCO上精度可达43.1%AP，在T4上推理速度可达520FPS。在部署方面，YOLOv6支持GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。
@@ -1125,23 +1329,359 @@ SIoU:
 - YOLOv6-tiny在COCO val上取得了41.3%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到602FPS的性能，相较于YOLOv5-s精度提升3.9%AP，速度提升29.4%
 - YOLOv6-s在COCO val上取得了41.3%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到520FPS的性能，相较于YOLOX-s精度提升2.6%AP，速度提升29.4%；相较于PP-YOLOE-s精度提升20.4%AP的条件下，在T4上使用TRT FP16 进行单batch推理，速度提升71.3%
 
+
 # YOLOv7
 
-## 1. 优势/历史地位
+## 1. 创新点
+1. E-ELAN: Extended efficient layer aggregation networks
+    ![YOLOv7 ELAN.png](../pictures/YOLOv7%20ELAN.png)
+    - 区分ELAN和E-ELAN
+    - 这篇文章的重点结构
+    - ELAN/E-ELAN配置文件结构：
+        - [from, number, module, args]
+        - from: 当前层的输入是来自于那一层
+        - number: 当前模块的数量
+        - module: 该层的模块类型
+        - args: 创建该层对应的模块时，需要传递的参数
+            - [channels, kernel_size, stride]
+    - E-ELAN是两个并行的ELAN
+        ![YOLOv7 E-ELAN.png](../pictures/YOLOv7%20E-ELAN.png)
+
+        - 空洞卷积的等价形式
+            ![YOLOv7 E-ELAN-branch.png](../pictures/YOLOv7%20E-ELAN-branch.png)
+
+    - ELAN和E-ELAN对比
+        ![YOLOv6 comparison ELAN and E-ELAN.png](../pictures/YOLOv7%20comparison%20ELAN%20and%20E-ELAN.png)
+
+2. 模型缩放方法Model scaling for concatenation-based models
+    - 调节模型的属性，产生模型不同速度需求下的不同大小
+    - 基于拼接操作(ELAN和E-ELAN就用了)的复合模型缩放方法
+    - 能够同时改变深度和宽度
+        ![YOLOv7 ELAN-ELANUP.png](../pictures/YOLOv7%20ELAN-ELANUP.png)
+
+3. 计划的重参数化卷积
+    - 把卷积用到残差模块或者拼接模块
+        - 去看RepVGG
+        - 训练的时候采用非常复杂的结构
+        - 训练完成后重参数化称为一个等效的卷积
+        - 能够在不增加推理速度的情况下，提升模型的效果
+
+    - 虽然重参数化方法在VGG上很好使，但是不能直接使用的ResNet和DensNet这种有残差结构的网络上
+    - RepConvN就是在RepConv基础上去掉了恒等连接
+        ![YOLOv7 RepConv can and not.png](../pictures/YOLOv7%20RepConv%20can%20and%20not.png)
+
+    - 结论：当一层带有残差或者拼接的模块时，必须使用没有恒等连接的重参数化结构
+
+    - 作者只在代码里使用了最简单的重参数化替换方法，没有在残差或者卷积上使用，也就是没有使用这个结论
+
+3. 两种新的标签分配方法
+    1. Deep supervision
+        ![YOLOv7 deep supervision.png](../pictures/YOLOv7%20deep%20supervision.png)
+
+        - 在基本的检测头上，增加了辅助检测头
+        - 辅助检测头参与反向传播
+
+    2. label assignment
+        - hard label：根据真实GT框对应的目标框，GT中心位置在哪，就产生什么标签
+        - soft label：不再只通过红色标注框中心点位置，分配标注框。而是不同的网格位置，和这个红色的标注框去做额外的复杂运算，再最终确定标注框的分配位置
+            ![YOLOv7 label assign.png](../pictures/YOLOv7%20label%20assign.png)
+        
+        - 分配器Assigner：实际代码中是OTA
+
+    3. 求损失
+        - Lead Head和Auxiliary Head都需要计算损失
+        - YOLOv7提出两种guided assigner计算损失
+        - fine label：中心和邻域共3个hard label共同计算出标注框的soft label，称之为细粒度软标签。粗粒度软标签被认为是中心和其4邻域hard label的计算结果
+        - coarse label：
+
+4. 训练技巧
+    1. BN层融合
+    1. 隐式知识
+    1. EMA
 
 ## 2. 算法流程
+1. 模型种类
+    - 基础模型
+        - YOLOv7-tiny：边缘计算GPU
+            - leaky ReLU
+            - SiLU
+        - YOLOv7：常规GPU
+        - YOLOv7-W6：云GPU
+    - YOLOv7-X：使用了复合模型缩放方法，扩大了模型的宽度和深度，常规GPU
+    - 在YOLOv7-W6基础上使用符合模型缩放得到扩大的模型
+        - YOLOv7-E6：云GPU
+        - YOLOv7-D6：云GPU
+    - YOLOv7-E6E：在YOLOv7-E6基础上，把所有ELAN都替换成E-ELAN的模型，云GPU
 
-## 3. 缺点
+2. 网络结构
+    ![YOLOv7 yaml.png](../pictures/YOLOv7%20yaml.png)
 
+    - 配置文件中的Conv不仅仅是普通的Conv，是Conv + BN
+    + SiLU的组合，也被称为CBS层
+
+    - ELAN
+        ![YOLOv7 ELAN.png](../pictures/YOLOv7%20ELAN.png)
+    
+    - MP1
+        ![YOLOv7 MP1.png](../pictures/YOLOv7%20MP1.png)
+
+        - 复杂版的最大池化层：因为输入输出通道数不变，但是尺寸减半
+    - SPPCSPC
+        ![YOLOv7 SPPCSPC.png](../pictures/YOLOv7%20SPPCSPC.png)
+
+    - ELAN'
+        ![YOLOv7 ELAN'.png](../pictures/YOLOv7%20ELAN'.png)
+
+    - MP2
+        ![YOLOv7 MP2.png](../pictures/YOLOv7%20MP2.png)
+
+    - Detect
+        ![YOLOv7 Detect.png](../pictures/YOLOv7%20Detect.png)
+
+        - 预测数量self.no = 类别数 + 回归参数(4) + 目标参数(1)
+        - 锚框数量self.na一般都是3
+        - 常见数值255 = self.no * self.na(其中self.no的类别数取80)
+
+    - 预测框计算公式
+        ![YOLOv7 function.png](../pictures/YOLOv7%20function.png)
+
+    - DownC
+        ![YOLOv7 downc.png](../pictures/YOLOv7%20downc.png)
+
+    - ELAN所有变体
+        ![YOLOv7 all ELAN.png](../pictures/YOLOv7%20all%20ELAN.png)
+
+    - ImplicitA和IMplicitM
+        - 就是加了一个可学习的向量
+        - A是Add，加法
+        - M是multiple，乘法
+
+
+3. YOLOv7网络结构
+    - YOLOv7-tiny
+        ![YOLOv7 tiny.png](../pictures/YOLOv7%20tiny.png)
+
+    - YOLOv7
+        ![YOLOv7 yaml.png](../pictures/YOLOv7%20yaml.png)
+
+    - YOLOv7-W6
+        ![YOLOv7 W6.png](../pictures/YOLOv7%20W6.png)
+
+    - YOLOv7-X
+        ![YOLOv7 X.png](../pictures/YOLOv7%20X.png)
+
+    - YOLOv7-E6
+        ![YOLOv7 E6.png](../pictures/YOLOv7%20E6.png)
+
+    - YOLOv7-D6
+        ![YOLOv7 D6.png](../pictures/YOLOv7%20D6.png)
+
+    - YOLOv7-E6E
+        ![YOLOv7 E6E.png](../pictures/YOLOv7%20E6E.png)
 
 # YOLOv8
 
-## 1. 优势/历史地位
+## 什么是 YOLOv8？
 
-## 2. 算法流程
+YOLOv8 是最新的最先进的 YOLO 模型，可⽤于对象检测、图像分类和实例分割任务。 YOLOv8 由 [Ultralytics](https://ultralytics.com/?ref=blog.roboflow.com) 开发，他还创建了具有影响⼒和⾏业定义的 YOLOv5 模型。 YOLOv8 在 YOLOv5 的基础上包含了许多架构和开发⼈员体验的变化和改进。
 
-## 3. 缺点
+截⾄撰写本⽂时，YOLOv8 正在积极开发中，因为 Ultralytics 致⼒于开发新功能并响应社区的反馈。事实上，当 Ultralytics 发布模型时，它会得到⻓期⽀持：该组织与社区合作，使模型达到最佳状态。
 
+## YOLO如何成⻓为YOLOv8
+
+[YOLO (You Only Look Once)](https://blog.roboflow.com/guide-to-yolo-models/) 系列模型在计算机视觉界名声⼤噪。 YOLO 之所以出名，是因为它在保持较⼩模型尺⼨的同时具有相当⾼的准确性。 YOLO 模型可以在单个 GPU 上进⾏训练，这使得⼴泛的开发⼈员可以使⽤它。机器学习从业者可以在边缘硬件或云中以低成本部署它。
+
+⾃ 2015 年由 Joseph Redmond ⾸次推出以来，YOLO ⼀直受到计算机视觉社区的培育。在早期（版本 1-4），YOLO 在 Redmond 编写的名为 [Darknet](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) 的⾃定义深度学习框架中以 C 代码维护。
+
+YOLOv8 作者，Ultralytics 的 Glenn Jocher，在 PyTorch 中跟踪了 YOLOv3 存储库 [YOLOv3 repo in PyTorch](https://blog.roboflow.com/training-a-yolov3-object-detection-model-with-a-custom-dataset/) （来⾃ Facebook 的深度学习框架）。随着 shadow repo 中的训练变得更好，Ultralytics 最终推出了⾃⼰的模型： [YOLOv5](https://blog.roboflow.com/how-to-train-yolov5-on-a-custom-dataset/).
+
+鉴于其灵活的 Pythonic 结构，YOLOv5 迅速成为世界上的 SOTA 存储库。这种结构允许社区发明新的建模改进，并使⽤类似的 PyTorch ⽅法在存储库中快速共享它们。
+
+除了强⼤的模型基础，YOLOv5 维护者⼀直致⼒于⽀持围绕该模型的健康软件⽣态系统。他们积极解决问题并根据社区需求推动存储库的功能。
+
+在过去两年中，各种模型从 YOLOv5 PyTorch 存储库中分⽀出来，包括 [Scaled-YOLOv4](https://roboflow.com/model/scaled-yolov4?ref=blog.roboflow.com), [YOLOR](https://blog.roboflow.com/train-yolor-on-a-custom-dataset/), 和 [YOLOv7](https://blog.roboflow.com/yolov7-breakdown/)。 世界各地出现了其他基于 PyTorch 的模型，例如 [YOLOX](https://blog.roboflow.com/how-to-train-yolox-on-a-custom-dataset/) 和 [YOLOv6](https://blog.roboflow.com/how-to-train-yolov6-on-a-custom-dataset/). ⼀路⾛来，每个 YOLO 模型都带来了新的 SOTA 技术，这些技术继续推动模型的准确性和效率。
+
+在过去六个⽉中，Ultralytics 致⼒于研究 YOLO 的最新 SOTA 版本 YOLOv8。YOLOv8 于 2023 年 1 ⽉ 10 ⽇发布。
+
+## 为什么要使⽤ YOLOv8？
+
+以下是您应该考虑在下⼀个计算机视觉项⽬中使⽤ YOLOv8 的⼏个主要原因：
+
+1. YOLOv8在COCO和Roboflow 100上测得准确率很⾼。
+2. YOLOv8 具有许多⽅便开发⼈员的功能，从易于使⽤的 CLI 到良好的结构化的 Python 包。
+3. 围绕 YOLO 有⼀个庞⼤的社区，围绕 YOLOv8 模型的社区也在不断壮⼤，这意味着计算机视觉界有很多⼈可以在您需要指导时为您提供帮助。
+
+YOLOv8 在 COCO 上实现了很强的准确性。例如，YOLOv8m 模型 中等模型 在 COCO 上测量时达到 50.2% mAP。当针对 Roboflow 100（⼀个专⻔评估各种任务特定领域的模型性能的数据集）进⾏评估时，YOLOv8 的得分明显优于 YOLOv5。本⽂后⾯的性能分析中提供了这⽅⾯的更多信息。
+
+此外，YOLOv8 中⽅便开发⼈员的功能⾮常重要。与将任务拆分到您可以执⾏的许多不同 Python ⽂件的其他模型不同，YOLOv8 带有⼀个 CLI，可以使模型训练更加直观。这是对 Python 包的补充，它提供⽐以前的模型更⽆缝的编码体验。
+
+当您考虑要使⽤的模型时，围绕 YOLO 的社区是值得注意的。许多计算机视觉专家都知道 YOLO 及其⼯作原理，并且⽹上有⼤量关于在实践中使⽤ YOLO 的指导。虽然 YOLOv8 在撰写本⽂时是新的，但⽹上有许多指南可以提供帮助。
+
+以下是我们⾃⼰的⼀些学习资源，您可以使⽤它们来增进对 YOLO 的了解：
+
+- [Roboflow 模型上的 YOLOv8 模型卡](https://roboflow.com/model/yolov8?ref=blog.roboflow.com)
+- [如何在⾃定义数据集上训练 YOLOv8 模型](https://blog.roboflow.com/how-to-train-yolov8-on-a-custom-dataset/)
+- [如何将 YOLOv8 模型部署到 Raspberry Pi](https://blog.roboflow.com/how-to-deploy-a-yolov8-model-to-a-raspberry-pi/)
+- [⽤于训练 YOLOv8 对象检测模型的 Google Colab Notebook](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov8-object-detection-on-custom-dataset.ipynb?ref=blog.roboflow.com)
+- [⽤于训练 YOLOv8 分类模型的 Google Colab Notebook](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov8-classification-on-custom-dataset.ipynb?ref=blog.roboflow.com)
+- [⽤于训练 YOLOv8 分割模型的 Google Colab Notebook](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov8-classification-on-custom-dataset.ipynbhttps://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov8-instance-segmentation-on-custom-dataset.ipynb?ref=blog.roboflow.com)
+- [使⽤ YOLOv8 和 ByteTRACK 跟踪和计数⻋辆](https://youtu.be/OS5qI9YBkfk?ref=blog.roboflow.com)
+
+让我们深⼊了解架构以及 YOLOv8 与之前的 YOLO 模型的不同之处。
+
+## YOLOv8 架构：深⼊探讨
+
+YOLOv8 尚未发表论⽂，因此我们⽆法直接了解其创建过程中进⾏的直接研究⽅法和消融研究。话虽如此，我们分析了有关模型的存储库和可⽤信息，以开始记录 YOLOv8 中的新功能。
+
+如果您想⾃⼰查看代码，请查看 [YOLOv8 存储库](https://github.com/ultralytics/ultralytics?ref=blog.roboflow.com) 并查看 [此代码差异](https://github.com/ultralytics/yolov5/compare/master...exp13?ref=blog.roboflow.com) 以了解⼀些研究是如何完成的。
+
+在这⾥，我们提供了有影响⼒的模型更新的快速总结，然后我们将查看模型的评估，这不⾔⾃明。
+
+GitHub ⽤⼾ RangeKing 制作的下图显⽰了⽹络架构的详细可视化。
+
+![YOLOv8 Architecture, visualisation made by GitHub user RangeKing](../pictures/YOLOv8%20Architecture%2C%20visualisation%20made%20by%20GitHub%20user%20RangeKing.png)
+
+### ⽆锚检测
+
+YOLOv8 是⼀个⽆锚模型。这意味着它直接预测对象的中⼼⽽不是已知 [锚框](https://blog.roboflow.com/what-is-an-anchor-box/) 的偏移量。
+
+![Visualization of an anchor box in YOLO](../pictures/YOLOv8%20Visualization%20of%20an%20anchor%20box%20in%20YOLO.png)
+
+[锚框](https://blog.roboflow.com/what-is-an-anchor-box/) 是早期 YOLO 模型中众所周知的棘⼿部分，因为它们可能代表⽬标基准框的分布，⽽不是⾃定义数据集的分布。
+
+![The detection head of YOLOv5, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8%20The%20detection%20head%20of%20YOLOv5.png)
+
+Anchor free 检测减少了框预测的数量，从⽽加速了⾮最⼤抑制 (NMS)，这是⼀个复杂的后处理步骤，在推理后筛选候选检测。
+
+![The detection head for YOLOv8, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8%20The%20detection%20head%20for%20YOLOv8.png)
+
+### 新的卷积
+
+stem 的第⼀个 `6x6` conv 被 `3x3` 替换,  主要构建块被更改，[C2f](https://github.com/ultralytics/ultralytics/blob/dba3f178849692a13f3c43e81572255b1ece7da9/ultralytics/nn/modules.py?ref=blog.roboflow.com#L196) 更换 [C3](https://github.com/ultralytics/yolov5/blob/cdd804d39ff84b413bde36a84006f51769b6043b/models/common.py?ref=blog.roboflow.com#L157) . 该模块总结如下图，其中 "f" 是特征数, "e" 是扩展率，CBS是由 `Conv`, `BatchNorm` 和后⾯的 `SiLU` 组成的block 。
+
+在 `C2f` 中, `Bottleneck` 的所有输出(两个具有残差连接的 3x3 `convs` 的奇特名称) 都被连接起来。⽽在 `C3` 中，仅使⽤了最后⼀个 `Bottleneck` 的输出。
+
+![New YOLOv8 `C2f` module](../pictures/YOLOv8%20New%20YOLOv8%20C2f%20module.png)
+
+`Bottleneck` 与 YOLOv5 相同，但第⼀个 conv 的内核⼤⼩从 `1x1` 更改为 `3x3`。从这些信息中，我们可以看到 YOLOv8 开始恢复到 2015 年定义的 ResNet 块。
+
+在颈部，特征直接连接⽽不强制使⽤相同的通道尺⼨。这减少了参数数量和张量的整体⼤⼩。
+
+### 关闭⻢赛克增强
+
+深度学习研究倾向于关注模型架构，但 YOLOv5 和 YOLOv8 中的训练例程是它们成功的重要部分。
+
+YOLOv8 在在线训练期间增强图像。在每个时期，模型看到它所提供的图像的变化略有不同。
+
+其中⼀种增强称为 [⻢赛克增强](https://blog.roboflow.com/advanced-augmentations/)。这涉及将四张图像拼接在⼀起，迫使模型学习新位置、部分遮挡和不同周围像素的对象。
+
+![Mosaic augmentation of chess board photos](../pictures/YOLOv8%20Mosaic%20augmentation%20of%20chess%20board%20photos.png)
+
+然⽽，如果在整个训练过程中执⾏，这种增强根据经验显⽰会降低性能。在最后⼗个训练时期将其关闭是有利的。
+
+这种变化是在 YOLOv5 repo 和 YOLOv8 研究中加班时对 YOLO 建模给予仔细关注的典范。
+
+## YOLOv8 精度改进
+
+YOLOv8 研究的主要动机是对 [COCO 基准进⾏实证评估](https://blog.roboflow.com/coco-dataset/)。随着⽹络和训练例程的每⼀部分都得到调整，新的实验将运⾏以验证更改对 COCO 建模的影响。
+
+### YOLOv8 COCO 精度
+
+COCO（Common Objects in Context）是评估对象检测模型的⾏业标准基准。在 COCO 上⽐较模型时，我们查看推理速度的 mAP 值和 FPS 测量。模型应该以相似的推理速度进⾏⽐较。
+
+下图显⽰了 YOLOv8 在 COCO 上的准确性，使⽤的数据由 Ultralytics 团队收集并发布在他们的 [YOLOv8 README](https://github.com/ultralytics/ultralytics?ref=blog.roboflow.com) 中：
+
+![YOLOv8 COCO evaluation](../pictures/YOLOv8%20COCO%20evaluation.png)
+
+在撰写本⽂时，YOLOv8 COCO 的准确性是推理延迟相当的模型的最新⽔平。
+
+### RF100 精度
+
+在 Roboflow，我们从 [Roboflow Universe](https://universe.roboflow.com/?ref=blog.roboflow.com) 中抽取了 100 个样本数据集，⼀个包含超过 100,000 个数据集的存储库，⽤于评估模型对新领域的泛化能⼒。我们的基准测试是在英特尔的⽀持下开发的，是计算机视觉从业者的基准测试，旨在为以下问题提供更好的答案：“该模型在我的⾃定义数据集上的表现如何？”
+
+我们在 [RF100](https://www.rf100.org/?ref=blog.roboflow.com) 上评估了 YOLOv8与 YOLOv5 和 YOLOv7 ⼀起进⾏基准测试，以下箱线图显⽰了每个模型的 _mAP@.50._
+
+_我们将每个模型的⼩型版本运⾏ 100 个 epoch，我们只⽤⼀个种⼦运⾏⼀次，因此由于梯度抽签，我们对这个结果持 **保留态度**_
+
+下⾯的箱线图告诉我们，当针对 Roboflow 100 基准进⾏测量时，YOLOv8 有更少的离群值和更好的 mAP。
+
+![YOLOs _mAP@.50_ against RF100](../pictures/YOLOv8%20YOLOs%20_mAP%40.50_%20against%20RF100.png)
+
+以下条形图显⽰了每个 RF100 类别的平均 _mAP@.50_ 。同样，YOLOv8 优于所有以前的模型。
+
+![YOLOv8 YOLOs average _mAP@.50_ against RF100 categories](../pictures/YOLOv8%20YOLOs%20average%20_mAP%40.50_%20against%20RF100%20categories.png)
+
+相对于 YOLOv5 评估，YOLOv8 模型在每个数据集上产⽣了相似的结果，或者显着提⾼了结果。
+
+## YOLOv8 存储库和 PIP 包
+
+[YOLOv8代码库](https://github.com/ultralytics/ultralytics?ref=blog.roboflow.com) 旨在成为社区使⽤和迭代模型的地⽅。由于我们知道这个模型会不断改进，我们可以将最初的 YOLOv8 模型结果作为基线，并期待随着新迷你版本的发布⽽进⾏未来的改进。
+
+我们希望的最好结果是研究⼈员开始在 Ultralytics 存储库之上开发他们的⽹络。研究⼀直在 YOLOv5 的分⽀中进⾏，但如果模型在⼀个位置制作并最终合并到主线中会更好。
+
+### YOLOv8 存储库布局
+
+YOLOv8 模型使⽤与 YOLOv5 相似的代码和新结构，其中分类、实例分割和对象检测任务类型由相同的代码例程⽀持。
+
+模型仍然使⽤相同的 [YOLOv5 YAML  格式](https://roboflow.com/formats/yolov8-pytorch-txt?ref=blog.roboflow.com) 进⾏初始化并且数据集格式保持不变。
+
+![YOLOv8 code structure](../pictures/YOLOv8%20code%20structure.png)
+
+### YOLOv8 CLI
+
+`ultralytics` 包随 CLI⼀起分发。许多 YOLOv5 ⽤⼾都熟悉这⼀点，其中核⼼训练、检测和导出交互也是通过 CLI 完成的。
+
+```
+yolo task=detect mode=val model={HOME}/runs/detect/train/weights/best.pt data={dataset.location}/data.yaml
+```
+
+您可以在 `[detect, classify, segment]` 中传递 `task` , 在 `[train, predict, val, export]` 中传递 `mode` , 将 `model` 作为未初始化的 `.yaml` 或先前训练的 `.pt` ⽂件传递。
+
+### YOLOv8 Python 包
+
+除了可⽤的 CLI ⼯具外，YOLOv8 现在作为 PIP 包分发。这使本地开发变得更加困难，但释放了将 YOLOv8 编织到 Python 代码中的所有可能性。
+
+```
+from ultralytics import YOLO
+
+# Load a model
+model = YOLO("yolov8n.yaml")  # build a new model from scratch
+model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+
+# Use the model
+results = model.train(data="coco128.yaml", epochs=3)  # train the model
+results = model.val()  # evaluate model performance on the validation set
+results = model("https://ultralytics.com/images/bus.jpg")  # predict on an image
+success = YOLO("yolov8n.pt").export(format="onnx")  # export a model to ONNX format
+```
+
+## The YOLOv8 注释格式
+
+YOLOv8 使⽤ YOLOv5 PyTorch TXT 注释格式，这是 Darknet 注释格式的修改版本。如果您需要将数据转换为 YOLOv5 PyTorch TXT 以⽤于您的 YOLOv8 模型，我们可以满⾜您的需求。查看我们的 [Roboflow 转换](https://roboflow.com/formats/yolov8-pytorch-txt?ref=blog.roboflow.com) 学习如何转换数据以⽤于新的 YOLOv8 模型的⼯具。
+
+## YOLOv8 标注⼯具
+
+Ultralytics 是 YOLOv8 的创建者和维护者，已与 Roboflow 合作成为推荐⽤于 YOLOv8 项⽬的注释和导出⼯具。使⽤ Roboflow，您可以为 YOLOv8 ⽀持的所有任务（对象检测、分类和分割）注释数据并导出数据，以便您可以将其与 YOLOv8 CLI 或 Python 包⼀起使⽤。
+
+## YOLOv8 ⼊⻔
+
+要开始将 YOLOv8 应⽤于您⾃⼰的⽤例，请查看我们的指南，了解 [如何在⾃定义数据集上训练 YOLOv8](https://blog.roboflow.com/how-to-train-yolov8-on-a-custom-dataset/).
+
+要查看其他⼈使⽤ YOLOv8 做什么， [请浏览 Roboflow Universe 以获取其他 YOLOv8 模型](https://blog.roboflow.com/yolov8-models-apis-datasets/)，数据集和灵感。
+
+对于将模型投⼊⽣产并使⽤主动学习策略不断更新模型的从业者 [部署 YOLOv8 模型](https://blog.roboflow.com/upload-model-weights-yolov8/)，在我们的推理引擎中使⽤它，并在您的数据集上进⾏标签辅助。
+
+快乐的训练，当然还有快乐的推理！
+
+## YOLOv8 FAQs
+
+### **YOLOv8 有哪些版本？**
+
+⾃ 2023 年 1 ⽉ 10 ⽇发布以来，YOLOv8 有五个版本，从 YOLOv8n（最⼩的模型，在 COCO 上的 mAP 得分为 37.3）到 YOLOv8x（最⼤的模型，在 COCO 上的 mAP 得分为 53.9）。
+
+### **YOLOv8 可以⽤于哪些任务？**
+
+YOLOv8 开箱即⽤地⽀持对象检测、实例分割和图像分类。
 
 # 题目
 
