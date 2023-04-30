@@ -30,7 +30,7 @@
   - [新领域应用](#新领域应用)
 
 ## 设计模式
-#### [设计模式也可以这么简单]()
+#### [设计模式也可以这么简单](https://github.com/KingXHJ/X-PaperReading/blob/main/Design%20patterns/Design%20patterns%2023%20types.md)
 
 ## 传统3D视觉论文
   
