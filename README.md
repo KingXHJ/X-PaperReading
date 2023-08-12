@@ -15,6 +15,7 @@
   - [PatchMatch](#PatchMatch)
 - [深度学习论文](#深度学习论文)
   - [损失函数](#损失函数)
+  - [计算机视觉-特征提取](#计算机视觉-特征提取)
   - [计算机视觉-3D](#计算机视觉-3D)
   - [计算机视觉-CNN](#计算机视觉-CNN)
   - [计算机视觉-Transformer](#计算机视觉-Transformer)
@@ -61,6 +62,12 @@
 ### 损失函数
 
 #### [19种损失函数介绍](https://github.com/KingXHJ/X-PaperReading/blob/main/DeepLearning/Loss%20Functions/Loss%20Function%2019%20Types.md)
+
+
+### 计算机视觉-特征提取
+| 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
+| ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+| [✅](./DeepLearning/CV%20Feature%20Extraction/LightGlue%20Local%20Feature%20Matching%20at%20Light%20Speed.md)      | 2023 | [LightGlue](https://arxiv.org/pdf/2306.13643.pdf) | 图像之间的Transformer特征匹配方法                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fa6159daf277e73ca511da98a0d05432f6bab0de7%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/LightGlue%3A-Local-Feature-Matching-at-Light-Speed-Lindenberger-Sarlin/a6159daf277e73ca511da98a0d05432f6bab0de7) |
 
 
 ### 计算机视觉-3D
