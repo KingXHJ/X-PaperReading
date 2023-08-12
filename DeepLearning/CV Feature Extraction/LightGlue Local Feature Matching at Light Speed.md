@@ -30,14 +30,14 @@
         - LightGlue将其中一些创新应用于2D特征匹配，并在效率和准确性方面都有所提高
 1. 根据SuperGlue的缺点，设计LightGLue
     - 在本文中，我们利用这些见解来设计LightGlue，这是一种比SuperGlue更准确、更高效、更容易训练的深度网络。我们重新审视了它的设计决策，并结合了许多简单但有效的架构修改。我们提取了一个配方，用有限的资源训练高性能的深度匹配器，在短短几天内达到最先进的精度。如图1所示，与现有的稀疏和密集匹配器相比，LightGlue在效率-精度权衡方面是Pareto最优的。
-    ![LightGlue1](./pictures/LightGlue1.png)
+    ![LightGlue1](../pictures/LightGlue1.png)
 
     - 与以前的方法不同，LightGlue适用于每个图像对的难度，这取决于视觉重叠量、外观变化或判别信息。图2显示，因此，在直观上容易匹配的配对上，推理比在具有挑战性的配对上要快得多，这种行为让人想起了人类如何处理视觉信息。这是通过 **1)** 在每个计算块之后预测一组对应关系，以及 **2)** 使模型能够内省它们并预测是否需要进一步计算来实现的。LigthGlue也会在早期阶段丢弃不可匹配的点，从而将注意力集中在可视区域
-    ![LightGlue2](./pictures/LightGlue2.png)
+    ![LightGlue2](../pictures/LightGlue2.png)
 
     - 实验表明，LightGlue是SuperGlue的即插即用替代品：它预测两组局部特征的强匹配，只需运行时间的一小部分。这为在SLAM等延迟敏感应用程序中部署深度匹配器或从多数据重建更大场景开辟了令人兴奋的前景。LightGlue模型及其训练代码将在获得许可的情况下[公开发布](https://github.com/cvg/LightGlue)
 # 三、设计的模型——更快的特征匹配
-![LightGlue3](./pictures/LightGlue3.png)
+![LightGlue3](../pictures/LightGlue3.png)
 
 - Problem formulation
     - LightGlue预测在SuperGlue之后从图像A和B中提取的两组局部特征之间的部分分配。每个局部特征 $i$ 由二维点位置 $\mathbf{p}_ {i} := (x,y)_ {i} \in [0,1]^{2}$ ，该点位置由图像大小归一化和视觉描述符 $\mathbf{d}_ {i} \in \mathbb{R}^{d}$ 组成。图像A和B具有M个和N个局部特征，分别由 $\mathcal{A} := \lbrace 1,...,M \rbrace$ 和 $\mathcal{B} := \lbrace 1,...,N \rbrace$ 索引
@@ -104,7 +104,7 @@
         - LightGlue遵循SuperGlue的监督训练设置。我们首先用从1M幅图像中采样的合成单应性对模型进行预训练。这样的增强提供了完全且无噪声的监督，但是需要仔细的调谐。然后，LightGlue使用MegaDepth数据集进行微调，该数据集包括描绘196个旅游地标的1M众包图像，通过SfM恢复相机校准和姿势，并通过多视图立体恢复密集深度。由于大型模型很容易过度适应这种独特的场景，因此预训练对模型的泛化至关重要，但在最近的随访中被省略了。
 
     1. Training tricks
-        ![LightGlue3](./pictures/LightGlue5.png)
+        ![LightGlue3](../pictures/LightGlue5.png)
         - 虽然LightGlue体系结构提高了训练速度、稳定性和准确性，但我们发现一些细节也有很大的影响。图5显示，与SuperGlue相比，这减少了训练模型所需的资源。这降低了训练成本，并使更广泛的社区更容易接触到深度匹配者
         - 由于MegaDepth的深度图通常是不完整的，我们还将具有大核误差的点标记为不可匹配。仔细调整和退火学习率可以提高准确性。多点训练也可以：我们使用每张图像2k，而不是1k。批量大小很重要：我们使用梯度检查点和混合精度在具有24GB VRAM的单个GPU上拟合32个图像对
     1. Implementation details
@@ -120,11 +120,11 @@
     1. 更加准确
     1. 更容易训练
 1. 消融实验
-    ![LightGlueTable4](./pictures/LightGlueTable4.png)
+    ![LightGlueTable4](../pictures/LightGlueTable4.png)
     - 我们通过评估LightGlue在具有极端光度增强的具有挑战性的合成单应性数据集上进行预训练后的设计决策来验证我们的设计决策。我们使用SuperPoint功能和5M样本训练不同的变体，所有这些都在4 GPU天内完成。我们从应用于训练过程中看不见的图像的相同增强中创建了一个测试集。我们从每个关键点中提取512个关键点。我们还与SuperGlue进行了比较，SuperGlue是我们使用相同设置进行训练的。附录中提供了更多详细信息。
     - 我们在表4中报告了消融结果。与SuperGlue相比，LightGlue的收敛速度明显更快，召回率达到+4%，准确率达到+12%。请注意，SuperGlue可以通过足够长的训练达到与LightGlue类似的精度，但改进的收敛性使在新数据上训练更加实用。
     1. matchability classifier
-        ![LightGlue6](./pictures/LightGlue6.png)
+        ![LightGlue6](../pictures/LightGlue6.png)
         - 如果没有匹配性分类器，网络将失去区分好匹配和坏匹配的能力，如图6所示。直观地，相似性矩阵提出了许多可能的匹配，而匹配性过滤了不正确的提议。因此，我们的部分分配可以被视为相互最近邻居搜索和学习的内部分类器的优雅融合。这比解决SuperGlue的最佳运输问题要快得多。
     1. absolute positions
         - 用旋转嵌入取代学习的绝对位置编码可以提高准确性，在每个自关注层旋转查询和键会对运行时间造成较小的损失。使用相对位置，LightGlue学习在图像之间匹配几何图案。提醒网络每层的位置可以提高网络的鲁棒性，从而达到+2%的精度。
@@ -134,10 +134,10 @@
         - 使用深度监督，中间层也会产生有意义的结果。在5层之后，网络就可以预测稳健的匹配，实现>90%的召回率。在最后几层，网络专注于拒绝异常值，从而提高匹配精度
 ## 2、有优势的原因
 1. LightGLue能够适应问题的难度
-    ![LightGlueTable5](./pictures/LightGlueTable5.png)
+    ![LightGlueTable5](../pictures/LightGlueTable5.png)
     - 适应性：通过预测匹配性得分和置信度，我们可以根据具体情况自适应地减少前向传球过程中的计算。表5研究了两种修剪机制——自适应深度和宽度——对不同视觉重叠范围的MegaDepth图像对的有效性。对于简单的样本，例如视频的连续帧，网络在几层后快速收敛并退出，从而实现1.86倍的加速。在低视觉重叠的情况下，例如环路闭合，网络需要更多的层来收敛。然而，它会提前拒绝有信心和不匹配的点，并将它们排除在后续层的输入之外，从而避免不必要的计算。
 1. 效率
-    ![LightGlue7](./pictures/LightGlue7.png)
+    ![LightGlue7](../pictures/LightGlue7.png)
     - 图7显示了不同数量的输入关键点的运行时间。对于每张图像最多2K个关键点（这是视觉定位的常见设置），LightGlue比SuperGlue和SGMNet都快。自适应修剪进一步减少了任何输入大小的运行时间。
 ## 3、改进空间
 1. full cross-attention
