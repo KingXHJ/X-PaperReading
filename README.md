@@ -6,6 +6,7 @@
 感谢李沐老师([跟李沐学AI](https://space.bilibili.com/1567748478?spm_id_from=333.337.0.0))，以及B站UP主[霹雳吧啦Wz](https://space.bilibili.com/18161609)([GitHub](https://github.com/WZMIAOMIAO/deep-learning-for-image-processing))阅读论文的启发，借鉴了李沐老师的README格式。在学习整理李沐老师和霹雳吧啦Wz所讲述的论文基础上，增加了自己阅读的一些论文及翻译和笔记，希望能够对不同机器学习邻域能够有更深的了解。
 
 ## 目录
+- [可视化工具]()
 - [设计模式](#设计模式)
 - [传统3D视觉论文](#传统3D视觉论文)
   - [MVS](#MVS)
@@ -29,6 +30,13 @@
   - [图神经网络](#图神经网络)
   - [优化算法](#优化算法)
   - [新领域应用](#新领域应用)
+
+## 可视化
+- [t-SNE](https://lvdmaaten.github.io/tsne/)
+
+| 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
+| ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+| []()      | 2017 | [Grad-CAM](https://arxiv.org/abs/1610.02391) | 可视化CNN                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fe7eef2ac4136ec93bd306d2c9c353a13729a4553%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Grad-CAM%3A-Visual-Explanations-from-Deep-Networks-Selvaraju-Das/e7eef2ac4136ec93bd306d2c9c353a13729a4553) |
 
 ## 设计模式
 #### [设计模式也可以这么简单](https://github.com/KingXHJ/X-PaperReading/blob/main/Design%20patterns/Design%20patterns%2023%20types.md)
