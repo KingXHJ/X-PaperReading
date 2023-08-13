@@ -6,6 +6,7 @@
 感谢李沐老师([跟李沐学AI](https://space.bilibili.com/1567748478?spm_id_from=333.337.0.0))，以及B站UP主[霹雳吧啦Wz](https://space.bilibili.com/18161609)([GitHub](https://github.com/WZMIAOMIAO/deep-learning-for-image-processing))阅读论文的启发，借鉴了李沐老师的README格式。在学习整理李沐老师和霹雳吧啦Wz所讲述的论文基础上，增加了自己阅读的一些论文及翻译和笔记，希望能够对不同机器学习邻域能够有更深的了解。
 
 ## 目录
+- [综述](#综述)
 - [可视化工具](#可视化工具)
 - [设计模式](#设计模式)
 - [传统3D视觉论文](#传统3d视觉论文)
@@ -30,23 +31,31 @@
   - [优化算法](#优化算法)
   - [新领域应用](#新领域应用)
 
+
+## 综述
+
+#### [斯坦福100+作者的200+页综述](https://arxiv.org/abs/2108.07258)
+
+
 ## 可视化工具
-- [t-SNE](https://lvdmaaten.github.io/tsne/)
+
+#### [t-SNE](https://lvdmaaten.github.io/tsne/)
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | []()      | 2017 | [Grad-CAM](https://arxiv.org/abs/1610.02391) | 可视化CNN                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fe7eef2ac4136ec93bd306d2c9c353a13729a4553%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Grad-CAM%3A-Visual-Explanations-from-Deep-Networks-Selvaraju-Das/e7eef2ac4136ec93bd306d2c9c353a13729a4553) |
 
+
 ## 设计模式
+
 #### [设计模式也可以这么简单](https://github.com/KingXHJ/X-PaperReading/blob/main/Design%20patterns/Design%20patterns%2023%20types.md)
+
 
 ## 传统3D视觉论文
 
-  
 ### MVS
 
 #### 对极几何
-
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -71,7 +80,6 @@
 
 #### [19种损失函数介绍](./DeepLearning/Loss%20Functions/Loss%20Function%2019%20Types.md)
 
-
 ### 计算机视觉-特征提取
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -80,8 +88,8 @@
 
 ### 计算机视觉-3D
 
-- [立体视觉网络排行网站](https://vision.middlebury.edu/stereo/)
-- [双目视觉数据网站](./Resources/双目立体开源数据集资源汇总.pdf)
+#### [立体视觉网络排行网站](https://vision.middlebury.edu/stereo/)
+#### [双目视觉数据网站](./Resources/双目立体开源数据集资源汇总.pdf)
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -93,8 +101,8 @@
 | [✅](./DeepLearning/CV%203D/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection.md)      | 2023 | [Model-Agnostic Hierarchical Attention for 3D Object Detection](https://arxiv.org/pdf/2301.02650.pdf) | 点云网络利用Transformers + "多尺度"/"尺寸自适应局部"注意力机制实现更好的小目标的3D目标检测题                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F620da8851e38e932e62fb2ee4a28a13cfeb5772f%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Model-Agnostic-Hierarchical-Attention-for-3D-Object-Shu-Xue/620da8851e38e932e62fb2ee4a28a13cfeb5772f) |
 | [✅](./DeepLearning/CV%203D/Super%20Sparse%203D%20Object%20Detection.md)      | 2023 | [Super Sparse 3D Object Detection](https://arxiv.org/pdf/2301.02562.pdf) | 点云网络利用超稀疏特征实现远距离3D目标检测题                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F55d2665d77965dad3e6cd699d523dd326195e385%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Super-Sparse-3D-Object-Detection-Fan-Yang/55d2665d77965dad3e6cd699d523dd326195e385) |
 
-### 计算机视觉-CNN
 
+### 计算机视觉-CNN
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -105,6 +113,7 @@
 | [✅](./DeepLearning/CV%20CNN/MobileNets%20Efficient%20Convolutional%20Neural%20Networks%20for%20Mobile%20Vision%20Applications.md) | 2017 | [MobileNet](https://arxiv.org/pdf/1704.04861.pdf) | 适合终端设备的小CNN                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F3647d6d0f151dc05626449ee09cc7bce55be497e%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/MobileNets%3A-Efficient-Convolutional-Neural-Networks-Howard-Zhu/3647d6d0f151dc05626449ee09cc7bce55be497e)  |
 | [✅](./DeepLearning/CV%20CNN/EfficientNet%20Rethinking%20Model%20Scaling%20for%20Convolutional%20Neural%20Networks.md)| 2020 | [EfficientNet](https://arxiv.org/pdf/1905.11946.pdf) | 通过架构搜索得到的CNN                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F4f2eda8077dc7a69bb2b4e0a1a086cf054adb3f9%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/EfficientNet%3A-Rethinking-Model-Scaling-for-Neural-Tan-Le/4f2eda8077dc7a69bb2b4e0a1a086cf054adb3f9)  |
 | [✅](./DeepLearning/CV%20CNN/NON-DEEP%20NETWORKS.md)| 2021 |  [Non-deep networks](https://arxiv.org/pdf/2110.07641.pdf) | 让不深的网络也能在ImageNet刷到SOTA                   | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F0d7f6086772079bc3e243b7b375a9ca1a517ba8b%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Non-deep-Networks-Goyal-Bochkovskiy/0d7f6086772079bc3e243b7b375a9ca1a517ba8b) |
+
 
 ### 计算机视觉-Transformer
 
@@ -117,7 +126,9 @@
 | [✅](./DeepLearning/CV%20Transformer/Masked%20Autoencoders%20Are%20Scalable%20Vision%20Learners.md) | 2021 | [MAE](https://arxiv.org/pdf/2111.06377.pdf) | BERT的CV版             |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fc1962a8cf364595ed2838a097e9aa7cd159d3118%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Masked-Autoencoders-Are-Scalable-Vision-Learners-He-Chen/c1962a8cf364595ed2838a097e9aa7cd159d3118)  |
 | [✅](./DeepLearning/CV%20Transformer/FLatten%20Transformer%20Vision%20Transformer%20using%20Focused%20Linear%20Attention.md) | 2023 | [FLatten Transformer](https://arxiv.org/pdf/2308.00442.pdf) | 聚焦的线性注意力模块             |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F24c5296ad98606192afe5003ef3f0d79aa19e321%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/FLatten-Transformer%3A-Vision-Transformer-using-Han-Pan/24c5296ad98606192afe5003ef3f0d79aa19e321)  |
 
+
 #### CLIP相关工作
+
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | [✅](./DeepLearning/CV%20Transformer/Language-driven%20Semantic%20Segmentation.md) | 2022 | [Lseg](https://arxiv.org/pdf/2201.03546.pdf) | CLIP用在分割领域                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fcc9826c222ac1e81b4b374dd9e0df130f298b1e8%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Language-driven-Semantic-Segmentation-Li-Weinberger/cc9826c222ac1e81b4b374dd9e0df130f298b1e8)  |
@@ -130,6 +141,7 @@
 | [✅](./DeepLearning/CV%20Transformer/HOW%20MUCH%20CAN%20CLIP%20BENEFIT%20VISION-ANDLANGUAGE%20TASKS.md) | 2021 | [VisionLanguageTask](https://arxiv.org/pdf/2107.06383.pdf) | CLIP用回到Vision Language            |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F8f167ec1149921fac63b1ea855443de109bb013a%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/How-Much-Can-CLIP-Benefit-Vision-and-Language-Tasks-Shen-Li/8f167ec1149921fac63b1ea855443de109bb013a)  |
 | [✅](./DeepLearning/CV%20Transformer/AudioCLIP%20Extending%20CLIP%20to%20Image,%20Text%20and%20Audio.md) | 2021 | [AudioCLIP](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747631) | CLIP进入语音领域             |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Ffda4530df9eec0e3f714dba3459ac50dab17d89c%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Audioclip%3A-Extending-Clip-to-Image%2C-Text-and-Audio-Guzhov-Raue/fda4530df9eec0e3f714dba3459ac50dab17d89c)  |
 | [✅](./DeepLearning/CV%20Transformer/Can%20Language%20Understand%20Depth.md) | 2022 | [Can Language Understand Depth](https://arxiv.org/pdf/2207.01077.pdf) | 深度估计图             |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2F9d0afe58801fe9e5537902e853d6e9e385340a92%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Can-Language-Understand-Depth-Zhang-Zeng/9d0afe58801fe9e5537902e853d6e9e385340a92)  |
+
 
 ### 生成模型
 
@@ -147,6 +159,7 @@
 | | 2021 | [Improved DDPM](https://arxiv.org/pdf/2102.09672.pdf) | 改进的 DDPM   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fde18baa4964804cf471d85a5a090498242d2e79f%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Improved-Denoising-Diffusion-Probabilistic-Models-Nichol-Dhariwal/de18baa4964804cf471d85a5a090498242d2e79f)  |
 | | 2021 | [Guided Diffusion Models](https://arxiv.org/pdf/2105.05233.pdf) | 号称超越 GAN  |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F64ea8f180d0682e6c18d1eb688afdb2027c02794%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Diffusion-Models-Beat-GANs-on-Image-Synthesis-Dhariwal-Nichol/64ea8f180d0682e6c18d1eb688afdb2027c02794)  |
 | | 2021 | [StyleGAN3](https://arxiv.org/pdf/2106.12423.pdf) |        |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fc1ff08b59f00c44f34dfdde55cd53370733a2c19%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Alias-Free-Generative-Adversarial-Networks-Karras-Aittala/c1ff08b59f00c44f34dfdde55cd53370733a2c19)  |
+
 
 ### 计算机视觉-ObjectDetection
 
@@ -186,10 +199,7 @@
 |        | 2023 | [SAM Fails to Segment Anything?](https://arxiv.org/pdf/2304.09148)         |                       |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fecf514b5015acd8c35bea1d313bd1620cfa57eef%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/ecf514b5015acd8c35bea1d313bd1620cfa57eef)  |
 
 
-<a name="contrastive_learning"></a>
-
 ### 计算机视觉-对比学习
-
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -208,13 +218,18 @@
 | [✅](./DeepLearning/CV%20Contrastive%20Learning/Emerging%20Properties%20in%20Self-Supervised%20Vision%20Transformers.md)  | 2021 |  [DINO](https://arxiv.org/pdf/2104.14294.pdf) | transformer加自监督在视觉也很香                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fad4a0938c48e61b7827869e4ac3baffd0aefab35%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Emerging-Properties-in-Self-Supervised-Vision-Caron-Touvron/ad4a0938c48e61b7827869e4ac3baffd0aefab35)  |
 | [✅](./DeepLearning/CV%20Contrastive%20Learning/DINOv2%20Learning%20Robust%20Visual%20Features%20without%20Supervision.md)  | 2023 |  [DINOv2](https://arxiv.org/pdf/2304.07193) | 借鉴最近在自然语言处理方面的一些技术和进展                   |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F5a9cb1b3dc4655218b3deeaf4a2417a9a8cd0891%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Emerging-Properties-in-Self-Supervised-Vision-Caron-Touvron/5a9cb1b3dc4655218b3deeaf4a2417a9a8cd0891)  |
 
+
 ### 计算机视觉-LSTM
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 |   | 2022 | [Sequencer](https://arxiv.org/pdf/2205.01972) | 可以替代ViT                 | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F1ae6c9a120507c83ca43b4ed361b7a5f8461a284%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Sequencer%3A-Deep-LSTM-for-Image-Classification-Tatsunami-Taki/1ae6c9a120507c83ca43b4ed361b7a5f8461a284) |
 
+
 ### 自然语言处理-Transformer
+
+#### [对LayerNorm的新研究](https://arxiv.org/pdf/1911.07013.pdf)
+#### [对Attention在Transformer里面作用的研究](https://arxiv.org/abs/2103.03404)
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
@@ -235,11 +250,13 @@
 |  | 2019 | [Zero](https://arxiv.org/pdf/1910.02054.pdf) | 参数分片      |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F00c957711b12468cb38424caccdf5291bb354033%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/ZeRO%3A-Memory-optimizations-Toward-Training-Trillion-Rajbhandari-Rasley/00c957711b12468cb38424caccdf5291bb354033)  |
 |  |  2022 | [Pathways](https://arxiv.org/pdf/2203.12533.pdf) |  将Jax拓展到上千TPU核上       |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F512e9aa873a1cd7eb61ce1f25ca7df6acb7e2352%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Pathways%3A-Asynchronous-Distributed-Dataflow-for-ML-Barham-Chowdhery/512e9aa873a1cd7eb61ce1f25ca7df6acb7e2352)  |
 
+
 ### 图神经网络
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | [✅](./DeepLearning/Graph%20Neural%20Network/A%20Gentle%20Introduction%20to%20Graph%20Neural%20Networks.md)  |  2021 | [图神经网络介绍](https://distill.pub/2021/gnn-intro/) | GNN的可视化介绍                  |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F2c0e0440882a42be752268d0b64243243d752a74%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/A-Gentle-Introduction-to-Graph-Neural-Networks-S%C3%A1nchez-Lengeling-Reif/2c0e0440882a42be752268d0b64243243d752a74)  |
+
 
 ### 优化算法
 
@@ -252,7 +269,6 @@
 
 ### 新领域应用
 
-
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | | 2016 | [AlphaGo](https://storage.googleapis.com/deepmind-media/alphago/AlphaGoNaturePaper.pdf) | 强化学习出圈                 |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F846aedd869a00c09b40f1f1f35673cb22bc87490%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Mastering-the-game-of-Go-with-deep-neural-networks-Silver-Huang/846aedd869a00c09b40f1f1f35673cb22bc87490)  |
@@ -262,10 +278,3 @@
 |  | 2021 | [指导数学直觉](https://www.nature.com/articles/s41586-021-04086-x.pdf) | 分析不同数学物体之前的联系来帮助发现新定理         |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Ff672b8fb430606fee0bb368f16603531ce1e90c4%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Advancing-mathematics-by-guiding-human-intuition-AI-Davies-Velickovic/f672b8fb430606fee0bb368f16603531ce1e90c4)  |
 | | 2021 | [AlphaTensor](https://www.nature.com/articles/s41586-022-05172-4.pdf) | 矩阵乘法算法                 |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F442ab95eb9cfbc03bb17a27b52313b5d25eaa738%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Discovering-faster-matrix-multiplication-algorithms-Fawzi-Balog/442ab95eb9cfbc03bb17a27b52313b5d25eaa738)  |
 |  | 2022 | [AlphaCode](https://storage.googleapis.com/deepmind-media/AlphaCode/competition_level_code_generation_with_alphacode.pdf) | 媲美一般程序员的编程解题水平       |[![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F5cbe278b65a81602a864184bbca37de91448a5f5%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/Competition-Level-Code-Generation-with-AlphaCode-Li-Choi/5cbe278b65a81602a864184bbca37de91448a5f5)  |
-
-
-
-
-#### 1. [斯坦福100+作者的200+页综述](https://arxiv.org/abs/2108.07258)
-#### 2. [对LayerNorm的新研究](https://arxiv.org/pdf/1911.07013.pdf)
-#### 3. [对Attention在Transformer里面作用的研究](https://arxiv.org/abs/2103.03404)
