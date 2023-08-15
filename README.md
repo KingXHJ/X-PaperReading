@@ -80,6 +80,14 @@
 
 #### [19种损失函数介绍](./DeepLearning/Loss%20Functions/Loss%20Function%2019%20Types.md)
 
+
+### 计算机视觉-VPR
+| 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
+| ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+| [✅](./DeepLearning/CV%20VPR/AnyLoc%20Towards%20Universal%20Visual%20Place%20Recognition.md)      | 2023 | [AnyLoc](https://arxiv.org/pdf/2308.00688.pdf) | 通用的位置识别算法 | [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2Fa6159daf277e73ca511da98a0d05432f6bab0de7%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/LightGlue%3A-Local-Feature-Matching-at-Light-Speed-Lindenberger-Sarlin/a6159daf277e73ca511da98a0d05432f6bab0de7) |
+
+
+
 ### 计算机视觉-特征提取
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
