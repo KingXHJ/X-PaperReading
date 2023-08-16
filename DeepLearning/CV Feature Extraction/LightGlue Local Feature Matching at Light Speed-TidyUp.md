@@ -1,9 +1,5 @@
 # LightGlue Local Feature Matching at Light Speed
 
-## 目录
-- []()
-
-
 ## 优势和特征
 1. 优势（相较于SuperGlue）
     1. 内存和计算方面更高效
