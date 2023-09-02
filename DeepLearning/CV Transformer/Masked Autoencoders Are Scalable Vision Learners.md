@@ -6,6 +6,9 @@
 - 作者：Kaiming He∗,† , Xinlei Chen∗ , Saining Xie,  Yanghao Li,  Piotr Dollar,  Ross Girshick, ∗equal technical contribution, †project lead; Facebook AI Research (FAIR)
 - 实验环境：128 TPU V-core
 - 数据集：
+
+[ppt](../ppt/models_by_DASOU/MAE/MAE.pptx)
+
 # 论文知识补充
 - 做的模型很快叫`efficient`
 - 做的模型很大叫`scalable`

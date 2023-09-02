@@ -7,6 +7,9 @@
 - 实验环境：TPUv3 hardware
 - 数据集：ImageNet-21k JFT-300M
 
+[ppt](../ppt/models_by_DASOU/VIT/VIT.pdf)
+[python code](../ppt/models_by_DASOU/VIT/VIT.py)
+
 # 一、解决的问题
 1. 挑战了CNN在CV界的绝对地位，足够多的数据上做预训练
 2. 打破了NLP和CV的界限，为多模态做出了杰出贡献

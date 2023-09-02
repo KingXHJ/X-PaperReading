@@ -6,6 +6,12 @@
 - 作者：Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova; Google AI Language
 - 实验环境：
 - 数据集：
+
+[ppt](../ppt/models_by_DASOU/BERT/BERT.pptx)
+[code anlysis](../ppt/models_by_DASOU/BERT/BERTCode.pdf)
+[python code](../ppt/models_by_DASOU/BERT/BERT.py)
+
+
 # 一、解决的问题
 1. 在NLP中，BERT之前，始终没有一个大的、深的神经网络可以在很大的数据集上训练好之后，帮助一大批的NLP任务
 2. 参考ELMo（芝麻街里的人物），他们凑了一个BERT（芝麻街里的人物），Bideirection Encoder Representations from Transformer

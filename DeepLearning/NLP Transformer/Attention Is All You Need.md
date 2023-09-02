@@ -6,6 +6,12 @@
 - 作者：Ashish Vaswani∗, Google Brain; Noam Shazeer∗, Google Brain; Niki Parmar∗, Google Research; Jakob Uszkoreit∗, Google Research; Llion Jones∗, Google Research; Aidan N. Gomez∗ †, University of Toronto; Łukasz Kaiser∗, Google Brain; Illia Polosukhin∗ ‡
 - 实验环境：8个P100 GPUs
 - 数据集：
+
+[ppt](../ppt/models_by_DASOU/Transformer/TRM.pptx)
+[code anlysis](../ppt/models_by_DASOU/Transformer/TRMCode.pptx)
+[python code](../ppt/models_by_DASOU/Transformer/TRM.py)
+[Interview Answers](../ppt/models_by_DASOU/Transformer/Answers.pdf)
+
 # 一、解决的问题
 1. 之前使用RNN是个时序模型，是一个无法在时间上进行并行，后一个词依赖于前一个词的计算结果
 2. 且RNN会丢弃历史信息

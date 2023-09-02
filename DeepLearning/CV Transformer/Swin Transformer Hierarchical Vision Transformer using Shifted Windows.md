@@ -6,6 +6,10 @@
 - 作者：Ze Liu†*, Yutong Lin†*, Yue Cao*, Han Hu*‡, Yixuan Wei†, Zheng Zhang, Stephen Lin, Baining Guo; Microsoft Research Asia
 - 实验环境：
 - 数据集：COCO、ADE20K
+
+[ppt](../ppt/models_by_DASOU/Swin_Transformer/SwinTRM.pdf)
+[python code](../ppt/models_by_DASOU/Swin_Transformer/swin_transformer.py)
+
 # 一、解决的问题
 1. 告诉大家，Transformer可以被应用于视觉的方方面面，作为通用的骨干网络
 2. 使用Transformer有尺度的问题

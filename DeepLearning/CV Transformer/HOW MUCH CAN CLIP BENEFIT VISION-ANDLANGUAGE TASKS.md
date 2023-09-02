@@ -2,7 +2,7 @@
 - 时间：2021
 - 期刊：ICLR
 - 网络名称： 
-- 意义：CLIP用回到VIsion Language
+- 意义：CLIP用回到Vision Language
 - 作者：Sheng Shen∗†, Liunian Harold Li∗‡, Hao Tan◦, Mohit Bansal◦,Anna Rohrbach†, Kai-Wei Chang‡, Zhewei Yao† and Kurt Keutzer†； †University of California, Berkeley, ‡University of California, Los Angeles ◦University of North Carolina at Chapel Hill
 - 实验环境：
 - 数据集：
