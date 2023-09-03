@@ -11,6 +11,7 @@
 - [综述](#综述)
 - [可视化工具](#可视化工具)
 - [设计模式](#设计模式)
+- [强化学习](#强化学习)
 - [传统3D视觉论文](#传统3d视觉论文)
   - [MVS](#mvs)
     - [对极几何](#对极几何)
@@ -36,9 +37,9 @@
 
 ## 综述
 
-[斯坦福100+作者的200+页综述](https://arxiv.org/abs/2108.07258)
-[DASOU原创深度学习从零入门思维导图](./DeepLearning/MindMap/DASOU原创深度学习从零入门思维导图.xmind)
-[22个实战项目](./DeepLearning/MindMap/22个实战项目.xmind)
+#### [斯坦福100+作者的200+页综述](https://arxiv.org/abs/2108.07258)
+#### [DASOU原创深度学习从零入门思维导图](./DeepLearning/MindMap/DASOU原创深度学习从零入门思维导图.xmind)
+#### [22个实战项目](./DeepLearning/MindMap/22个实战项目.xmind)
 
 ## 可视化工具
 
@@ -52,6 +53,11 @@
 ## 设计模式
 
 #### [设计模式也可以这么简单](https://github.com/KingXHJ/X-PaperReading/blob/main/Design%20patterns/Design%20patterns%2023%20types.md)
+
+
+## 强化学习
+
+#### [动手学强化学习](https://hrl.boyuai.com/chapter/intro)
 
 
 ## 传统3D视觉论文
