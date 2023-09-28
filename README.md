@@ -140,6 +140,8 @@
 
 #### [立体视觉网络排行网站](https://vision.middlebury.edu/stereo/)
 #### [双目视觉数据网站](./Resources/双目立体开源数据集资源汇总.pdf)
+#### [MVTec anomaly detection dataset](https://www.mvtec.com/company/research/datasets/mvtec-ad/)
+#### [Carlos Hernandez research result](https://www.carlos-hernandez.org/publications.html)
 
 | 笔记 | 年份 | 名字                                                         | 简介                 | 引用 |
 | ------ | ---- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
