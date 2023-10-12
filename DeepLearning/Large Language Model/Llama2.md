@@ -490,9 +490,9 @@ class Attention(nn.Module):    
 
 ```
 In  [1]: {prompt:"将进酒："}
-Out [1]: 将进酒：人In  
+Out [1]: 将进酒：人
 
-[2]: 将进酒：人
+In  [2]: 将进酒：人
 Out [2]: 将进酒：人生
 
 In  [3]: 将进酒：人生
