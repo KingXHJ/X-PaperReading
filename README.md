@@ -29,7 +29,7 @@
   - [计算机视觉-ObjectDetection](#计算机视觉-objectdetection)
   - [计算机视觉-对比学习](#计算机视觉-对比学习)
   - [计算机视觉-LSTM](#计算机视觉-lstm)
-  - [自然语言处理-Transformer](#计算机视觉-transformer)
+  - [自然语言处理-Transformer](#自然语言处理-transformer)
   - [Transformer结构的理解](#transformer结构的理解)
   - [大语言模型LLM](#大语言模型llm)
   - [系统](#系统)
