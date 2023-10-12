@@ -8,6 +8,7 @@
 - 数据集：ImageNet-21k JFT-300M
 
 [ppt](../ppt/models_by_DASOU/VIT/VIT.pdf)
+
 [python code](../ppt/models_by_DASOU/VIT/VIT.py)
 
 # 一、解决的问题
