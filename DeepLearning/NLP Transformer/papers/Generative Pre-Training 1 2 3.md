@@ -21,7 +21,7 @@
     2. GPT比BERT要难：因为BERT是能看到所有的输入，做完形填空；GPT是只能看到前面的信息，预测未来。显然GPT更难些
     3. fine-tuning：softmax算概率： $$P(y|x^1,...,x^m)=softmax(h_{l}^{m}W_y)$$  第二个目标函数： $$L_2(C)=\sum_{(x,y)}logP(y|x^1,...,x^m)$$ 训练一个模型，去预测句子中的下一个词和预测词的标号。第三个目标函数： $$L_3(C)=L_2(C)+\lambda \cdot L_1(C)$$
 
-    ![GPT1](../pictures/GPT1.png)
+    ![GPT1](../pictures/GPT/GPT1.png)
     - 开始符、分隔符、抽取符：特殊记号
     - 无论任务类型怎么变，Transformer层的结构不会变，这就是这篇文章的最大卖点
 
@@ -38,12 +38,12 @@
     1. 考虑few-shot，考虑模型的有效性
     2. 做子任务的时候，不做参数更新和微调
 
-    ![GPT3](../pictures/GPT3%20meta%20learning.png)
+    ![GPT3](../pictures/GPT/GPT3%20meta%20learning.png)
     - meta-learning in-context learning
     
     4. 1750亿可学习的参数
 
-    ![GPT3 3shot](../pictures/GPT3%203shot.png)
+    ![GPT3 3shot](../pictures/GPT/GPT3%203shot.png)
     - zero-shot:告诉模型要干什么，然后给输入
     - one-shot：告诉模型要做什么，然后给一个样本。注意这个样本只做预测，不做训练，不对模型算梯度，不会更新模型；目的是让注意力机制从长样本里找到有价值的信息->上下文学习
     - few-shot：告诉模型要做什么，然后给几个样本

@@ -256,7 +256,7 @@ $$\mathrm{loss}(x,y) =  \frac{\sum_ {i} \mathrm{max}(0, w[y] \ast (\mathrm{margi
 
   
 
-![LossFunction19TypesTripletMarginLoss](../pictures/LossFunction19TypesTripletMarginLoss.jpg)
+![LossFunction19TypesTripletMarginLoss](../pictures/Loss%20Function%2019%20Types/LossFunction19TypesTripletMarginLoss.jpg)
 
 ```
 torch.nn.TripletMarginLoss(margin=1.0, p=2.0, eps=1e-06, swap=False, reduction='mean')

@@ -4,7 +4,7 @@
 - 网络名称： GAN
 - 意义：生成模型的开创工作	
 - 作者：
-![GAN author](../pictures/GAN%20author.png)
+![GAN author](../pictures/GAN/GAN%20author.png)
 - 实验环境：
 - 数据集：
 # 一、解决的问题
@@ -36,24 +36,24 @@
     
 6. 证明优化函数没问题：
 
-    $$D ^ {\*} _ {G} (x) = \frac{p_ {data}(x)}{p_ {data}(x)+p_ g(x)}$$
+    $$D^{*}_{G}(x) = \frac{p_ {data}(x)}{p_ {data}(x)+p_ g(x)}$$
     
     - '\*'代表最优解
-    ![GAN identify](../pictures/GAN%20identify.png)
+    ![GAN identify](../pictures/GAN/GAN%20identify.png)
 
-    ![GAN KL](../pictures/GAN%20KL.png)
+    ![GAN KL](../pictures/GAN/GAN%20KL.png)
 
 7. 算法1能优化目标函数
-    ![GAN indentify algorithm](../pictures/GAN%20identify%20algorithm.png)
+    ![GAN indentify algorithm](../pictures/GAN/GAN%20identify%20algorithm.png)
 
 # 四、实验结果
 1. GAN在做什么
-    ![GAN do](../pictures/GAN%20do.png)
+    ![GAN do](../pictures/GAN/GAN%20do.png)
     - $x$ 是黑色，生成器是绿色，辨别器是蓝色
     - 噪音 $z$ 是均匀分布，企图映射成高斯分布的 $x$
     - 生成器逐渐靠近训练数据分布，使得辨别器没有优化的空间了
 2. GAN的算法：
-    ![GAN algorithm](../pictures/GAN%20algorithm.png)
+    ![GAN algorithm](../pictures/GAN/GAN%20algorithm.png)
     - 先采样m个训练样本和m个噪音样本
     - 放进价值函数里面求辨别器梯度，更新辨别器
     - 再采样m个噪音样本

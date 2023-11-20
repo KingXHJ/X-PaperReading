@@ -7,11 +7,11 @@
 - 实验环境：
 - 数据集：
 
-[ppt](../ppt/models_by_DASOU/BERT/BERT.pptx)
+[ppt](../ppt/BERT/BERT.pptx)
 
-[code anlysis](../ppt/models_by_DASOU/BERT/BERTCode.pdf)
+[code anlysis](../ppt/BERT/BERTCode.pdf)
 
-[python code](../ppt/models_by_DASOU/BERT/BERT.py)
+[python code](../code/BERT/BERT.py)
 
 
 # 一、解决的问题
@@ -29,7 +29,7 @@
 2. 微调是用预训练得到的参数做初始化，再用有标号的数据集，让所有参数都参与调整
 
 - 预训练和微调相同的部分
-    ![BERT pre fine](../pictures/BERT%20pre%20fine.png)
+    ![BERT pre fine](../pictures/BERT/BERT%20pre%20fine.png)
 
     1. 多层的、双向的Transformer
     2. 作者调整的参数：
@@ -39,7 +39,7 @@
 
     3. 计算参数
 
-    ![BERT param](../pictures/BERT%20param.png)
+    ![BERT param](../pictures/BERT/BERT%20param.png)
 
     - A * 64 = H
 
@@ -47,7 +47,7 @@
     5. 区分两个句子：
         - 用[SEP]分开
 
-    ![BERT embedding](../pictures/BERT%20embedding.png)
+    ![BERT embedding](../pictures/BERT/BERT%20embedding.png)
 
     6. BERT Embedding
         - 词向量

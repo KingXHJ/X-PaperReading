@@ -14,7 +14,7 @@
 4. Bubble：空闲的时间
 # 一、解决的问题
 1. 利用流水线并行的技术，有效的训练巨大的神经网络、
-    ![GPipe greater model better](../pictures/GPipe%20greater%20model%20better.png)
+    ![GPipe greater model better](../pictures/GPipe/GPipe%20greater%20model%20better.png)
     - 可学习参数增多，精度越高
 2. 神经网络变大了之后会超过单个加速器的容量，需要高带宽（GPU对内存带宽要求更高），高内存（显存），主要是成本问题
 3. 只要模型都是一层一层叠加的，这个并行流水线加速是通用的
@@ -33,9 +33,9 @@
     
 3. Algorithm
     1. 把切的第k个单元，放在第k个加速器上面，模型并行和数据并行主要区别是，怎么切
-        ![GPipe model parallel and data parallel](../pictures/GPipe%20model%20parallel%20and%20data%20parallel.png)
+        ![GPipe model parallel and data parallel](../pictures/GPipe/GPipe%20model%20parallel%20and%20data%20parallel.png)
     2. 通常分布式系统认为数据并行更好，因为模型并行有个很致命的问题
-        ![GPipe interface](../pictures/GPipe%20interface.png)
+        ![GPipe interface](../pictures/GPipe/GPipe%20interface.png)
         - 从时间上和做单GPU算是没区别的，除了可以看作内存增大了，但是计算能力没有增强，不叫并行
     3. 将小批量再切成多个微批量，每次在一个微批量上做运算，模型并行+数据并行（数据之间没有相互依赖关系）
 4. Performance Optimization
@@ -44,14 +44,14 @@
         - **Transformer没有这个问题，用了层的归一化，每一次算均值和方差是对每一个样本里面算的**
     2. 之前完成的*模型的切割*和*数据的切割*，现在还要看怎么节省内存
         1. 还有大量数据（每个层的中间输入，后面算梯度还要用到）要放在activation memory上
-            ![GPipe activation](../pictures/GPipe%20activation.png)
+            ![GPipe activation](../pictures/GPipe/GPipe%20activation.png)
             - 计算换空间
             - n：样本大小
             - d：隐藏层大小
             - l：层数
         2. Re-materialization：
             - 每个加速器维护一个单元，它只会存activation在边界处的地方，别的地方就不存了，现用现算，做forward，把之前的内存空间复杂度从 $O(N \times L)$ 减少到 $O(N + \frac{L}{K} \times \frac{N}{M})$
-                ![GPipe space complex](../pictures/GPipe%20space%20complex.png)
+                ![GPipe space complex](../pictures/GPipe/GPipe%20space%20complex.png)
             - 开销：
                 -  Bubble time $O(\frac{K-1}{M+K-1})$ ，只要切的块： $M \geqslant 4 \times K $
                 - 重新forward 
@@ -60,7 +60,7 @@
                
 # 四、实验结果
 1. 性能分析
-    ![GPipe table1](../pictures/GPipe%20table1.png)
+    ![GPipe table1](../pictures/GPipe/GPipe%20table1.png)
     - 第一个做的是变形虫，CNN网络
     - 第二个是transformer，是large
     - 第一个应该是写错了，都用的是TPU，一个是v2，一个是v3
@@ -72,17 +72,17 @@
     - 应该是线性关系，但是因为CNN的每一个层，不断地把高和宽减低，通道数增加，所以它只保证每一层的计算差不多，但是内存使用率是不一样的，切的不会很均匀，增加卡的时候，中间可能有一个GPU，的内存会占的多一点，成为瓶颈；Transformer就会好很多，输出就是一个隐藏层（Dimension），隐藏通道数这个东西是不变的，Transformer层之间的计算开销和内存开销是差不多的，非常均匀，增长线性
     - 确实做到了增加GPU的时候，线性增加了模型的大小
 
-    ![GPipe table2](../pictures/GPipe%20table2.png)
+    ![GPipe table2](../pictures/GPipe/GPipe%20table2.png)
     - K：卡的数量
     - M：微批量
     - 真的取决于模型并行的时候，切的能不能均匀
 
-    ![GPipe table3](../pictures/GPipe%20table3.png)
+    ![GPipe table3](../pictures/GPipe/GPipe%20table3.png)
     - 应该是强制GPU传到CPU去做GPU的交互，证明模型并行比数据并行通信量少
 2. 性能开销的一个分解
     1. 讲的原因是之前的结果都有一定的误导性
         - 因为为了支撑很大的模型，用了Re-materialization（把一些中间结果删掉，这样要重新算一次前置运算），那这样加速比都不太好看，没法跟别人比
-        ![GPipe table4](../pictures/GPipe%20table4.png)
+        ![GPipe table4](../pictures/GPipe/GPipe%20table4.png)
 
 3. 实验都过时了，核心还是看这份工作是否真的有用
 ## 1、比之前模型的优势

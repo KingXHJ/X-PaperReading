@@ -7,17 +7,17 @@
 - 实验环境：8个P100 GPUs
 - 数据集：
 
-[PPT](../ppt/models_by_DASOU/Transformer/TRM.pptx)
+[PPT](../ppt/Transformer/TRM.pptx)
 
-[Theory Notes](../ppt/models_by_DASOU/Transformer/TRM.pdf)
+[Theory Notes](../ppt/Transformer/TRM.pdf)
 
-[Code Anlysis](../ppt/models_by_DASOU/Transformer/TRMCode.pptx)
+[Code Anlysis](../ppt/Transformer/TRMCode.pptx)
 
-[Code Anlysis Notes](../ppt/models_by_DASOU/Transformer/TRMCode.pdf)
+[Code Anlysis Notes](../ppt/Transformer/TRMCode.pdf)
 
-[Python Code](../ppt/models_by_DASOU/Transformer/TRM.py)
+[Python Code](../code/Transformer/TRM.py)
 
-[Interview Answers](../ppt/models_by_DASOU/Transformer/Answers.pdf)
+[Interview Answers](../ppt/Transformer/Answers.pdf)
 
 # 一、解决的问题
 1. 之前使用RNN是个时序模型，是一个无法在时间上进行并行，后一个词依赖于前一个词的计算结果
@@ -31,7 +31,7 @@
 # 三、设计的模型
 - Auto-regressive 上一时刻的输出是下一时刻的输入
 
-![Transformer Architecture](../pictures/Transformer%20architecture.png)
+![Transformer Architecture](../pictures/Transformer/Transformer%20architecture.png)
 
 - 编码器输入：进入Embedding，把单词变成向量，并加入位置信息
 - 解码器的输入：Outputs（shift right）在做预测的时候是没有输入的，其实就是解码器在之前时刻的输出
@@ -42,7 +42,7 @@
   - 一个multi-head attention和一个feed-forward network（本质MLP）
   - 每个子层用了残差连接
 
-  ![Transformer layer norm](../pictures/Transformer%20layer%20norm.png)
+  ![Transformer layer norm](../pictures/Transformer/Transformer%20layer%20norm.png)
 
   - layer normalization：
     - batch noralization 是在每次的mini-batch里面把每个特征学习成均值为0，方差为1，对全局去算。相当于样本-特征矩阵中的一列（对一个特征做操作）
@@ -59,7 +59,7 @@
   - output是value的加权和，和value的维度相同
   - 加权和是通过value的key和query的相似度（compatibility function）计算得到的
   
-  ![Transformer Attention calculate](../pictures/Transformer%20Attention%20calculate.png)
+  ![Transformer Attention calculate](../pictures/Transformer/Transformer%20Attention%20calculate.png)
   - q和k维度相同为 $d_k$ ，做内积，再除以长度开根号，最后通过softmax算出来权重（非负，加和为1）；v的维度是 $d_v$ ；完整计算：
   
   $$Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V$$
@@ -69,7 +69,7 @@
     - 点乘比较简单
     - 除以 $\sqrt{d_k}$ ，在长度较小的时候没什么差距；在值比较大的时候，如果直接做softmax，由于较大的值之间差距大，做完后大的更靠近于1，小的更靠近于0，导致梯度很小，容易跑不动。因此要除以长度，避免这种i情况
 
-![Transfomer Attention](../pictures/Transformer%20Attention.png)
+![Transfomer Attention](../pictures/Transformer/Transformer%20Attention.png)
 4. Multi-Head Attention
   - LEFT：mask会把未来的数据点换成非常大的一个负数，在进入softmax之后会变成零，就达到了mask的效果
   - RIGHT：
@@ -94,12 +94,12 @@
     - 输出就是value的加权和，是输入的一个加权和
     - 多加了Mask的成分，不让看后面的内容
   
-  ![Transformer use Attention](../pictures/Transformer%20use%20Attention.png)
+  ![Transformer use Attention](../pictures/Transformer/Transformer%20use%20Attention.png)
   - Encoder和Decoder交会的地方：
     - k、v来自于编码器的输出，q来自于解码器
     - 解码器的输出会根据需求，挑在编码器中感兴趣的向量
 
-![Transformer vs RNN](../pictures/Transformer%20vs%20RNN.png)
+![Transformer vs RNN](../pictures/Transformer/Transformer%20vs%20RNN.png)
 6. point-wise feed-forward network
   - 本质就是MLP
   - 每个词是一个点，对每个词作用一次就是point-wise
@@ -125,7 +125,7 @@
 ## 1、比之前模型的优势
 
 ## 2、有优势的原因
-![Transformer efficient](../pictures/Transformer%20efficient.png)
+![Transformer efficient](../pictures/Transformer/Transformer%20efficient.png)
 - 可见Transformer的效率还是很高的
 
 - 学习率是算出来的：

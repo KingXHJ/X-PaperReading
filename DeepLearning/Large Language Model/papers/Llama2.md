@@ -171,7 +171,7 @@ def generate(prompt_tokens: List[List[int]], #提示的tokens    
 
 > 笔者在之前写过一篇[关于Vision Transformer的解读](http://mp.weixin.qq.com/s?__biz=MzU2NzE2MjE2Nw==&mid=2247484003&idx=1&sn=0572c32793dd6f9a9c6c5426f09fedaf&chksm=fca0263bcbd7af2d7726ad0bb1b3e4264843839b5bcbd593ec93a2d89ae0f886ea3b2c591487&scene=21#wechat_redirect)，ViT就是典型的Transformer Encoder，有兴趣的可以自行对比一下差异
 
-![Llama2_1](../pictures/Llama2_1.png)
+![Llama2_1](../pictures/Llama2/Llama2_1.png)
 
 Llama 2的模型结构与标准的Transformer Decoder结构基本一致，主要由32个 Transformer Block 组成，不同之处主要包括以下几点：
 
@@ -231,7 +231,7 @@ Llama 2 在对序列进行位置编码时，也与标准Transformer不一样，L
 
 在标准的Transformer中通常是在整个网络进入Transformer Block之前做一个位置编码，如下图所示
 
-![Llama2_2](../pictures/Llama2_2.png)
+![Llama2_2](../pictures/Llama2/Llama2_2.png)
 
 比较经典的位置编码用公式表达就是，其中 $p_ {i,2t}$ 表示第`i`嵌入向量 $x_ {i}$ 的第`2t`个位置的位置编码
 
@@ -402,7 +402,7 @@ sin(m\theta_ {\frac{d}{2}})
 
 论文也提供了一个非常直观的图来说明RoPE的处理过程，如下所示, 序列两个一对利用复数坐标嵌入位置信息
 
-![Llama2_3](../pictures/Llama2_3.png)
+![Llama2_3](../pictures/Llama2/Llama2_3.png)
 
 至此就算完成了对RoPE的原理解读了，看到公式(19)也解答了我在看`llama.cpp`的后端CUDA RoPe算子时，用一个线程处理两个相邻的数据
 
@@ -484,7 +484,7 @@ class Attention(nn.Module):    
 
 从第一节处理流程中我们可以知道，在LLama 2模型的推理阶段是采用自回归的方式来进行推理，即每一个Token的生成都是由之前所有生成的所有token作为输入而得到的。
 
-![Llama2_4](../pictures/Llama2_4.png)
+![Llama2_4](../pictures/Llama2/Llama2_4.png)
 
 举个例子，假设有这样一个生成任务
 
@@ -513,7 +513,7 @@ Out [7]: 将进酒：人生得意需尽欢
 
 而第四次的处理过程是用"**将进酒：人生得**" 来预测下一个"**意**"字，所以需要把"**将进酒：人生得**"进行token化后再进行Attention计算，即 $Softmax(Q*K^{T})*V$ ,如下图所示
 
-![Llama2_5](../pictures/Llama2_5.png)
+![Llama2_5](../pictures/Llama2/Llama2_5.png)
 
 不难发现在第三次处理的时候，就已经把"**将进酒：人生**"所对应的 $Q,K,V$ 进行过相关的运算，所以没必要在对他们进行Attention计算，这样就能节省大部分算力，由此KV Cache便是来解决这个问题的：通过将每次计算的K和V缓存下来，之后新的序列进来时只需要从KV Cache中读取之前的KV值即可，就不需要再去重复计算之前的KV了。此外，对于Q也不用将序列对应的所有 $Q_ i$ 都计算出来，只需要计算最新的 $Q_ {newtoken}$ , (即此时句子长度为1), K V同理，所以我们用简易代码描述一下这个过程就是
 
@@ -547,7 +547,7 @@ def mha(x, c_attn, c_proj, n_head, kvcache=None):  # [n_seq, n_embd] -
 
 为了简单明了说明MQA GQA这里用GQA原论文的一个图来表示
 
-![Llama2_6](../pictures/Llama2_6.png)
+![Llama2_6](../pictures/Llama2/Llama2_6.png)
 
 就如图例所言，多头注意力机制(MHA)就是多个头各自拥有自己的 $Q,K,V$ 来算各自的Self-Attention，而MQA(Multi Query Attention)就是Q依然保持多头，但是K,V只有一个，所有多头的Q共享一个K,V ,这样做虽然能最大程度减少KV Cache所需的缓存空间，但是可想而知参数的减少意味着精度的下降，所以为了在精度和计算之间做一个trade-off，GQA (Group Query Attention)孕育而生，即Q依然是多头，但是分组共享K,V，即减少了K,V缓存所需的缓存空间，也暴露了大部分参数不至于精度损失严重
 
