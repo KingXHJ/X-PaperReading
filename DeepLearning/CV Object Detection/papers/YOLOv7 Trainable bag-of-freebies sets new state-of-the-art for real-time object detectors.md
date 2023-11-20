@@ -10,7 +10,7 @@ Institute of Information Science, Academia Sinica, Taiwan
 # 一、解决的问题
 1. 摘要
     - YOLOv7 在 5 FPS 到 160 FPS 的范围内在速度和精度上都超过了所有已知的物体检测器，并且在 GPU V100 上具有 30 FPS 或更⾼的所有已知实时物体检测器中具有最⾼的精度 56.8% AP。 YOLOv7-E6 ⽬标检测器（56 FPS V100，55.9% AP）在速度上优于基于Transformer的检测器 SWIN L Cascade-Mask R-CNN（9.2 FPS A100，53.9% AP）509% 的速度和 2% 的精度，以及卷积基于检测器 ConvNeXt-XL Cascade-Mask R-CNN（8.6 FPS A100，55.2% AP）的速度提⾼了 551%，准确度提⾼了 0.7% AP，以及 YOLOv7 优于：YOLOR、YOLOX、Scaled-YOLOv4、YOLOv5、DETR、可变形 DETR、DINO-5scale-R50、ViT-Adapter-B 和许多其他速度和准确性的物体检测器。此外，我们只在 MS COCO 数据集上从头开始训练 YOLOv7，⽽不使⽤任何其他数据集或预训练权重。
-        ![YOLOv71.png](../pictures/YOLOv71.png)
+        ![YOLOv71.png](../pictures/YOLOv7/YOLOv71.png)
 
 1. Introduction 问题
     - 实时⽬标检测是计算机视觉中⼀个⾮常重要的主题，因为它通常是计算机视觉系统中的必要组件。例如，多⽬标跟踪[94,93]、⾃动驾驶[40,18]、机器⼈[35,58]、医学图像分析[34,46]等。执行实时⽬标的计算设备检测通常是⼀些移动CPU或GPU，以及各⼤⼚商开发的各种神经处理单元（NPU）。例如，Apple 神经引擎（Apple）、神经计算棒（Intel）、Jetson AI 边缘设备（Nvidia）、边缘 TPU（Google）、神经处理引擎（Qualcomm）、AI 处理单元（MediaTek）和 AI SoC (Kneron)，都是 NPU。上⾯提到的⼀些边缘设备专注于加速不同的操作，例如普通卷积、深度卷积或 MLP 操作。在本⽂中，我们提出的实时⽬标检测器主要是希望它能够同时⽀持从边缘到云端的移动GPU和GPU设备。
@@ -61,13 +61,13 @@ Institute of Information Science, Academia Sinica, Taiwan
 1. Architecture
     1. Extended efficient layer aggregation networks
         - 在⼤多数关于设计⾼效架构的⽂献中，主要考虑的⽆⾮是参数的数量、计算量和计算密度。从内存访问成本的特点出发，Ma 等⼈。 [55]还分析了输⼊/输出通道⽐、体系结构的分⽀数和元素操作对⽹络推理速度的影响。美元等。 [15]在执行模型缩放时还考虑了激活，即更多地考虑卷积层输出张量中的元素数量。图2 (b)中CSPVoVNet [79]的设计是 VoVNet [39]的变体。除了考虑上述基本设计问题外，CSPVoVNet [79]的体系结构还分析了梯度路径，以使不同层的权重能够学习更多不同的特征。上述梯度分析⽅法使引⽤更快更准确。图2 (c) 中的ELAN [1]考虑了以下设计策略“如何设计⾼效⽹络？”。他们得出了⼀个结论：通过控制最短最⻓的梯度路径，更深层的⽹络可以有效地学习和收敛。在本⽂中，我们提出了基于 ELAN 的扩展 ELAN（E-ELAN），其主要架构如图2（d）所⽰。
-            ![YOLOv72.png](../pictures/YOLOv72.png)
+            ![YOLOv72.png](../pictures/YOLOv7/YOLOv72.png)
 
         - 无论梯度路径长度和大规模ELAN中计算块的堆叠数量如何，它都达到了稳定状态。如果无限制地堆叠更多的计算块，这种稳定状态可能会被破坏，参数利用率会降低。所提出的E-ELAN使用扩展、混洗、合并基数来实现在不破坏原始梯度路径的情况下持续增强网络学习能力的能力。在架构方面，E-ELAN只改变了计算块的架构，而过渡层的架构完全没有改变。我们的策略是使用群卷积来扩展计算块的通道和基数。我们将对计算层的所有计算块应用相同的组参数和信道乘法器。然后，每个计算块计算出的特征图将根据设置的组参数 $g$ 被打乱为 $g$ 组，然后将它们连接在一起。此时，每组特征图中的通道数量将与原始架构中的通道数相同。最后，我们添加 $g$ 组特征图来执行合并基数。除了保持原有的ELAN设计架构外，E-ELAN还可以引导不同组的计算块学习更多样化的特征。
 
     1. Model scaling for concatenation-based models
         - 模型缩放的主要⽬的是调整模型的⼀些属性，⽣成不同尺度的模型，以满⾜不同推理速度的需要。例如，EfficientNet [72]的缩放模型考虑了宽度、深度和分辨率。⾄于 scaled-YOLOv4 [79]，其缩放模型是调整阶段数。在[15] 中， Dollar´ 等⼈。分析了vanilla convolution和group convolution在进行宽深缩放时对参数量和计算量的影响，并以此设计了相应的模型缩放⽅法。以上⽅法主要⽤于PlainNet或ResNet等架构。这些架构在执行scaling up或scaling down时，每⼀层的⼊度和出度都不会发⽣变化，因此我们可以独⽴分析每个缩放因⼦对参数量和计算量的影响。然⽽，如果将这些⽅法应⽤于基于级联的体系结构，我们会发现，当对深度进行放⼤或缩⼩时，紧接基于级联的计算块之后的转换层的⼊度会降低或增加，如图3（a）和（b）所⽰。
-            ![YOLOv73.png](../pictures/YOLOv73.png)
+            ![YOLOv73.png](../pictures/YOLOv7/YOLOv73.png)
 
         - 从上述现象可以推断，对于基于级联的模型，我们不能单独分析不同的⽐例因⼦，⽽必须综合考虑。以 scaling up depth 为例，这样的动作会导致过渡层的输⼊通道和输出通道之间的⽐率发⽣变化，这可能会导致模型的硬件使⽤率下降。因此，我们必须为基于级联的模型提出相应的复合模型缩放⽅法。当我们缩放计算块的深度因⼦时，我们还必须计算该块的输出通道的变化。然后，我们将在过渡层上进行相同变化量的宽度因⼦缩放，结果如图3（c）所⽰。我们提出的复合缩放⽅法可以保持模型在初始设计时具有的属性并保持最佳结构。
 
@@ -76,11 +76,11 @@ Institute of Information Science, Academia Sinica, Taiwan
         - 尽管 RepConv [13]在 VGG [68]上取得了优异的性能，但是当我们将其直接应⽤于 ResNet [26]和 DenseNet [32]等架构时，其精度会显着降低。我们使⽤梯度流传播路径来分析重新参数化卷积应该如何与不同的⽹络相结合。我们还相应地设计了计划的重新参数化卷积。
 
         - RepConv 实际上在⼀个卷积层中结合了 3×3 卷积、1×1 卷积和恒等连接。在分析了 RepConv 和不同架构的组合和对应性能后，我们发现 RepConv 中的⾝份连接破坏了 ResNet 中的残差和 DenseNet 中的连接，这为不同的特征图提供了更多的梯度多样性。由于上述原因，我们使⽤不带⾝份连接的 RepConv (RepConvN) 来设计计划的重新参数化卷积的体系结构。在我们的想法中，当⼀个有残差或concatenation的卷积层被re-parameterized convolution代替时，应该没有identity connection。图4显⽰了我们设计的⽤于 PlainNet 和 ResNet 的“计划重新参数化卷积”的⽰例。⾄于基于残差模型和基于级联模型的完整计划的重新参数化卷积实验，将在消融研究会议中展⽰。
-            ![YOLOv74.png](../pictures/YOLOv74.png)
+            ![YOLOv74.png](../pictures/YOLOv7/YOLOv74.png)
 
     1. Coarse for auxiliary and fine for lead loss
         - 深度监督[38]是⼀种经常⽤于训练深度⽹络的技术。它的主要思想是在⽹络的中间层增加额外的辅助头，以辅助损失为指导的浅层⽹络权重。即使对于通常收敛良好的 ResNet [26]和 DenseNet [32]等架构，深度监督[70,98,67,47,82,65,86,50]仍然可以显着提⾼模型在许多⽅⾯的性能任务。图5 (a) 和 (b) 分别显⽰了“没有”和“有”深度监督的对象检测器架构。在本⽂中，我们将负责最终输出的头称为lead head，⽤于辅助训练的头称为auxiliary head。
-            ![YOLOv75.png](../pictures/YOLOv75.png)
+            ![YOLOv75.png](../pictures/YOLOv7/YOLOv75.png)
 
         - 接下来我们要讨论标签分配的问题。以往在深度⽹络的训练中，标签分配通常直接参考ground truth，根据给定的规则⽣成hard label。然⽽，近年来，如果我们以⽬标检测为例，研究⼈员往往利⽤⽹络预测输出的质量和分布，然后与ground truth⼀起考虑，使⽤⼀些计算和优化⽅法来⽣成可靠的软标签[61,8,36,99,91,44,43,90,20,17,42] 。例如，YOLO [61]使⽤边界框回归和ground truth预测的IoU作为objectness的软标签。在本⽂中，我们将这种将⽹络预测结果与ground truth⼀起考虑然后分配软标签的机制称为“标签分配器”。
 

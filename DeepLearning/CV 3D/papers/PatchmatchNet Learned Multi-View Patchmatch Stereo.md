@@ -28,7 +28,7 @@
 
 
 # 二、做出的创新
-![PatchMatchNet performance](../pictures/PatchMatchNet%20performance.png)
+![PatchMatchNet performance](../pictures/PatchMatchNet/PatchMatchNet%20performance.png)
 
 1. 提出了PatchmatchNet，一种新颖的可学习的Patchmatch ***级联公式*** ，用于高分辨率多视图立体，并基于深度特征的学习自适应传播和评估模块进行了扩展
 2. 三大创新:
@@ -43,7 +43,7 @@
 
 # 三、设计的模型
 
-![PatchMatchNet struct](../pictures/PatchMatchNet%20struct.png)
+![PatchMatchNet struct](../pictures/PatchMatchNet/PatchMatchNet%20struct.png)
 - 由多尺度特征提取、基于学习的PatchMatch（包含迭代地从粗糙到精细的框架）和一个空间优化模块，三个部分组成
 1. 多尺度特征提取
     1. 表示：
@@ -52,7 +52,7 @@
     2. 在应用于基于学习的Patchmatch算法之前，提取了像素级的特征，这与特征金字塔网络(FPN)相似。特征在多分辨率图像上分层提取，可以加速深度图从粗糙到精细的计算
 2. 基于学习的PatchMatch
 
-    ![PatchMatchNet pipeline](../pictures/PatchMatchNet%20pipeline.png)
+    ![PatchMatchNet pipeline](../pictures/PatchMatchNet/PatchMatchNet%20pipeline.png)
     1. 步骤：
         1. 初始化：生成随机的假设
         2. 传播：传播假设到邻域
@@ -67,7 +67,7 @@
             - 为了定义 $R_k$ 的中心，我们利用先前迭代的估计，可能是从较粗的阶段上采样。这提供了一套比仅仅使用传播更为多样的假设
             - 围绕先前的估计进行采样可以局部细化结果并纠正错误的估计（见 ***补充材料*** ）。
     3. 自适应传播
-        - ![PatchMatchNet adaptive propagation](../pictures/PatchMatchNet%20adaptive%20propagation.png)
+        - ![PatchMatchNet adaptive propagation](../pictures/PatchMatchNet/PatchMatchNet%20adaptive%20propagation.png)
 
         1. 深度值的空间一致性通常只存在于同一物理表面的像素。因此，我们希望以自适应方式进行传播，从同一表面收集假设，而不是像Gipuma和DeepPruner那样，从静态的邻域集合中传播深度假设。这有助于PatchMatch更快地收敛，并提供更准确的深度图。
             - 我们的自适应方案倾向于从同一表面的像素收集假设——对于有纹理的对象和无纹理的区域——使我们能够有效地收集比仅使用静态模式更有前景的深度假设
@@ -89,7 +89,7 @@
         3. 自适应空间代价聚合
             - 传统的MVS匹配算法通常在空间窗口（即，在我们的情况下为一个前向平行平面）上聚集代价，以提高匹配鲁棒性和隐式平滑效果。可以说，我们的多尺度特征提取器已经从空间域中的一个大的感受野中聚集了邻域信息。然而，我们建议研究空间代价聚合。为了防止跨表面边界聚集的问题，我们提出了一种基于Patchmatch立体和AANet的自适应空间聚集策略。对于 $K_e$ 像素 $\lbrace \mathbf{p}_ {k} \rbrace^{K_e}_ {k=1}$ 的空间窗口，将其组织为网格，我们学习每个像素的额外偏移 $\lbrace \Delta \mathbf{p}_ {k} \rbrace^{K_e}_ {k=1}$ 。聚集空间成本 $\tilde{\mathbf{C}}(\mathbf{p},j)$ 定义为： $$\tilde{C}(\mathbf{p},j) = \frac{1}{\sum^{K_e}_ {k=1}w_{k}d_{k}} \sum^{K_e}_ {k=1}w_{k}d_{k} \mathbf{C}(\mathbf{p} + \mathbf{p}_ {k} + \Delta \mathbf{p}_ {k},j)$$ 其中， $w_{k}$ 和 $d_{k}$ 基于特征和深度相似度对成本C进行加权（细节在 ***补充材料*** 中）。与自适应传播类似，每像素位移集 $\lbrace \Delta \mathbf{p}_ {k} \rbrace^{K_e}_ {k=1}$ 通过在参考特征图 $\mathbf{F}_ {0}$ 上应用2D CNN找到。
 
-            ![PatchMatchNet sample](../pictures/PatchMatchNet%20sample.png)
+            ![PatchMatchNet sample](../pictures/PatchMatchNet/PatchMatchNet%20sample.png)
 
             举例说明了学习的自适应聚集窗口。采样位置保持在对象边界内，而对于无纹理区域，采样点在更大的空间背景上聚集，这可能会减少估计的模糊性
         4. 深度回归
@@ -112,7 +112,7 @@
     2. 内存和运行时比较
         - 我们将内存消耗和运行时间与几种最先进的基于学习的方法进行了比较，这些方法在低内存消耗和低运行时间的情况下实现了竞争性能：CasMVSNet、UCS-Net和CVP-MVSNet。这些方法提出了与输入图像相同分辨率的3D成本体和输出深度图的级联公式。
         
-        ![PatchMatchNet memory comp](../pictures/PatchMatchNet%20memory%20comp.png)
+        ![PatchMatchNet memory comp](../pictures/PatchMatchNet/PatchMatchNet%20memory%20comp.png)
 
         - 当深度假设的数量固定时，所有方法的内存和运行时间几乎随分辨率线性增加（特别是，这将导致使用原始成本体方法的方法的放大图像空间采样不足）。请注意，在更高的分辨率下，其他方法无法装入用于评估的GPU的内存。我们进一步观察到，PatchmatchNet的内存消耗和运行时间增长比其他方法慢得多。例如，在分辨率为1152×864（51.8%）的情况下，与CasMVSNet相比，内存消耗和运行时间分别减少了67.1%和66.9%，与UCS Net相比分别减少了55.8%和63.9%，与CVP MVSNet比较分别减少了68.5%和83.4%。我们得出结论，我们的方法在内存消耗和运行时间方面比大多数最先进的基于学习的方法更有效，而且性能非常有竞争力。
     3. 在Tanks & Temples数据集上的表现
@@ -127,7 +127,7 @@
     2. 迭代次数
         - 回想一下，在训练期间，我们不包括第1阶段Patchmatch的自适应传播。因此，我们也将第1阶段的迭代次数保持为1。Patchmatch的更多迭代通常会提高性能，但是，在“2,2,1”迭代之后，改进会停滞
         
-        ![PatchMatchNet error distribution](../pictures/PatchMatchNet%20error%20distribution.png)
+        ![PatchMatchNet error distribution](../pictures/PatchMatchNet/PatchMatchNet%20error%20distribution.png)
         
         我们进一步可视化了图中设置“2,2,1,1”的反向深度范围内的归一化绝对误差分布。我们观察到，在所有阶段的Patchmatch5次迭代之后，误差会收敛。与使用大量邻居进行传播的Gipuma相比，我们将Patchmatch嵌入了一个从粗到细的框架中，以加快远程交互。除此之外，我们学习的自适应传播、多样的初始化和局部扰动都有助于更快的收敛
     3. 像素视图权重（Pixel-wise View Weight VW）和稳健训练策略（Robust Training Strategy RT）
@@ -160,7 +160,7 @@
 2. 如何在Patchmatch的局部扰动步骤中设置归一化反深度范围 $R_k$ ？
     1. 在初始迭代之后，我们的假设集通过自适应传播和先前估计的局部扰动获得。回想一下，我们的局部扰动过程通过在归一化逆深度范围 $R_k$ 内均匀生成每像素 $N_k$ 个深度假设来丰富假设集。目标是双重的。特别是在开始时，在低分辨率下，这有助于进一步探索搜索空间。更重要的是，我们的自适应传播隐含地假设了前向平行表面，因为我们没有明确地包括切向表面信息（由于隐含的大量内存消耗）。在先前估计的局部附近采样将局部细化解决方案，并减轻未明确建模切向表面信息的潜在缺点。我们发现，在早期阶段就应用这些扰动有助于为假设传播注入积极影响，并注意到，仅在最佳水平上进行后验改进无法恢复相同的质量。在实践中，我们再次以粗略到精细的方式进行操作，并根据层次结构级别相应地设置 $R_k$ 
 
-    ![PatchMatchNet Cumulative](../pictures/PatchMatchNet%20Cumulative.png)
+    ![PatchMatchNet Cumulative](../pictures/PatchMatchNet/PatchMatchNet%20Cumulative.png)
 
     2. 上图显示了DTU评估集上反向深度范围内归一化绝对误差的累积分布函数。在第3阶段Patchmatch的第一次迭代之后，估计误差显著降低：90.0%的情况下，归一化误差已经小于0.1。显而易见，每次迭代后，性能都会不断提高。为了校正估计误差并细化阶段k的结果，我们将 $R_k$ 设置为补偿大部分估计误差。例如，在第一次迭代之后，我们在第3阶段设置Patchmatch的 $R_3 = 0.38$ ，以便我们可以覆盖假设范围内的大部分地面真实深度，然后细化结果。此外，当 $R_k$ 中的采样在细化中失败时，自适应传播将进一步使用来自邻居的深度假设来校正那些错误的估计
 3. 为什么不包括阶段1上Patchmatch的最后一次迭代的传播？
@@ -175,14 +175,14 @@
 6. 自适应传播的可视化
     - 我们在两种典型情况下可视化采样位置，即对象边界和无纹理区域。
     
-    ![PatchMatchNet figure11](../pictures/PatchMatchNet%20figure11.png)
+    ![PatchMatchNet figure11](../pictures/PatchMatchNet/PatchMatchNet%20figure11.png)
 
     对于物体边界处的像素 $\mathbf{p}$ ，所有采样点往往位于与 $\mathbf{p}$ 相同的表面上。相反，对于无纹理区域中的像素 $\mathbf{q}$ ，采样点分布在更大的区域上。通过从大区域采样，可以将更多样的深度假设集传播到 $\mathbf{q}$ ，并减少无纹理区域中深度估计的局部模糊性。可视化显示了自适应传播如何成功地使采样适应不同的挑战性情况的两个示例
 
 7. 自适应评估的可视化
     - 这里，我们再次可视化了两种情况下的采样位置，即对象边界和无纹理区域。
     
-    ![PatchMatchNet figure12](../pictures/PatchMatchNet%20figure12.png)
+    ![PatchMatchNet figure12](../pictures/PatchMatchNet/PatchMatchNet%20figure12.png)
     
     对于物体边界处的像素 $\mathbf{p}$ ，采样点往往停留在物体边界内，从而它们聚焦于相似的深度区域。对于无纹理区域中的像素 $\mathbf{q}$ ，点被稀疏分布以从大背景中采样，这有助于获得可靠的匹配并减少模糊度。同样，可视化展示了我们的自适应评估如何将空间成本聚集的采样适应不同的情况
 

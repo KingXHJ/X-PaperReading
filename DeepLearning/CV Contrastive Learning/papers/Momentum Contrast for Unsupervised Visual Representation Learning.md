@@ -33,7 +33,7 @@
 6. MoCo学好的特征是可以迁移到下游任务的
 # 三、设计的模型
 1. 为什么是动态字典：
-    ![MoCo Contrast work](../pictures/MoCo%20contrast%20work.png)
+    ![MoCo Contrast work](../pictures/MoCo/MoCo%20contrast%20work.png)
     - $x_1$ 经历了不同的变化得到了 $x^1_1$ 和 $x^2_1$ ，一个正样本对
     - 我们称 $x^1_1$ 为anchor（锚点基准）， $x^2_1$ 相对于锚点为 $x_1$ 的正样本（positive），剩下的图片都是负样本（negative）
     - 样本输入编码器，得到特征输出。 $x^1_1$ 和 $x^2_1$ 的编码器可以一样，也可以不一样。但是我们通常让positive和negative输入一样的编码器，获得同样的特征空间
@@ -46,7 +46,7 @@
     - 训练的时候要尽可能的保持一致性：字典里的`key`都应该用相同或者相似的编码器去产生，这样和`query`做对比的时候，才能保证尽可能的一致。如果用不同编码器，`query`很可能找到的是和自己用相同编码器的`key`，而不是相同语义的`key`，变相的引入了一个捷径（`ShortCut solution`）
 
 3. MoCo总览图：
-    ![MoCo figure1](../pictures/MoCo%20figure1.png)
+    ![MoCo figure1](../pictures/MoCo/MoCo%20figure1.png)
     - MoCo的贡献就是在`momentum encoder`生成的`queue`。
     - 字典太大，显卡内存肯定吃不消。所以要想一个办法，能让字典的大小，和每次模型去做前向过程时的batch size大小剥离开
     - 解决方案：用队列这种数据结构。移除老的mini-batch，添入新的mini-batch
@@ -83,7 +83,7 @@
     - 有一个方法是每个iteration后，把`query`学习的参数复制给`key`，但是这会降低所有`key`的一致性
     - 于是引入了`momentum encoder` $$\theta_k=m\theta_{k-1}+(1-m)\theta_q$$ 选择一个大的动量 $m$ ，使得 $\theta_k$ 变化缓慢，受 $\theta_q$ 影响较小，就可以尽最大可能保证相对的一致性。用了 $m=0.999$ 。使用大动量比小动量效果更好
 9. Relation to previous mechanisms:
-    ![MoCo comparison](../pictures/MoCo%20comparison.png)
+    ![MoCo comparison](../pictures/MoCo/MoCo%20comparison.png)
     - 之前的方法：
         - end-to-end：q和k都是一个mini-batch来的，encoder也可以梯度学习了，但是受限于字典大小
         - memory bank：只有一个q的encoder，把所有特征都存在了memory bank，但是特征一致性不好，每个epoch会导致一致性差的更多；扩展性不好
@@ -124,7 +124,7 @@
 ## 3、模型是否引入了新的问题
 
 # 六、代码
-![MoCo code](../pictures/MoCo%20code.png)
+![MoCo code](../pictures/MoCo/MoCo%20code.png)
 ```
 # f_q, f_k: encoder networks for query and key
 # queue: dictionary as a queue of K keys (CxK)

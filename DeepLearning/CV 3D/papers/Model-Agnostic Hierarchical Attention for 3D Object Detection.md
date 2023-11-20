@@ -7,7 +7,7 @@
 - 实验环境：
 - 数据集：ScanNetV2； SUN RGB-D
 # 一、解决的问题
-![Model-Agnostic Hierarchical Attention for 3D Object Detection figure1](../pictures/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection%20figure1.png)
+![Model-Agnostic Hierarchical Attention for 3D Object Detection figure1](../pictures/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection%20figure1.png)
 
 1. 现在的方法：Transformer作为多功能网络架构，最近在3D点云对象检测方面取得了巨大成功
 

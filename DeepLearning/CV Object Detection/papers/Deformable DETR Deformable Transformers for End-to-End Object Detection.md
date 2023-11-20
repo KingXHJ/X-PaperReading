@@ -51,7 +51,7 @@ Transformer中包含了多头自注意力和交叉注意力机制，其中多头
 
 DETR在目标检测领域中引入了Transformer结构并且取得了不错的效果。这套范式摒弃了传统目标检测中的`anchor`和`post processing` 机制，而是先预先设定100个object queries然后进行**二分图匹配**计算loss。其具体流程图(pipeline)如下
 
-![Deformable DERT DETR Pipeline](../pictures/Deformable%20DERT%20DETR%20Pipeline.jpg)
+![Deformable DETR DETR Pipeline](../pictures/Deformable%20DETR/Deformable%20DETR%20DETR%20Pipeline.jpg)
 
 1、输入图片`3×800×1066`的一张图片，经过卷积神经网络提取特征，长宽`32倍下采样`后得到`2048×25×34`，然后通过一个`1×1 Conv`进行降维最终得到输出shape为`256×25×34`.
 
@@ -75,7 +75,7 @@ tips: 虽然DETR没有anchor，但是object queries其实就是起到了anchor�
 
 ### 4.1、Deformable Attention Module
 
-![Deformable DERT Deformable Attention Module](../pictures/Deformable%20DERT%20Deformable%20Attention%20Module.jpg)
+![Deformable DETR Deformable Attention Module](../pictures/Deformable%20DETR/Deformable%20DETR%20Deformable%20Attention%20Module.jpg)
 
 Deformable Attention Module主要思想是结合了DCN和自注意力, 目的就是为了通过在输入特征图上的参考点(reference point)附近只采样少数点(deformable detr设置为3个点)来作为注意力的 $k$ 。因此要解决的问题就是：（1）确定reference point。（2）确定每个reference point的偏移量 (offset)。(3) 确定注意力权重矩阵 $A_ {mqk}$ 。在Encoder和Decoder中实现方法不太一样, 加下来详细叙述。
 
@@ -107,7 +107,7 @@ def get_reference_points(spatial_shapes, valid_ratios, device):
 
 ### 4.2、Multi-Scale Deformable Attention Module
 
-![Deformable DERT Multi-Scale Feature Maps](../pictures/Deformable%20DERT%20Multi-Scale%20Feature%20Maps.jpg)
+![Deformable DETR Multi-Scale Feature Maps](../pictures/Deformable%20DETR/Deformable%20DETR%20Multi-Scale%20Feature%20Maps.jpg)
 
 多尺度的Deformable Attention模块也是在多尺度特征图上计算的。多尺度的特征融合方法则是取了骨干网(ResNet)最后三层的特征图C3，C4，C5，并且用了一个Conv3x3 Stride2的卷积得到了一个C6构成了四层特征图。特别的是会通过卷积操作将通道数量统一为256(也就是token的数量)，然后在这四个特征图上运行`Deformable Attention Module`并且进行直接相加得到最终输出。其中`Deformable Attention Module`算子的pytorch实现如下：
 
@@ -603,7 +603,7 @@ class DeformableTransformer(nn.Module):
 
 ## 5、Experiment
 
-![Deformable DETR ability comparison](../pictures/Deformable%20DERT%20ability%20comparison.jpg)
+![Deformable DETR ability comparison](../pictures/Deformable%20DETR/Deformable%20DETR%20ability%20comparison.jpg)
 
 由**图4**可知，Deformable DETR不仅收敛速率比DETR快并且小目标精度也高了许多。
 

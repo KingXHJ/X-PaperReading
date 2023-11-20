@@ -38,7 +38,7 @@
 - 与最先进的检测系统相⽐，YOLO 存在各种缺点。与 Fast R-CNN 相⽐，YOLO 的错误分析表明 YOLO 产⽣了⼤量的定位错误。此外，与基于区域建议的⽅法相⽐，YOLO 的召回率相对较低。因此，我们主要关注提⾼召回和定位，同时保持分类准确性。
 
 - 计算机视觉通常倾向于更⼤、更深的⽹络。更好的性能通常取决于训练更⼤的⽹络或将多个模型集成在⼀起。然⽽，对于 YOLOv2，我们需要⼀个更准确且速度仍然很快的检测器。我们不是扩⼤我们的⽹络，⽽是简化⽹络，然后使表⽰更容易学习。我们将过去⼯作中的各种想法与我们⾃⼰的新颖概念结合起来，以提⾼ YOLO 的性能。结果总结⻅表2。
-    ![YOLOv2 Table2.png](../pictures/YOLOv2%20Table2.png)
+    ![YOLOv2 Table2.png](../pictures/YOLOv2/YOLOv2%20Table2.png)
 
 1. Batch Normalization
     - 批量归⼀化导致收敛性显着改善，同时消除了对其他形式正则化的需要。通过在 YOLO 的所有卷积层上添加批量归⼀化，我们在 mAP 上获得了超过 2% 的改进。批量归⼀化也有助于规范化模型。通过批量归⼀化，我们可以在不过度拟合的情况下从模型中移除丢失。
@@ -64,10 +64,10 @@
         $$d(box,centroid) = 1 - IOU(box,centroid)$$
 
     - 我们对各种 k 值运⾏ k-means 并绘制具有最接近质⼼的平均 IOU，参⻅图2。我们选择 k = 5 作为模型复杂性和⾼召回率之间的良好折衷。簇质⼼与⼿⼯挑选的锚框明显不同。短⽽宽的检测框越来越少，⾼⽽薄的检测框越来越多。
-        ![YOLOv22.png](../pictures/YOLOv22.png)
+        ![YOLOv22.png](../pictures/YOLOv2/YOLOv22.png)
 
     - 我们将平均 IOU 与我们的聚类策略和表 1 中⼿⼯挑选的锚框的最接近先验进⾏了⽐较。只有 5 个先验，质⼼的表现与 9 个锚框相似，平均 IOU 为 61.0 对⽐ 60.9。如果我们使⽤ 9 个质⼼，我们会看到更⾼的平均 IOU。这表明使⽤ k-means ⽣成我们的边界框以更好的表⽰开始模型，并使任务更容易学习。
-        ![YOLOv2 Table1.png](../pictures/YOLOv2%20Table1.png)
+        ![YOLOv2 Table1.png](../pictures/YOLOv2/YOLOv2%20Table1.png)
 
 1. Direct location prediction
     - 在 YOLO 中使⽤锚框时，我们遇到了第⼆个问题：模型不稳定，尤其是在早期迭代期间。⼤多数不稳定性来⾃预测框的 $(x, y)$ 位置。在区域提议⽹络中，⽹络预测值 $t_ {x}$ 和 $t_ {y}$ ，并且 $(x, y)$ 中⼼坐标计算如下：
@@ -90,7 +90,7 @@
         b_ {h} &= p_ {h} e^{t_ {h}} \notag \\
         Pr(object) * IOU(b,object) &= \sigma(t_ {o}) \notag 
         \end{align}$$
-        ![YOLOv23.png](../pictures/YOLOv23.png)
+        ![YOLOv23.png](../pictures/YOLOv2/YOLOv23.png)
 
     - 由于我们限制了位置预测，参数化更容易学习，使⽹络更稳定。使⽤维度集群以及直接预测边界框中⼼位置，使 YOLO ⽐使⽤锚框的版本提⾼了近 5%。
 
@@ -107,13 +107,13 @@
     - 这种制度迫使⽹络学会在各种输⼊维度上进⾏良好预测。这意味着同⼀个⽹络可以预测不同分辨率的检测。⽹络在更⼩的尺⼨下运⾏得更快，因此 YOLOv2 在速度和准确性之间提供了⼀个简单的权衡。
 
     - 在⾼分辨率下，YOLOv2 是最先进的检测器，在 VOC 2007 上具有 78.6 mAP，同时仍以⾼于实时速度运⾏。 YOLOv2的对⽐⻅表3。与 VOC 2007 上的其他框架, 图4
-        ![YOLOv2 Table3.png](../pictures/YOLOv2%20Table3.png)
+        ![YOLOv2 Table3.png](../pictures/YOLOv2/YOLOv2%20Table3.png)
 
-        ![YOLOv24.png](../pictures/YOLOv24.png)
+        ![YOLOv24.png](../pictures/YOLOv2/YOLOv24.png)
 
 1. Further Experiments
     - 进⼀步的实验。我们训练 YOLOv2 以检测 VOC 2012。表4显⽰了 YOLOv2 与其他最先进检测系统的⽐较性能。YOLOv2 达到 73.4 mAP，同时运⾏速度远快于竞争⽅法。我们还在 COCO 上进⾏训练，并与表 5 中的其他⽅法进⾏⽐较。在 VOC 指标 (IOU = .5) 上，YOLOv2 获得 44.0 mAP，与 SSD 和 Faster R-CNN 相当。
-        ![YOLOv2 Table4.png](../pictures/YOLOv2%20Table4.png)
+        ![YOLOv2 Table4.png](../pictures/YOLOv2/YOLOv2%20Table4.png)
 
 ## 有部分结构在[1、比之前模型的优势](#1比之前模型的优势)
 
@@ -129,7 +129,7 @@
         - 我们提出了⼀种新的分类模型作为 YOLOv2 的基础。我们的模型建⽴在⽹络设计的先前⼯作以及该领域的常识之上。与 VGG 模型类似，我们主要使⽤ 3×3 滤波器，并且在每个池化步骤后将通道数加倍。在 Network in Network (NIN) 的⼯作之后，我们使⽤全局平均池进⾏预测，并使⽤ 1×1 过滤器来压缩 3×3 卷积之间的特征表⽰。我们使⽤批量归⼀化来稳定训练、加速收敛并规范模型。
 
         - 我们的最终模型称为 Darknet-19，具有 19 个卷积层和 5 个最⼤池化层。有关完整说明，请参阅表6.Darknet-19 仅需要 55.8 亿次操作来处理图像，但在 ImageNet 上达到了 72.9% 的 top-1 精度和 91.2% 的 top-5 精度
-            ![YOLOv2 Table6.png](../pictures/YOLOv2%20Table6.png)
+            ![YOLOv2 Table6.png](../pictures/YOLOv2/YOLOv2%20Table6.png)
 
 2. Stronger
     - 我们提出了⼀种联合训练分类和检测数据的机制。我们的⽅法使⽤标记为检测的图像来学习特定于检测的信息，例如边界框坐标预测和⽬标性以及如何对常⻅对象进⾏分类。它使⽤仅带有类标签的图像来扩展它可以检测的类别数量。
@@ -168,7 +168,7 @@
         - 出于分类⽬的，我们假设图像包含⼀个对象： $Pr(physical object) = 1$ 。
 
         - 为了验证这种⽅法，我们在使⽤ 1000 类 ImageNet 构建的 WordTree 上训练 Darknet-19 模型。为了构建 WordTree1k，我们添加了所有中间节点，将标签空间从 1000 扩展到 1369。在训练期间，我们将真实标签传播到树中，这样如果⼀个图像被标记为“诺福克梗”，它也会被标记为“狗”和“哺乳动物”等。为了计算条件概率，我们的模型预测了⼀个包含 1369 个值的向量，并且我们计算了作为同⼀概念的下位词的所有系统集的 softmax，请参⻅图 5 。
-            ![YOLOv25.png](../pictures/YOLOv25.png)
+            ![YOLOv25.png](../pictures/YOLOv2/YOLOv25.png)
 
         - 使⽤与之前相同的训练参数，我们的分层 Darknet-19 达到了 71.9% 的 top-1 准确率和 90.4% 的 top-5 准确率。尽管添加了 369 个额外的概念并让我们的⽹络预测树结构，但我们的准确性仅略有下降。以这种⽅式进⾏分类也有⼀些好处。性能在新的或未知的对象类别上平稳下降。例如，如果⽹络看到⼀张狗的图⽚但不确定它是什么类型的狗，它仍然会以⾼置信度预测“狗”，但在下义词中分散的置信度较低。
 
@@ -176,7 +176,7 @@
 
     2. Dataset combination with WordTree
         - 我们可以⽤WordTree 以⼀种合理的⽅式将多个数据集组合在⼀起。我们只是将数据集中的类别映射到树中的同义词集。图6显⽰了使⽤ WordTree 组合来⾃ ImageNet 和 COCO 的标签的⽰例。WordNet ⾮常多样化，因此我们可以将这种技术⽤于⼤多数数据集。
-            ![YOLOv26.png](../pictures/YOLOv26.png)
+            ![YOLOv26.png](../pictures/YOLOv2/YOLOv26.png)
 
     3. Joint classification and detection
         - 现在我们可以使⽤ WordTree 组合数据集，我们可以训练我们的分类和检测联合模型。我们想要训练⼀个超⼤规模检测器，因此我们使⽤ COCO 检测数据集和完整 ImageNet 版本中的前 9000 个类创建了我们的组合数据集。我们还需要评估我们的⽅法，以便我们添加 ImageNet 检测挑战中尚未包含的任何类。该数据集对应的 WordTree 有 9418 个类。 ImageNet 是⼀个⼤得多的数据集，因此我们通过对 COCO 进⾏过采样来平衡数据集，以便 ImageNet 仅⼤ 4:1 倍。
@@ -190,7 +190,7 @@
         - 我们在 ImageNet 检测任务上评估 YOLO9000。ImageNet 的检测任务与 COCO 共享 44 个对象类别，这意味着 YOLO9000 只看到了⼤多数测试图像的分类数据，⽽不是检测数据。 YOLO9000 在不相交的 156 个对象类上获得 19.7 mAP 和 16.0 mAP，它从未⻅过任何标记的检测数据。该 mAP ⾼于 DPM 取得的结果，但 YOLO9000 仅在部分监督下在不同的数据集上进⾏训练。它还同时检测 9000 个其他对象类别，所有这些都是实时的。
 
         - 当我们分析 YOLO9000 在 Ima geNet 上的表现时，我们发现它可以很好地学习新的动物种类，但在学习服装和设备等类别⽅⾯却很吃⼒。新动物更容易学习，因为客观性预测很好地从 COCO 中的动物中概括出来。相反，COCO 没有针对任何类型服装的边界框标签，只有针对⼈的边界框标签，因此 YOLO9000 很难为“太阳镜”或“泳裤”等类别建模。
-            ![YOLOv27.png](../pictures/YOLOv27.png)
+            ![YOLOv27.png](../pictures/YOLOv2/YOLOv27.png)
 
 ## 2、有优势的原因
 

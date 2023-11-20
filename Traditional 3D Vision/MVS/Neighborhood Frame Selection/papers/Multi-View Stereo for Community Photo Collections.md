@@ -13,7 +13,7 @@
 1. 我们提出了一种多视图立体算法，该算法可以解决大型在线社区照片收集中的 ***照明、比例、杂乱（clutter）*** 和其他效果的极端变化
 2. 这类网络用户提供的数据提供了一个难得的机会：使用迄今为止已知的最大、最多样且基本上未开发的多视图立体数据集重建世界的几何结构。数据集的与众不同之处不仅在于它的大小，还在于它是在“野外”捕获的，而不是在实验室中捕获的，这给多视图立体研究带来了一系列根本性的新挑战
 3. CPCs收集到的图片在色彩表现上和参数上都有很大不同，因为它们是由不同相机在一天的不同时间段拍摄而成
-    ![CPC get effected](../pictures/CPC%20get%20effected.png)
+    ![CPC get effected](../pictures/multi-view%20stereo%20for%20community%20photo%20collections/CPC%20get%20effected.png)
 
 4. 此外，选择最近的视图通常是不可取的，因为许多图像几乎相同，因此提供的视差很小
 # 二、做出的创新
@@ -74,7 +74,7 @@
         
         2. 作为优化的立体匹配(Stereo Matching as Optimization)
             - 我们将以参考视图 $R$ 中的像素为中心的n×n像素窗口解释为场景中一个小平面斑块的投影。然后，我们在匹配阶段的目标是优化该面片的深度和方向，以使其投影到相邻视图中的光度一致性最大化。其中一些视图可能不匹配，例如，由于遮挡或其他问题。这样的视图被拒绝为该修补程序无效，并被本地视图选择步骤提供的其他相邻视图替换
-            ![Parametrization for stereo matching](../pictures/Parametrization%20for%20stereo%20matching.png)
+            ![Parametrization for stereo matching](../pictures/multi-view%20stereo%20for%20community%20photo%20collections/Parametrization%20for%20stereo%20matching.png)
 
             - 场景几何模型(Scene Geometry Model)
                 - 我们假设以参考视图中的像素位置 $(s, t)$ 为中心的n×n像素窗口中可见的场景几何体由深度为 $h(s, t)$ 的平面定向窗口很好地建模。投影到中心像素的点的3D位置为 $$\begin{equation} \mathbf{x}_ {R}(s, t) = \mathbf{o}_ {R} + h(s, t) \cdot \vec{r}_ {R}(s, t) \end{equation}$$ 其中 $\mathbf{o}_ {R}$ 是视图 $R$ 的投影中心， $\vec{r}_ {R}(s, t)$ 是通过像素的归一化光线方向。我们使用每像素距离偏移 $h_ {s}(s, t)$ 和 $h_ {t}(s, t)$ 对窗口方向进行编码，分别对应于 $s$ 和 $t$ 方向上的每像素深度变化率。投影到匹配窗口内像素的点的3D位置为 $$\begin{equation} \mathbf{x}_ {R}(s+i,t+j) = \mathbf{o}_ {R} + [h(s, t) + i h_ {s}(s, t) + j h_ {t}(s, t)] \cdot \vec{r}_ {R}(s + i, t + j) \end{equation}$$ 其中， $i,j = - \frac{n-1}{2} \dots \frac{n-1}{2}$ 注意，这仅近似于平面窗口，但我们假设对于小 $n$ ，即当 $\vec{r}_ {R}(s + i, t + j) \thickapprox \vec{r}_ {R}(s, t)$ 。我们现在可以使用该视图的投影 $\mathbf{P}_ {k}(x_ {R}(s+i，t+j))$ 以亚像素精度确定相邻视图k中的对应位置。该公式用所有视图之间一致的表面方向的显式表示代替了常用的每个视图窗口形状参数，从而消除了多余的自由度
@@ -90,7 +90,7 @@
                 - 在实践中，我们以两种方式修改上述过程，以显著改善其行为。首先，我们仅每第五次迭代或相邻视图的活动集发生变化时更新法线和色阶因子。这提高了性能并降低了振荡的可能性。第二，在第14次迭代之后（即，就在更新色阶因子和法线之前），我们拒绝所有NCC分数变化超过 $\epsilon$ 的视图，以停止可能的振荡
                 - 如果优化收敛，并且法线和观察射线 $\vec{r}_ {R}(s, t)$ 之间的点积大于0.1，我们将置信度得分 $C$ 计算为参考视图中的斑块和所有活动相邻视图之间的平均NCC得分，从 $[\kappa \dots 1]$ 归一化为 $[0 \dots 1]$。我们使用这个分数来确定如何更新深度、法线和置信度图和 $Q$
 # 四、实验结果
-![Test LVS ON](../pictures/Test%20LVS%20ON.png)
+![Test LVS ON](../pictures/multi-view%20stereo%20for%20community%20photo%20collections/Test%20LVS%20ON.png)
 
 ## 1、比之前模型的优势
 

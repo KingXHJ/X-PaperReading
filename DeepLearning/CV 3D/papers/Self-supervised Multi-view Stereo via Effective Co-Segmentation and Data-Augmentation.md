@@ -32,7 +32,7 @@
     - 实验证明，JDACS-MS模型比此前的无监督网络效果都要好上一大截，而且可以和部分有监督网络竞争
 
 # 三、设计的模型
-![JDACS-MS struct](../pictures/JDACS-MS%20struct.png)
+![JDACS-MS struct](../pictures/JDACS-MS/JDACS-MS%20struct.png)
 
 1. 一共三个分支，两次反向传播
     - 深度估计(Depth Estimation)：与协同分割的loss一块做反向传播，共有四个loss：分割、光度一致性、SSIM和Smooth
@@ -55,7 +55,7 @@
         - 在协同分割结构中，引入了预训练的VGG网络用于特征提取。N个视角中提取到的特征图，每一个的维度都是(H,W,C)
         - 之后多视角特征图被连接(concatenate)在一起，并且重塑成矩阵A，维度是(NHW,C)
         - 根据乘法更新规则(multiplicative update rule in (Ding, He, and Simon 2005))求解NMF，矩阵A被分解成维度为(NHW,K)的矩阵P和维度为(K,C)的矩阵Q。其中，K是NMF代表语义聚类数量的因子
-    ![JDACS-MS NMF](../pictures/JDACS-MS%20NMF.png)
+    ![JDACS-MS NMF](../pictures/JDACS-MS/JDACS-MS%20NMF.png)
 
     5. Q矩阵
         - 由于正交矩阵的约束，矩阵Q的每行可以看作是C维的一个聚类中心，该中心对应视图间的一个相关对象
@@ -109,7 +109,7 @@
 
 
 # 四、实验结果
-![JDACS-MS performance](../pictures/JDACS-MS%20performance.png)
+![JDACS-MS performance](../pictures/JDACS-MS/JDACS-MS%20performance.png)
 
 1. 实施细节
     1. 主干网络：
@@ -168,7 +168,7 @@
     
     2. JDACS-MS的实现
     
-        ![JDACS-MS illustration](../pictures/JDACS-MS%20illustration.png)
+        ![JDACS-MS illustration](../pictures/JDACS-MS/JDACS-MS%20illustration.png)
 
         - 损失函数：
             $$\mathbb{L}_ {JDACS-MS} = \sum^{5}_ {s=1} (\lambda_1 \mathbb{L}^{s}_ {PC} + \lambda_2 \mathbb{L}^{s}_ {SC} + \lambda_3 \mathbb{L}^{s}_ {DA} + \lambda_4 \mathbb{L}_ {SSIM} + \lambda_5 \mathbb{L}_ {Smooth})$$ 

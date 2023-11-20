@@ -15,7 +15,7 @@
 
 回到正题，DINO 的核心思想便是通过在大规模的无标签数据集上进行对比学习，学习出一组具有可传递性的视觉特征表示。在 DINO 中，作者通过引入一个新的对比学习方法，将原始图像的特征与随机裁剪的图像的特征进行对比，从而学习到更好的视觉通用表征，最终也获得了非常出色的效果。
 
-![DINO outcome](../pictures/DINO%20outcome.png)
+![DINO outcome](../pictures/DINO/DINO%20outcome.png)
 
 > DINO 这个名称可以理解为是由 Distillation 和 NO labels 这两个词组成的缩写，既表达了DINO采用自蒸馏方法的特点，也突出了它是一种基于无监督学习的模型。具体来说，DINO 是使用一种称为“无监督自蒸馏”的方法，该方法通过自监督学习来学习模型的知识表示。在这个方法中，模型使用自身的输出来生成“伪标签”，然后使用这些伪标签来重新训练模型，从而进一步提高模型的性能和泛化能力。
 
@@ -23,13 +23,13 @@
 
 作为开始，我们给出一张动图，其非常生动形象的展示了贯穿 DINO 的整个框架和核心思想：
 
-![DINO mind](../pictures/DINO%20mind.gif)
+![DINO mind](../pictures/DINO/DINO%20mind.gif)
 
 如上所示，DINO 本质上是一种自监督学习方法，通过无监督的方式学习图像特征表示，可用于计算机视觉的其他下游任务，例如分类和检测等。该方法的核心思想是使用一种叫做自蒸馏的方法，即将一个学生模型的表示与一个动量化的教师模型的表示进行比较，以学习出更好的特征表示。
 
 在正式讲解具体细节前，我们可以先看看 DINO 整个处理流程的伪代码：
 
-![DINO pseudo code](../pictures/DINO%20pseudo%20code.png)
+![DINO pseudo code](../pictures/DINO/DINO%20pseudo%20code.png)
 
 下面我们将分别从网络结构、数据增强、损失函数三大部分进行详细的介绍。
 
@@ -37,13 +37,13 @@
 
 正如我们上面提到过的，DINO 是采用自蒸馏(`self-distillation`)的方法学习的，其整体框架包含两个相同的架构，分别为教师网络和学生网络，具体的架构可以是 ViT 等 vision transformer 或者诸如 ResNet 等 CNNs 特征提取器，非常灵活方便。当然，通过下述消融实验也知道还是 ViT 的潜力更大。
 
-![DINO fusion experiment](../pictures/DINO%20fusion%20experiment.png)
+![DINO fusion experiment](../pictures/DINO/DINO%20fusion%20experiment.png)
 
 然而，这种学生和教师网络均输出相同 `embeddings` 的情况容易出现模式崩塌(`mode collapse`)的现象。在《`Momentum Contrast for Unsupervised Visual Representation Learning`》一文中提出了一种解决方案，即应用“动量教师”(`momentum tearcher`)模型，可以简单地理解为就是教师的模型不是基于反向传播更新的，而是再对学生模型进行梯度回传后，在通过指数移动平均(`Exponentially Weighted Average, EWA`)，直接将学生网络学习到的模型参数更新给教师网络，换句话就是教师网络的权重更新自学生网络。
 
 DINO 中便是沿用这种方式。具体地，我们可以简单看下教师权重的更新公式：
 
-![DINO distillation teacher optimizer function](../pictures/DINO%20distillation%20teacher%20optimizer%20function.png)
+![DINO distillation teacher optimizer function](../pictures/DINO/DINO%20distillation%20teacher%20optimizer%20function.png)
 
 这里下标 $t$ 和 $s$ 分别指代教师和学生网络对应的模型参数；而 $\lambda$ 则跟随余弦学习率衰减策略在训练过程中从 0.996 到 1 之间进行变化。
 
@@ -75,7 +75,7 @@ DINO 中最核心的数据采样策略便是图像裁剪，这也是自监督学
 
 当然，这也可以看作是一个分类问题，以便网络可以从局部视图中学习更有意义的全局表示。
 
-![DINO flow](../pictures/DINO%20flow.png)
+![DINO flow](../pictures/DINO/DINO%20flow.png)
 
 
 ### Centering and Sharpening
@@ -94,23 +94,23 @@ DINO 中最核心的数据采样策略便是图像裁剪，这也是自监督学
 
 首先，看下这张效果图：
 
-![DINO outcome monkey](../pictures/DINO%20outcome%20monkey.png)
+![DINO outcome monkey](../pictures/DINO/DINO%20outcome%20monkey.png)
 
 可以看出，DINO 是能够自动学习特定于类别(`class-specific`)的特征，从而实现准确的无监督对象分割。
 
 其次，我们将此模型应用于未受过训练的场景，例如用于识别重复图像：
 
-![DINO find repeat picture](../pictures/DINO%20find%20repeat%20picture.png)
+![DINO find repeat picture](../pictures/DINO/DINO%20find%20repeat%20picture.png)
 
 可以看出，DINO 的表现也优于现有的最先进模型，尽管它起初并不是为这一目的设计的！
 
-![DINO object detection](../pictures/DINO%20object%20detection.png)
+![DINO object detection](../pictures/DINO/DINO%20object%20detection.png)
 
 通过以上可视化结果不难看出，相比于监督学习，DINO 的潜在空间也具有很好的分离类别，这意味着它的特征足够丰富，可以分离物体中的微小差异，这使得它非常适合下游任务和迁移学习。
 
 最后，我们通过 t-SNE 可视化一起看看 DINO 的整个学习表征过程：
 
-![DINO how it learned](../pictures/DINO%20how%20it%20learned.gif)
+![DINO how it learned](../pictures/DINO/DINO%20how%20it%20learned.gif)
 
 Amazing!
 

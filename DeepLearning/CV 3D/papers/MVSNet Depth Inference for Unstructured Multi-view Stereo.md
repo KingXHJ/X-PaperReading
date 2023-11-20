@@ -54,7 +54,7 @@
 1. 提出了一个从多视角图片中，推断深度图的端到端（end-to-end）深度神经网络
 2. 模型思路：每次前向推理重建深度图，而不是一个3D场景
 
-    ![MVSNet structure](../pictures/MVSNet%20struct.png)
+    ![MVSNet structure](../pictures/MVSNet/MVSNet%20struct.png)
 
     1. 每次选择一个参考图像和几个原图像作为输入
     2. 首先提取深度视觉图像特征
@@ -65,7 +65,7 @@
 3. 模型输入：
     - 灵活采用任意的N个视角的输入，通过基于方差的代价度量标准（相似度函数），将多特征映射到一个代价特征上
 4. 模型关键：
-    ![MVSNet camera frustum](../pictures/MVSNet%20camera%20frustum.jpg)
+    ![MVSNet camera frustum](../pictures/MVSNet/MVSNet%20camera%20frustum.jpg)
     - 将相机参数编码成可微的单应性变换，基于 ***视图平截锥体(camera frustum)*** 建代价体（构建2D特征提取到3D的代价归一网络的桥梁）
     
 5. 模型结构细节：
@@ -102,7 +102,7 @@
             - 结果评估：所得概率体积在深度图推断中是非常理想的，因为它不仅可以用于每像素深度估计，而且可以用于测量估计置信度
     3. 深度图
 
-        ![MVSNet pd](../pictures/MVSNet%20pd.png)
+        ![MVSNet pd](../pictures/MVSNet/MVSNet%20pd.png)
 
         1. 初步估算
             - 问题：从概率体积P中检索深度图D的最简单方法是逐像素比较概率大小（赢家通吃）。但是，argmax运算无法产生亚像素估计，并且由于其不可区分性，无法使用反向传播进行训练
@@ -120,7 +120,7 @@
             - 实现细节：初始深度图和调整大小的参考图像被连接为4通道输入，然后通过三个32通道2D卷积层，接着是一个1通道卷积层以学习深度残差。然后将初始深度图添加回，以生成细化的深度图。最后一层不包含BN层和ReLU单元，以学习负残差。此外，为了防止在某个深度尺度上出现偏差，我们将初始深度幅度预缩放到范围[0，1]，并在细化后将其转换回去
     4. 误差计算
 
-        ![MVSNet loss](../pictures/MVSNet%20loss.png)
+        ![MVSNet loss](../pictures/MVSNet/MVSNet%20loss.png)
 
         - 内容：初始深度图和细化深度图的损失都被考虑在内
         - 问题及解决：由于真实深度图在整个图像中并不总是完整的，我们只考虑具有有效地面真实标签的像素

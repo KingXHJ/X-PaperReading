@@ -17,7 +17,7 @@
 1. >a depth of up to 152 layers—8×deeper than VGG nets
 2. >a deep residual learning framework
 
-![ResidualLearning](../pictures/Residual_learning.png)
+![ResidualLearning](../pictures/Residual%20Learning/Residual_learning.png)
 
 - 我认为就是由于网络深度增加，信息到高维后变得稀疏，关系丢失，原始信息零散化
 

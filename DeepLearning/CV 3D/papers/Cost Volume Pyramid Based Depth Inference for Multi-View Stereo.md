@@ -36,7 +36,7 @@
 
 # 三、设计的模型
 
-![CVP-MVSNet struct](../pictures/CVP-MVSNet%20strut.png)
+![CVP-MVSNet struct](../pictures/CVP-MVSNet/CVP-MVSNet%20strut.png)
 - 参考帧 $\mathbf{I} _{0} \in \mathbb{R}^{H \times W}$
 - N个邻域帧 $\lbrace \mathbf{I} _{i} \rbrace^{N} _{i=0}$
 - 所有视角的相机的内参、旋转矩阵和平移向量 $\lbrace \mathbf{K} _{i} \mathbf{R} _{i} \mathbf{t} _{i} \rbrace^{N} _{i=0}$
@@ -76,7 +76,7 @@
         - 原因：是相邻像素的深度位移是相关的，这表明常规的的多尺度3D卷积将为深度残差估计提供有用的上下文信息。因此，将深度位移假设安排在规则的3D空间中，并 ***如下计算成本体积***
             - 给定相机参数 $\lbrace \mathbf{K}_ {i} \mathbf{R}_ {i} \mathbf{t}_ {i} \rbrace^{N}_ {i=0}$ 和上采样深度估计 $\mathbf{D}^{l+1}_ {\uparrow}$ 。当前每个像素 $\mathbf{p}=(u,v)$ 被定义为 $d_{\mathbf{p}} = \mathbf{D}^{l+1}_ {uparrow}(u,v)$ ，设每个深度残差假设区间为 $\Delta d_{\mathbf{p}} = s_{\mathbf{p}} / M$ ，其中 $s_{\mathbf{p}}$ 表示深度搜索范围在p的时候，M代表采样的深度残差序号
 
-            ![CVP-MVSNet reprojection](../pictures/CVP-MVSNet%20reprojection.png)
+            ![CVP-MVSNet reprojection](../pictures/CVP-MVSNet/CVP-MVSNet%20reprojection.png)
             - 考虑对应的假设3D点与深度的投影 $(D^{l+1}_ {\uparrow}(u,v) + m \Delta d_{\mathbf{p}})$ 在邻域帧中是 $$\lambda_i x^{\prime}_ {i} = \mathbf{K}^{l}_ {i} (\mathbf{R}_ {i} \mathbf{R}^{-1}_ {0} ((\mathbf{K}^{i}_ {0})^{-1} (u,v,1)^{T} (d_{\mathbf{p}} + m \Delta d_{\mathbf{p}}) - \mathbf{t}_ {0}) + \mathbf{t}_ {i})$$ 其中 $\lambda_i$ 代表在邻域帧i中的相关深度， $m \in \lbrace -M / 2,...,M/2 - 1 \rbrace$ 
             - 然后，该像素在每个深度残差假设下的代价类似地基于公式 $\mathbf{C}^{L}_ {d}$ ，最终获得部分代价体  $\mathbf{C}^{L} \in \mathbb{R}^{W / 2^l \times H / 2^l \times M \times F}$
             - 在下一节中，我们将介绍我们的解决方案，以确定所有像素的深度搜索间隔和范围 $s_{\mathbf{p}}$ ，这对于获得准确的深度估计至关重要
@@ -86,7 +86,7 @@
         1. 成本体金字塔的深度采样
             - 观察到虚拟深度平面的深度采样与图像分辨率有关
             
-            ![CVP-MVSNet interpolation](../pictures/CVP-MVSNet%20interpolation.png)
+            ![CVP-MVSNet interpolation](../pictures/CVP-MVSNet/CVP-MVSNet%20interpolation.png)
             - 不需要密集地对深度平面进行采样，因为图像中那些采样的3D点的投影太近。在实验中，为了确定虚拟平面的数量，计算图像中对应0.5像素距离的平均深度采样间隔
             - 为了确定每个像素当前深度估计周围的深度残差的局部搜索范围
                 - 首先将其3D点投影到邻域视图中，沿着两个方向的 ***对极线*** 找到距离投影两个像素的点（见图CVP-MVSNet reprojection “ 2像素长度 ”），然后将这两个点反向投影到3D射线中。这两条光线与参考帧中的视觉光线的相交决定了当前级别上深度细化的搜索范围

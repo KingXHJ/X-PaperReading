@@ -18,11 +18,11 @@ Paul-Edouard Sarlin (1) , Daniel DeTone (2), Tomasz Malisiewicz (2), Andrew Rabi
 
 在本文中,我们提出了一种对特征匹配问题的新思考方式。我们没有学习更好的与任务无关的局部特征,然后使用简单的匹配启发式和技巧,而是使用一种新的神经架构SuperGlue来学习匹配过程从现有的局部特征。在SLAM的背景下,通常将问题分解为视觉特征提取前端和束调整或姿态估计后端,我们的网络直接位于中间(参见图1)。
 
-![SuperGlue1](../pictures/SuperGlue1.png)
+![SuperGlue1](../pictures/SuperGlue/SuperGlue1.png)
 
 SuperGlue可以从非专用局部特征检测器和描述符建立点对点的对应关系,它充当手工制作或学习前端和后端之间的中间端。SuperGlue使用图神经网络和注意力来解决分配优化问题,优雅地处理部分点可见性和遮挡。我们表明SuperGlue优于手工制作的匹配器和学习内点分类器。当与SuperPoint深度前端组合时,SuperGlue推进室内外姿态估计的状态,并为端到端深度SLAM铺平了道路。
 
-![SuperGlue2](../pictures/SuperGlue2.png)
+![SuperGlue2](../pictures/SuperGlue/SuperGlue2.png)
 
 2 相关工作
 
@@ -65,7 +65,7 @@ $$\begin{equation} \mathbf{P}\mathbf{1}_ {N}\leq\mathbf{1}_ {M}\quad\text{and}\q
 
 因此,我们将SuperGlue的第一个主要模块设计为注意力图神经网络(见图3)。 给定初始局部特征,它通过让特征相互通信来计算匹配描述符 $\mathbf{f}_{i}\in\mathbb{R}^{D}$ 。 如我们将要展示的,长距离特征聚合在图像内和跨图像对稳健匹配至关重要。 
 
-![SuperGlue3](../pictures/SuperGlue3.png)
+![SuperGlue3](../pictures/SuperGlue/SuperGlue3.png)
 
 关键点编码器:每个关键点 $i$ 的初始表示 ${}^{(0)}\mathbf{x}_{i}$ 结合其视觉外观和位置。我们用多层感知器(MLP)将关键点位置嵌入高维向量:
 
@@ -103,7 +103,7 @@ $$\begin{equation} \mathbf{f}{i}^{A}=\mathbf{W}\cdot{}^{(L)}\mathbf{x}_ {i}^{A}+
 
 $B$ 中的关键点类似。
 
-![SuperGlue4](../pictures/SuperGlue4.png)
+![SuperGlue4](../pictures/SuperGlue/SuperGlue4.png)
 
 最优匹配层
 

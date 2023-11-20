@@ -32,7 +32,7 @@
 4. >The kernels of the second, fourth, and fifth convolutional layers are connected only to those kernel maps in the previous layer which reside on the same GPU (see Figure 2). The kernels of the third convolutional layer are connected to all kernel maps in the second 
 - 卷积层的连接状态不同
 
-![AlexNet](../pictures/AlexNet.png)
+![AlexNet](../pictures/AlexNet/AlexNet.png)
 
 计算卷积层输出图像尺寸的公式：
 

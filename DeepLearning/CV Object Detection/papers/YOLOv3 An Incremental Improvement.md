@@ -46,7 +46,8 @@
             b_ {w} &= p_ {w} e^{t_ {w}} \notag \\
             b_ {h} &= p_ {h} e^{t_ {h}} \notag 
             \end{align}$$
-            ![YOLOv32.png](../pictures/YOLOv32.png)
+
+        ![YOLOv32.png](../pictures/YOLOv3/YOLOv32.png)
 
     - 在训练过程中，我们使用误差平方和损失。如果某些坐标预测的地面实况是 $\hat{t}_ {*}$ ，则我们的梯度是地面实况值（从地面实况框计算）减去我们的预测： $\hat{t}_ {*} - t_ {*}$ 。通过颠倒上述方程，可以很容易地计算出这个真值
 
@@ -68,10 +69,10 @@
 
 4. Feature Extractor
     - 我们使⽤⼀个新的⽹络来执⾏特征提取。我们的新⽹络是 YOLOv2、Darknet-19 中使⽤的⽹络和新奇的残差⽹络材料之间的混合⽅法。我们的⽹络使⽤连续的 3 × 3 和 1 × 1 卷积层，但现在也有⼀些快捷连接并且明显更⼤。它有 53 个卷积层，所以我们称它为……等等……Darknet-53！
-        ![YOLOv3 Table1.png](../pictures/YOLOv3%20Table1.png)
+        ![YOLOv3 Table1.png](../pictures/YOLOv3/YOLOv3%20Table1.png)
 
     - 这个新⽹络⽐ Darknet 19 更强⼤，但仍然⽐ ResNet-101 或 ResNet-152 更⾼效。
-        ![YOLOv3 Table2.png](../pictures/YOLOv3%20Table2.png)
+        ![YOLOv3 Table2.png](../pictures/YOLOv3/YOLOv3%20Table2.png)
 
     - 每个⽹络都使⽤相同的设置进⾏训练，并以 256×256 的单裁剪精度进⾏测试。运⾏时间是在 Titan X 上以 256 × 256 测量的。因此，Darknet-53 的性能与最先进的分类器相当，但浮点运算更少，速度更快。 Darknet-53 优于 ResNet-101，速度快 1.5 倍。 Darknet-53 具有与 ResNet-152 相似的性能，并且速度快 2 倍。
 
@@ -84,18 +85,18 @@
 # 四、实验结果
 ## How We Do
 - YOLOv3相当不错！见表3。就COCO而言，奇怪的平均AP指标与SSD变体不相上下，但速度快了3倍。不过，在这个指标上，它仍然远远落后于RetinaNet等其他型号。
-    ![YOLOv3 Table3.png](../pictures/YOLOv3%20Table3.png)
+    ![YOLOv3 Table3.png](../pictures/YOLOv3/YOLOv3%20Table3.png)
 
-    ![YOLOv33.png](../pictures/YOLOv33.png)
+    ![YOLOv33.png](../pictures/YOLOv3/YOLOv33.png)
 
 - 然⽽，当我们查看 IOU= .5（或图表中的 $AP_ {50}$ ）时 mAP 的“旧”检测指标时，YOLOv3 ⾮常强⼤。它⼏乎与 RetinaNet 相当，并且远⾼于 SSD 变体。这表明 YOLOv3 是⼀个⾮常强⼤的检测器，擅⻓为对象⽣成像样的框。然⽽，随着 IOU 阈值的增加，性能会显着下降，这表明 YOLOv3 难以使框与对象完美对⻬。
 
 - 过去，YOLO 在处理⼩物体时遇到了困难。然⽽，现在我们看到了这⼀趋势的逆转。通过新的多尺度预测，我们看到 YOLOv3 具有相对较⾼的 $AP_ {S}$ 性能。但是，它在中型和⼤型物体上的性能相对较差。需要进⾏更多调查才能弄清真相。
 
 - 当我们绘制 $AP_ {50}$ 指标的精度与速度（⻅图5）时，我们发现 YOLOv3 ⽐其他检测系统具有显着优势。即，它更快更好。
-    ![YOLOv35.png](../pictures/YOLOv35.png)
+    ![YOLOv35.png](../pictures/YOLOv3/YOLOv35.png)
 
-    ![YOLOv34.png](../pictures/YOLOv34.png)
+    ![YOLOv34.png](../pictures/YOLOv3/YOLOv34.png)
 
 ## 1、比之前模型的优势
 

@@ -27,7 +27,7 @@
 
 
 # R-CNN
-- [ppt](../ppt/pytorch_object_detection/R-CNN.pdf)
+- [ppt](../ppt/R-CNN/R-CNN.pdf)
 ## 1. 优势/历史地位
 - R-CNN可以说是利用深度学习进行目标检测的开山之作。作者Ross Girshick多次在PASCAL VOC的目标检测竞赛中折桂，曾在2010年带领团队获得终身成就奖。
 
@@ -40,10 +40,10 @@
     1. 特征送入每一类的SVM 分类器，判别是否属于该类
 
     1. 使用回归器精细修正候选框位置
-        ![R-CNN1.png](../pictures/R-CNN1.png)
+        ![R-CNN1.png](../pictures/R-CNN/R-CNN1.png)
 
 - 框架
-    ![R-CNN Construct.png](../pictures/R-CNN%20Construct.png)
+    ![R-CNN Construct.png](../pictures/R-CNN/R-CNN%20Construct.png)
 
 ## 3. 缺点
 1. 测试速度慢：
@@ -57,7 +57,7 @@
 
 
 # Fast R-CNN
-- [ppt](../ppt/pytorch_object_detection/Fast_R-CNN.pdf)
+- [ppt](../ppt/Fast%20R-CNN/Fast_R-CNN.pdf)
 ## 1. 优势/历史地位
 - Fast R-CNN是作者Ross Girshick继R-CNN后的又一力作。同样使用VGG16作为网络的backbone，与R-CNN相比训练时间快9倍，测试推理时间快213倍，准确率从62%提升至66%(再Pascal VOC数据集上)。
 
@@ -72,10 +72,10 @@
     1. 将图像输入网络得到相应的特征图，将SS算法生成的候选框投影到特征图上获得相应的特征矩阵
 
     1. 将每个特征矩阵通过ROI pooling层缩放到7x7大小的特征图，接着将特征图展平通过一系列全连接层得到预测结果
-        ![Fast R-CNN1.png](../pictures/Fast%20R-CNN1.png)
+        ![Fast R-CNN1.png](../pictures/Fast%20R-CNN/Fast%20R-CNN1.png)
 
 - 框架
-    ![Fast R-CNN Construct.png](../pictures/Fast%20R-CNN%20Construct.png)
+    ![Fast R-CNN Construct.png](../pictures/Fast%20R-CNN/Fast%20R-CNN%20Construct.png)
 
 ## 3. 缺点
 1. 测试速度没有非常优秀：
@@ -83,7 +83,7 @@
 
 
 # Faster R-CNN
-- [ppt](../ppt/pytorch_object_detection/Faster_R-CNN.pdf)
+- [ppt](../ppt/Faster%20R-CNN/Faster_R-CNN.pdf)
 ## 1. 优势/历史地位
 - Faster R-CNN是作者Ross Girshick继Fast R-CNN后的又一力作。同样使用VGG16作为网络的backbone，推理速度在GPU上达到5fps(包括候选区域的生成)，准确率也有进一步的提升。在2015年的ILSVRC以及COCO竞赛中获得多个项目的第一名。
 
@@ -99,10 +99,10 @@
     1. 使用RPN结构生成候选框，将RPN生成的候选框投影到特征图上获得相应的特征矩阵
 
     1. 将每个特征矩阵通过ROI pooling层缩放到7x7大小的特征图，接着将特征图展平通过一系列全连接层得到预测结果
-        ![Faster R-CNN2.png](../pictures/Faster%20R-CNN2.png)
+        ![Faster R-CNN2.png](../pictures/Faster%20R-CNN/Faster%20R-CNN2.png)
 
 - 框架
-    ![Faster R-CNN Construct.png](../pictures/Faster%20R-CNN%20Construct.png)
+    ![Faster R-CNN Construct.png](../pictures/Faster%20R-CNN/Faster%20R-CNN%20Construct.png)
 
 - 注意：
     1. 锚框(anchor)是在特征图上生成的；候选框(bounding box)是在原图上生成的。
@@ -117,13 +117,13 @@
     - 因为是对一个尺度的特征层进行检测
 
 # FPN
-- [ppt](../ppt/pytorch_object_detection/fpn.pdf)
+- [ppt](../ppt/FPN/fpn.pdf)
 ## 1. 优势/历史地位
-![FPN1.png](../pictures/FPN1.png)
+![FPN1.png](../pictures/FPN/FPN1.png)
 
 ## 2. 算法流程
 1. 特征图像处理类型
-    ![FPN2.png](../pictures/FPN2.png)
+    ![FPN2.png](../pictures/FPN/FPN2.png)
 
     - 生成不同尺度的特征图像
         - (a)的效率很低
@@ -132,7 +132,7 @@
         - (d)FPN结构
 
 1. 融合过程
-    ![FPN3.png](../pictures/FPN3.png)
+    ![FPN3.png](../pictures/FPN/FPN3.png)
 
     - 下采样都是2的整数倍
     - 1x1卷积核的目的就是调整不同特征图的channel
@@ -142,26 +142,26 @@
     - 算法就是nearest neighbour upsampling
 
 1. 网络结构
-    ![FPN4.png](../pictures/FPN4.png)
+    ![FPN4.png](../pictures/FPN/FPN4.png)
 
     - 不同尺寸的预测特征层预测不同大小的proposal
     - 通常尺寸大的特征图检测小目标(尺寸小的anchors)，尺寸小的特征图检测大目标(尺寸大的anchors)
 
 1. RPN的proposal映射到不同的预测特征层
-    ![FPN5.png](../pictures/FPN5.png)
+    ![FPN5.png](../pictures/FPN/FPN5.png)
     
     - k：2，3，4，5(对应P2 P3 P4 P5)
     - k0 = 4
     - w, h：RPN预测得到的proposal在原图上的宽度和高度
 
     - 映射方法Level Mapper
-        ![FPN6.png](../pictures/FPN6.png)
+        ![FPN6.png](../pictures/FPN/FPN6.png)
 
 ## 3. 缺点
 
 
 # SSD
-- [ppt](../ppt/pytorch_object_detection/SSD.pdf)
+- [ppt](../ppt/SSD/SSD.pdf)
 ## 1. 优势/历史地位
 - 借助VGG的框架在不同特征尺度上预测不同尺度的目标
     
@@ -170,13 +170,13 @@
 
 ## 2. 算法流程
 - VGG+多尺度预测
-    ![SSD2.png](../pictures/SSD2.png)
+    ![SSD2.png](../pictures/SSD/SSD2.png)
 
 - $(c+4)\times k$ 卷积核需要参与预测
     - c个类别
     - 4个边界框回归参数
     - k个边界框
-    ![SSD1.png](../pictures/SSD1.png)
+    ![SSD1.png](../pictures/SSD/SSD1.png)
 
     - 注意：
         - Faster R-CNN中是预测4c个，是因为对每个类别预测4个边界框回归参数
@@ -190,9 +190,9 @@
 ## 3. 缺点
 
 # Mask R-CNN
-- [ppt](../ppt/pytorch_object_detection/mask_r-cnn.pdf)
+- [ppt](../ppt/Mask%20R-CNN/mask_r-cnn.pdf)
 
-![Mask R-CNN7.png](../pictures/Mask%20R-CNN7.png)
+![Mask R-CNN7.png](../pictures/Mask%20R-CNN/Mask%20R-CNN7.png)
 
 - 图像分类：返回类别及概率
 - 目标检测：返回类别和检测框
@@ -201,39 +201,39 @@
 
 
 ## 1. 优势/历史地位
-![Mask R-CNN8.png](../pictures/Mask%20R-CNN8.png)
+![Mask R-CNN8.png](../pictures/Mask%20R-CNN/Mask%20R-CNN8.png)
 
 ## 2. 算法流程
 1. Mask R-CNN & Faster R-CNN
-    ![Mask R-CNN9.png](../pictures/Mask%20R-CNN9.png)
+    ![Mask R-CNN9.png](../pictures/Mask%20R-CNN/Mask%20R-CNN9.png)
 
     - Faster R-CNN源码也是RoIAlign，而不是RoIpooling
 
     - Mask 分支如下：
-        ![Mask R-CNN10.png](../pictures/Mask%20R-CNN10.png)
+        ![Mask R-CNN10.png](../pictures/Mask%20R-CNN/Mask%20R-CNN10.png)
 
 1. RoIAlign
     - 为什么将RoIpooling替换成RoIAlign
         - 因为RoIpooling涉及两次取整操作，两次取整肯定会导致定位的偏差
         - 论文称这个现象为misalignment
-        ![Mask R-CNN11.png](../pictures/Mask%20R-CNN11.png)
+        ![Mask R-CNN11.png](../pictures/Mask%20R-CNN/Mask%20R-CNN11.png)
 
         - 用RoIAlign定位更加准确
 
     - RoIpooling
-        ![Mask R-CNN12.png](../pictures/Mask%20R-CNN12.png)
+        ![Mask R-CNN12.png](../pictures/Mask%20R-CNN/Mask%20R-CNN12.png)
 
         - 第一次取整：特征图相对于原图的步距，需要做除法
         - 第二次取整：特征图可能不会被均分
 
     - RoIAlign
-        ![Mask R-CNN13.png](../pictures/Mask%20R-CNN13.png)
+        ![Mask R-CNN13.png](../pictures/Mask%20R-CNN/Mask%20R-CNN13.png)
         
         - 第一步不取整
         - 第二部均分，依靠sampling ratio设置每个均分区域有 $(sampling ratio)^{2}$ 个采样点
             - 当采用多个采样点的时候，每个子区域的输出取所有采样点的均值
 
-        ![Mask R-CNN14.png](../pictures/Mask%20R-CNN14.png)
+        ![Mask R-CNN14.png](../pictures/Mask%20R-CNN/Mask%20R-CNN14.png)
 
         - 通过双线性插值去计算采样点的数值
         - 0.3125是大矩形框的左上角点坐标
@@ -241,27 +241,27 @@
         - u是橙色点距离左侧最近黑边的距离
         - v是橙色点距离右侧最近黑边的距离
 
-        ![Mask R-CNN15.png](../pictures/Mask%20R-CNN15.png)
+        ![Mask R-CNN15.png](../pictures/Mask%20R-CNN/Mask%20R-CNN15.png)
 
-        ![Mask R-CNN16.png](../pictures/Mask%20R-CNN16.png)
+        ![Mask R-CNN16.png](../pictures/Mask%20R-CNN/Mask%20R-CNN16.png)
 
-        ![Mask R-CNN17.png](../pictures/Mask%20R-CNN17.png)
+        ![Mask R-CNN17.png](../pictures/Mask%20R-CNN/Mask%20R-CNN17.png)
 
-        ![Mask R-CNN18.png](../pictures/Mask%20R-CNN18.png)
+        ![Mask R-CNN18.png](../pictures/Mask%20R-CNN/Mask%20R-CNN18.png)
 
 1. Mask分支(FCN)
-    ![Mask R-CNN19.png](../pictures/Mask%20R-CNN19.png)
+    ![Mask R-CNN19.png](../pictures/Mask%20R-CNN/Mask%20R-CNN19.png)
 
     - 预测器的RoIAlign和mask的RoIAlign是不一样的，不共用
 
-    ![Mask R-CNN20.png](../pictures/Mask%20R-CNN20.png)
+    ![Mask R-CNN20.png](../pictures/Mask%20R-CNN/Mask%20R-CNN20.png)
 
-    ![Mask R-CNN21.png](../pictures/Mask%20R-CNN21.png)
+    ![Mask R-CNN21.png](../pictures/Mask%20R-CNN/Mask%20R-CNN21.png)
 
     - 之前讲过的FCN对每个像素，每个类别都会去预测一个概率分数。对每个像素沿channel方向做一个softmax处理。那么通过softmax处理就知道每个像素，归属每个类别的分数
     - 这里在每个Mask分支都会预测一个蒙版。但是，我们不会针对每一个数据沿channel方向做softmax方向处理，而是根据Fast R-CNN分支，预测该目标的类别信息，这样类别与类别之间不存在竞争关系
 
-    ![Mask R-CNN22.png](../pictures/Mask%20R-CNN22.png)
+    ![Mask R-CNN22.png](../pictures/Mask%20R-CNN/Mask%20R-CNN22.png)
 
     - RPN提供的边界框很多，相当于提供给Mask分支很多训练样本，且都是于GT有很大交集的
     - 类似随机裁剪数据增强的效果
@@ -269,10 +269,10 @@
         - 因为Fast R-CNN里面还有nms，可以进一步滤除
 
 1. Mask R-CNN损失
-    ![Mask R-CNN23.png](../pictures/Mask%20R-CNN23.png)
+    ![Mask R-CNN23.png](../pictures/Mask%20R-CNN/Mask%20R-CNN23.png)
 
 1. Mask分支损失
-    ![Mask R-CNN24.png](../pictures/Mask%20R-CNN24.png)
+    ![Mask R-CNN24.png](../pictures/Mask%20R-CNN/Mask%20R-CNN24.png)
 
     - 在RPN筛选的时候，知道输入的GT label，然后在计算损失的时候，把对应label的Mask拿出来
     - 虽然不做softmax处理了，但是还是对mask做了sigmoid，让预测值的范围在0~1之间
@@ -280,14 +280,14 @@
     - 在gt mask中，对应目标区域的数值等于1，对应背景区域的数值是等于0的
 
 1. Mask分支预测使用
-    ![Mask R-CNN25.png](../pictures/Mask%20R-CNN25.png)
+    ![Mask R-CNN25.png](../pictures/Mask%20R-CNN/Mask%20R-CNN25.png)
 
 
 ## 3. 缺点
 
 
 # YOLOv1
-- [ppt](../ppt/pytorch_object_detection/yolov1.pdf)
+- [ppt](../ppt/YOLO/yolov1.pdf)
 ## 1. 优势/历史地位
 - 比Faster R-CNN快，45FPS
 
@@ -305,7 +305,7 @@
 - 比同年的SSD的输入图像尺寸、速度和精度都低
 
 # YOLOv2
-- [ppt](../ppt/pytorch_object_detection/yolov2.pdf)
+- [ppt](../ppt/YOLOv2/yolov2.pdf)
 ## 1. 优势/历史地位
 - 回归了R-CNN和SSD的anchor检测方式
 - mAP和FPS都非常高
@@ -339,27 +339,27 @@
 
 
 # RetinaNet
-- [ppt](../ppt/pytorch_object_detection/retinanet.pdf)
+- [ppt](../ppt/RetinaNet/retinanet.pdf)
 ## 1. 优势/历史地位
 - one-stage网络首次超越two-stage
 - 论文名称：Focal Loss for Dense Object Detection
 - RetinaNet的对比效果
-![RetinaNet2.png](../pictures/RetinaNet2.png)
+![RetinaNet2.png](../pictures/RetinaNet/RetinaNet2.png)
 
 - 很明显，RetinaNet的效果远远好于two-stage和现有的one-stage
 
 ## 2. 算法流程
-![RetinaNet1.png](../pictures/RetinaNet1.png)
+![RetinaNet1.png](../pictures/RetinaNet/RetinaNet1.png)
 
 1. 采用FPN结构
-    ![RetinaNet3.png](../pictures/RetinaNet3.png)
+    ![RetinaNet3.png](../pictures/RetinaNet/RetinaNet3.png)
     
     - 注意：在原论文中P6是在C5的基础上生成的，这里是根据pytorch官方提供的实现方式绘制的
     - 而且，FPN会在C2位置生成P2，但是RetinaNet没有，原论文说，P2会占用更多的计算资源
     - 使用了3个scale，3个ratio，共9组anchor template
 
 1. 预测器部分
-    ![RetinaNet4.png](../pictures/RetinaNet4.png)
+    ![RetinaNet4.png](../pictures/RetinaNet/RetinaNet4.png)
 
     - 之前的FPN和Faster R-CNN是类似的，是two-stage网络
         - 首先会根据RPN生成proposal
@@ -371,14 +371,14 @@
         - 目标框参数
 
 1. 正负样本
-    ![RetinaNet5.png](../pictures/RetinaNet5.png)
+    ![RetinaNet5.png](../pictures/RetinaNet/RetinaNet5.png)
 
     1. $IoU >= 0.5$ , 正样本
     2. $IoU < 0.4$ , 负样本
     3. $IoU \in [0.4, 0.5)$ , 舍弃
 
 1. 损失计算
-    ![RetinaNet6.png](../pictures/RetinaNet6.png)
+    ![RetinaNet6.png](../pictures/RetinaNet/RetinaNet6.png)
 
     - 核心是Focal Loss
     - 详细内容在YOLOv3 SPP中讲解了
@@ -387,7 +387,7 @@
 ## 3. 缺点
 
 # YOLOv3
-- [ppt](../ppt/pytorch_object_detection/yolov3.pdf)
+- [ppt](../ppt/YOLOv3/yolov3.pdf)
 ## 1. 优势/历史地位
 - 内容很少，主要是整合了当前主流网络的优势
 - YOLOv3的速度是非常快的，但是mAP其实不是特别出色，没有RetinaNet那么好
@@ -395,7 +395,7 @@
 ## 2. 算法流程
 - 修改了backbone
     - YOLOv2使用了DarkNet-19，YOLOv3使用了DarkNet-53
-    ![YOLOv3 comparison backbone.png](../pictures/YOLOv3%20comparison%20backbone.png)
+    ![YOLOv3 comparison backbone.png](../pictures/YOLOv3/YOLOv3%20comparison%20backbone.png)
     - DarkNet-53没有pooling层，全部用卷积层下采样
     - 速度快的原因是DarkNet-53的通道数比ResNet少，意味着卷积核个数少
 - Conv + BN + LeakyReLU
@@ -413,7 +413,7 @@
 3. 尺寸较小的特征图会进行上采样，并与尺寸大一倍的特征图在通道数的维度上进行拼接
     - 每个尺度的特征图都是通过最后一个1x1的卷积层进行预测
 4. anchor机制
-![YOLOv23.png](../pictures/YOLOv23.png)
+![YOLOv23.png](../pictures/YOLOv2/YOLOv23.png)
 - 与faster R-CNN和SSD不一样的地方：
     - 前者是目标中心点的参数相对于cell的中心点
     - YOLOv2，v3是相对于cell的左上角点
@@ -443,41 +443,41 @@
 
 
 # FCOS
-- [ppt](../ppt/pytorch_object_detection/FCOS.pdf)
+- [ppt](../ppt/FCOS/FCOS.pdf)
 ## 1. 优势/历史地位
 - Anchor Free
     - 之前的网络都是anchor based
     - 基于生成好的anchor，去预测它的偏移和倍率系数
     - 预测l, r, t, b
-    ![FCOS anchor free.png](../pictures/FCOS%20anchor%20free.png)
+    ![FCOS anchor free.png](../pictures/FCOS/FCOS%20anchor%20free.png)
 
 - One-Stage
 - FCN-based
 
 ## 2. 算法流程
 1. 前言
-![FCOS1.png](../pictures/FCOS1.png)
+![FCOS1.png](../pictures/FCOS/FCOS1.png)
 
 1. FCOS网络结构
-    ![FCOS2.png](../pictures/FCOS2.png)
+    ![FCOS2.png](../pictures/FCOS/FCOS2.png)
 
     - 20年的版本是把Center-ness和Regression放在了一个分支
 
-    ![FCOS3.png](../pictures/FCOS3.png)
+    ![FCOS3.png](../pictures/FCOS/FCOS3.png)
 
-    ![FCOS4.png](../pictures/FCOS4.png)
+    ![FCOS4.png](../pictures/FCOS/FCOS4.png)
 
     - 5个预测特征层共用同一个Head
     - 注意Regression部分，正常应该预测 $4 \times num_anchors$ 组参数，但是由于anchor free，不依赖anchors的尺寸，所以只预测4个
 
-    ![FCOS5.png](../pictures/FCOS5.png)
+    ![FCOS5.png](../pictures/FCOS/FCOS5.png)
 
     - centerness是反映了当前预测点，对于目标中心的远近程度
     - 热度图中，蓝色代表数值0，红色代表数值为1
     - 加上了centerness分支有助于提高mAP
 
 1. 正负样本的匹配
-    ![FCOS6.png](../pictures/FCOS6.png)
+    ![FCOS6.png](../pictures/FCOS/FCOS6.png)
 
     - 之前的都是通过GT和Anchor box做IoU找正样本，并设定阈值
     - 现在是anhor free，没有anchors，就没办法使用之前的方法
@@ -487,7 +487,7 @@
         - s是特征图相对于原图的步距
         - r是超参数
 
-    ![FCOS7.png](../pictures/FCOS7.png)
+    ![FCOS7.png](../pictures/FCOS/FCOS7.png)
 
     - 同时落入多个相交区域怎么办？
         - 默认分配给面积最小的GT Box
@@ -495,16 +495,16 @@
 
 
 1. 损失计算
-    ![FCOS8.png](../pictures/FCOS8.png)
+    ![FCOS8.png](../pictures/FCOS/FCOS8.png)
 
 1. Ambiguity问题
-    ![FCOS9.png](../pictures/FCOS9.png)
+    ![FCOS9.png](../pictures/FCOS/FCOS9.png)
 
     - 尺寸更大的特征图，适合预测小目标
     - 尺度更小的特征图，适合预测大目标
 
 1. Assigning objects to FPN
-    ![FCOS10.png](../pictures/FCOS10.png)
+    ![FCOS10.png](../pictures/FCOS/FCOS10.png)
 
     - $l^{*}, t^{*}, r^{*}, b^{*}$ 是相对于于预测中心点，到GT box边界的左侧距离，上侧距离，右侧距离和下面距离
     - $m_ {i}$ 是作者预先给的一套阈值

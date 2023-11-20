@@ -15,7 +15,7 @@
     - 实例分割具有挑战性，因为它需要正确检测图像中的所有对象，同时还要精确分割每个实例。因此，它结合了对象检测的经典计算机视觉任务中的元素，其⽬标是对单个对象进⾏分类并使⽤边界框和语义对每个对象进⾏定位分割，其⽬标是将每个像素分类到⼀组固定的类别中，⽽不区分物体的姿态。 ***(按照通⽤术语，我们使⽤对象检测来表⽰通过边界框⽽不是掩码进⾏检测，使⽤语义分割来表⽰不区分实例的逐像素分类。然⽽我们注意到实例分割既是语义的⼜是⼀种检测形式。)*** 鉴于此，⼈们可能期望需要⼀种复杂的⽅法才能获得良好的结果。然⽽，我们证明了⼀个⾮常简单、灵活和快速的系统可以超越先前最先进的实例分割结果。
 
     - 我们的⽅法称为 Mask R-CNN，通过添加⼀个分⽀来预测每个感兴趣区域 (RoI) 上的分割掩码，与现有的分类和边界框回归分⽀并⾏，从⽽扩展了 Faster R-CNN (图1). mask 分⽀是应⽤于每个 RoI 的⼩型 FCN，以像素到像素的⽅式预测分割掩码。考虑到 Faster R-CNN 框架，Mask R-CNN 易于实施和训练，这有助于⼴泛的灵活架构设计。此外，mask 分⽀仅增加了少量计算开销，从⽽实现了快速系统和快速实验。
-        ![Mash R-CNN1.png](../pictures/Mask%20R-CNN1.png)
+        ![Mash R-CNN1.png](../pictures/Mask%20R-CNN/Mask%20R-CNN1.png)
 
     - 原则上 Mask R-CNN 是 Faster R-CNN 的直观扩展，但正确构建 Mask 分⽀对于获得良好结果⾄关重要。最重要的是，Faster R CNN 并不是为⽹络输⼊和输出之间的像素到像素对⻬⽽设计的。这⼀点在 [RoIPool](http://arxiv.org/abs/1504.08083v2) 中最为明显，RoIPool 是处理实例的事实上的核⼼操作，它执⾏⽤于特征提取的粗略空间量化。为了修复错位，我们提出了⼀个简单的、⽆量化的层，称为 RoIAlign，它忠实地保留了精确的空间位置。尽管是看似微⼩的变化，RoIAlign 却产⽣了巨⼤的影响：它将掩模准确度相对提⾼了 10% 到 50%，在更严格的定位指标下显⽰出更⼤的收益。其次，我们发现将掩码和类别预测分离是很重要的：我们独⽴地为每个类别预测⼀个⼆进制掩码，类别之间没有竞争，并依靠⽹络的 RoI 分类分⽀来预测类别。相⽐之下，FCN 通常执⾏每像素多类分类，将分割和分类结合起来，并且根据我们的实验，实例分割效果不佳。
 
@@ -35,7 +35,7 @@
         - 受 R-CNN 有效性的驱动，许多实例分割⽅法都基于分割提议。早期的⽅法重新分类为⾃下⽽上的⽚段。 DeepMask 和后续作品学习提出候选⽚段，然后由 Fast R-CNN 对其进⾏分类。在这些⽅法中，分割先于识别，这是缓慢且不太准确的。同样，[Instance-aware Semantic Segmentation via Multi-task Network Cascades](https://www.semanticscholar.org/reader/1e9b1f6061ef779e3ad0819c2832a29168eaeb9d)提出了⼀个复杂的多阶段级联，它从边界框提议中预测分段提议，然后进⾏分类。相反，我们的⽅法基于掩码和类标签的并⾏预测，更简单、更灵活。
 
         - 最近，[Fully Convolutional Instance-Aware Semantic Segmentation](https://www.semanticscholar.org/reader/0366b36006a6b37c673a42aad03ae77e8ef6ecda)将[Instance-Sensitive Fully Convolutional Networks](https://arxiv.org/pdf/1603.08678.pdf)中的分段建议系统和[R-FCN: Object Detection via Region-based Fully Convolutional Networks](https://www.semanticscholar.org/reader/b724c3f7ff395235b62537203ddeb710f0eb27bb)中的对象检测系统结合起来⽤于“完全卷积实例分割”（FCIS）。 上述3篇文献中的共同思想是完全卷积地预测⼀组位置敏感的输出通道。这些通道同时处理对象类、框和掩码，使系统速度更快。但是 FCIS 在重叠实例上表现出系统性错误并产⽣虚假边缘（图6），表明它受到了分割实例的基本困难的挑战。
-            ![Mask R-CNN6.png](../pictures/Mask%20R-CNN6.png)
+            ![Mask R-CNN6.png](../pictures/Mask%20R-CNN/Mask%20R-CNN6.png)
 
         - 实例分割的另⼀系列解决⽅案是由语义分割的成功驱动的。从每个像素的分类结果（例如，FCN 输出）开始，这些⽅法试图将同⼀类别的像素分成不同的实例。与这些⽅法的分割优先策略相反，Mask R-CNN 基于实例优先策略。我们预计未来将对这两种策略进⾏更深⼊的研究。
 
@@ -64,7 +64,7 @@
     - RoIPool [12]是⼀种标准操作，⽤于从每个 RoI 中提取⼀个⼩特征图（例如，7×7）。 RoIPool ⾸先将⼀个浮点数的 RoI 量化为特征图的离散粒度，然后将这个量化的 RoI 细分为本⾝量化的空间 bin，最后聚合每个 bin 覆盖的特征值（通常通过最⼤池化）。例如，通过计算 $[x / 16]$ 在连续坐标 $x$ 上执⾏量化，其中 16 是特征图步⻓， $[ \cdot ]$ 是舍⼊；同样，在划分为 bin（例如 7×7）时执⾏量化。这些量化在 RoI 和提取的特征之间引⼊了错位。虽然这可能不会影响对⼩翻译具有鲁棒性的分类，但它对预测像素精确掩码有很⼤的负⾯影响。
 
     - 为了解决这个问题，我们提出了⼀个 RoIAlign 层，它消除了 RoIPool 的严苛量化，将提取的特征与输⼊正确对⻬。我们提议的更改很简单：我们避免对 RoI 边界进⾏任何量化或 bins（即，我们使⽤ $x/16$ ⽽不是 $[x/16]$ ）。我们使⽤双线性插值[Spatial Transformer Networks](https://www.semanticscholar.org/reader/fe87ea16d5eb1c7509da9a0314bbf4c7b0676506)来计算每个 RoI bin 中四个定期采样位置的输⼊特征的精确值，并聚合结果（使⽤最⼤值或平均值），详⻅图3 。我们注意到，只要不执⾏量化，结果对确切的采样位置或采样的点数不敏感。
-        ![Mask R-CNN3.png](../pictures/Mask%20R-CNN3.png)
+        ![Mask R-CNN3.png](../pictures/Mask%20R-CNN/Mask%20R-CNN3.png)
 
     - 正如我们在 §4.2 中展⽰的那样，RoIAlign 带来了巨⼤的改进。我们还与 [Instance-Aware Semantic Segmentation via Multi-task Network Cascades](https://www.semanticscholar.org/reader/1e9b1f6061ef779e3ad0819c2832a29168eaeb9d) 中提出的 RoIWarp 操作进⾏了⽐较。与 RoIAlign 不同，RoIWarp 忽略了对⻬问题，并在[Instance-Aware Semantic Segmentation via Multi-task Network Cascades](https://www.semanticscholar.org/reader/1e9b1f6061ef779e3ad0819c2832a29168eaeb9d)中实现为量化 RoI，就像 RoIPool ⼀样。因此，尽管 RoIWarp 也采⽤了由[Spatial Transformer Networks](https://www.semanticscholar.org/reader/fe87ea16d5eb1c7509da9a0314bbf4c7b0676506)驱动的双线性重采样，但它的性能与 RoIPool 相当，如实验所⽰（表2c 中有更多详细信息），证明了对⻬的关键作⽤。
 
@@ -76,7 +76,7 @@
     - 我们还探索了 Lin 等⼈最近提出的另⼀个更有效的主⼲。 [Feature Pyramid Networks for Object Detection](https://www.semanticscholar.org/reader/b9b4e05faa194e5022edd9eb9dd07e3d675c2b36)，称为 Feature Pyra mid Network (FPN)。 FPN 使⽤具有横向连接的⾃顶向下架构，从单尺度输⼊构建⽹络内特征⾦字塔。 Faster R-CNN with an FPN back bone 根据其规模从特征⾦字塔的不同层级提取 RoI 特征，但除此之外，该⽅法的其余部分类似于 vanilla ResNet。使⽤ ResNet-FPN 主⼲与 Mask R CNN 进⾏特征提取可在准确性和速度⽅⾯获得出⾊的收益。有关 FPN 的更多详细信息，我们建议读者参阅[Feature Pyramid Networks for Object Detection](https://www.semanticscholar.org/reader/b9b4e05faa194e5022edd9eb9dd07e3d675c2b36)。
 
     - 对于⽹络头，我们密切遵循之前⼯作中提出的架构，我们在其中添加了完全卷积掩码预测分⽀。具体来说，我们从 ResNet 和 FPN 论⽂中扩展了 Faster R-CNN box heads 。详细信息如图 4 所⽰。ResNet -C4 ⻣⼲⽹的头部包括 ResNet 的第 5 级（即 9 层“res5” ），这是计算密集型的。对于 FPN，主⼲已经包含 res5，因此允许使⽤更少过滤器的更⾼效的头部。
-        ![Mask R-CNN4.png](../pictures/Mask%20R-CNN4.png)
+        ![Mask R-CNN4.png](../pictures/Mask%20R-CNN/Mask%20R-CNN4.png)
 
     - 我们注意到我们的掩码分⽀具有简单的结构。更复杂的设计有可能提⾼性能，但不是这项⼯作的重点。
 

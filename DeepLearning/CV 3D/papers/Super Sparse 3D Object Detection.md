@@ -1,5 +1,4 @@
 # 论文信息
-
 - 时间：2023
 - 期刊：CVPR
 - 网络/算法名称：
@@ -10,7 +9,7 @@
 
 # 一、解决的问题
 
-![Super Sparse 3D Object Detection figure1](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure1.png)
+![Super Sparse 3D Object Detection figure1](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure1.png)
 
 1. 以前的⽅法可以根据其空间稀疏性分为三类：密集检测器、稀疏检测器和半密集检测器
 
@@ -39,7 +38,7 @@
 
 4. 思路：鉴于固有的稀疏性，有效的远程检测的⼀个基本解决⽅案是删除密集的特征图并使⽹络架构完全稀疏
 
-![Super Sparse 3D Object Detection figure2](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure2.png)
+![Super Sparse 3D Object Detection figure2](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure2.png)
 
 5. 困难：然⽽，移除密集特征图并⾮易事，因为它在当前设计中起着不可或缺的作⽤。常⽤的稀疏体素编码器只提取⾮空体素上的特征。没有密集的特征图，对象中⼼通常是空的，尤其是对于⼤对象。我们将此问题命名为“中⼼特征缺失 (CFM)” （图2）。 CFM 显着削弱了中⼼体素的表⽰能⼒，甚⾄在某些极端情况下（如超⼤型⻋辆）甚⾄使中⼼特征变得空洞。然⽽，⼏乎所有流⾏的基于体素或⽀柱的检测器都采⽤基于中⼼的分配并依赖中⼼特征，因为它是整个对象的理想表⽰。所以他们必须在稀疏体素编码器之后⾸先将稀疏体素转换为⻦瞰图中的密集特征图。然后他们通过在密集特征图上应⽤卷积将特征扩散到实例中⼼来解决 CFM 问题，我们将其命名为特征扩散（图2）
 
@@ -82,7 +81,7 @@
         1. 分类和投票
             - 我们首先使用稀疏体素编码器从点云中提取体素特征，例如SST中的稀疏关注块或稀疏卷积编码器。然后，我们通过连接体素特征和从点到其对应体素中心的偏移来构建点特征。这些点特征被分成两个头部，用于前景分类和中心投票。投票类似于VoteNet，其中模型预测从前景点到相应对象中心的偏移。 L1 loss 和 Focal Loss 被用作投票损失 $L_ {vote}$ 和语义分类损失 $L_ {sem}$
 
-        ![Super Sparse 3D Object Detection figure3](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure3.png)
+        ![Super Sparse 3D Object Detection figure3](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure3.png)
 
         2. 连接的组件标签(CCL)
             - 为了将点分组到实例中，我们将所有预测的中心（图3中的红色点）视为图中的顶点。如果两个顶点的距离小于某个阈值，则将连接两个顶点。然后，此图中的连接组件可以被视为一个实例，投票给该连接组件的所有点都共享一个组ID。与VoteNet中的球查询不同，我们基于CCL的分组在大多数情况下避免了碎片化实例。尽管有许多精心设计的实例分组方法，我们选择简单的CCL，因为它在我们的设计中是足够的，并且可以通过高效的联合查找算法并行实现
@@ -111,7 +110,7 @@
             3. 组特征聚合
                 - 在组中，使用池函数来聚合相邻特征。SIR将动态池应用于聚合特征数组 $F$ 。根据 "准备工作：动态广播/汇集" 中的符号，我们得到 $G=p(F，I)$ ，其中 $G$ 是聚合的组特征
 
-            ![Super Sparse 3D Object Detection figure4](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure4.png)
+            ![Super Sparse 3D Object Detection figure4](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure4.png)
 
             4. 集成
                 - 结合这三个基本元素，我们可以构建基于点的运算符的许多变体，如PointNet、DGCNN、Meta Kernel等。图4说明了如何使用动态广播/池构建实例级点运算符的基本思想。在我们的设计中，我们采用VFE的公式作为SIR层的基本结构，基本上是两层PointNet。在SIR模块的第l层中，给定输入点方向特征阵列 $F_ {l}$、点坐标阵列 $X$ 、投票中心 $X^{'}$ 和组ID阵列 $I$ ，第l层的输出可以公式化为： $$\begin{align} F^{'}_ {l} = \mathrm{LinNormAct} (\mathrm{CAT} (F_ {l}, X - p_ {avg}(X^{'}, I)[I])) \end{align}$$ $$\begin{align} F_ {l+1} = \mathrm{LinNormAct} (\mathrm{CAT} (F^{'}_ {l}, p_ {max}(F^{'}_ {l}, I)[I])) \end{align}$$ 其中 $\mathrm{LinNormAct}$ 是完全连接的层，随后是归一化层和激活函数。 $p_ {avg}$ 和 $p_ {max}$ 分别是平均池和最大池函数。输出 $F_ {l+1}$ 可以进一步用作下一个SIR层的输入，因此我们的SIR模块是两个基本SIR层组成的堆栈
@@ -170,18 +169,18 @@
 
     3. 治疗改变失明
 
-        ![Super Sparse 3D Object Detection figure5](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure5.png)
+        ![Super Sparse 3D Object Detection figure5](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure5.png)
 
         - 理论上，通过组合骨架点和残差点，模型能够在当前帧中进行预测。然而，一种被称为“改变盲”的现象可能会阻碍绩效。变化盲是指人类视觉系统倾向于忽略场景中渐进的微小变化，即使多个时间步长的累积变化是显著的。在我们的案例中也可能出现类似的问题。考虑到车辆在时间步 $t$ 接近进入激光雷达的传感范围，只能观察到车辆的一小部分。检测器很可能将其识别为背景，因此RPP将在时间步长 $t+1$ 中删除这些点，并仅保留车辆的少量新点作为残余点。这样，如果车辆缓慢出现，检测器可能永远无法识别它。图5显示了改变的盲目性
 
         - 为了弥补改变的盲目性，我们引入了残余点的最大年龄 $M$ 。换言之，检测器将来自最多 $M$ 个步骤的残差点作为输入。形式上，检测器将 $\cup^{M-1}_ {i=0} \Delta P_ {t-i}$ 作为时间步长 $t$ 中输入的累积残余点
 
     4. 集成超级稀疏输入
-        - 输入点云由两部分组成：先前的骨架点和来自多个时间步骤的残差点。形式上，对于 $N$ 帧FSD++检测器，我们在时间步 $t$ 中有如下的最终输入点： $$\begin{align} P^{in}_ {t} = ( \bigcup^{N}_ {i=1} P^{s}_ {t-i} ) \cup ( \bigcup^{M-1}_ {i=0} \Delta P_ {t-i} ) \end{align}$$ 其中 $P^{s}_ {t}$ 是时间步长 $t$ 处的骨架点。 $P^{in}_ {t}$ 比原始点云稀疏得多。图7显示了 $P^{s}$ 、 $\Deta P$ 和 $P^{in}$ 的示例
+        - 输入点云由两部分组成：先前的骨架点和来自多个时间步骤的残差点。形式上，对于 $N$ 帧FSD++检测器，我们在时间步 $t$ 中有如下的最终输入点： $$\begin{align} P^{in}_ {t} = ( \bigcup^{N}_ {i=1} P^{s}_ {t-i} ) \cup ( \bigcup^{M-1}_ {i=0} \Delta P_ {t-i} ) \end{align}$$ 其中 $P^{s}_ {t}$ 是时间步长 $t$ 处的骨架点。 $P^{in}_ {t}$ 比原始点云稀疏得多。图7显示了 $P^{s}$ 、 $\Delta P$ 和 $P^{in}$ 的示例
 
-    ![Super Sparse 3D Object Detection figure6](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure6.png)
+    ![Super Sparse 3D Object Detection figure6](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure6.png)
 
-    ![Super Sparse 3D Object Detection figure7](../pictures/Super%20Sparse%203D%20Object%20Detection%20figure7.png)
+    ![Super Sparse 3D Object Detection figure7](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20figure7.png)
 
     5. 培训和推理管道
         - FSD++的训练和推理管道与标准方法不同，因为它使用了历史预测和时间信息。图6总结了整个管道
@@ -257,7 +256,7 @@
 
 # 六、代码
 
-![Super Sparse 3D Object Detection Algorithm 1](../pictures/Super%20Sparse%203D%20Object%20Detection%20Algorithm%201.png)
+![Super Sparse 3D Object Detection Algorithm 1](../pictures/Super%20Sparse%203D%20Object%20Detection/Super%20Sparse%203D%20Object%20Detection%20Algorithm%201.png)
 
 
 # 读者角度（挖掘文章中没有提到的）：

@@ -6,6 +6,8 @@
 - 作者：Zitian Wang1, Zehao Huang2, Jiahui Fu1, Naiyan Wang2, Si Liu1; 1Institute of Artificial Intelligence, Beihang University 2TuSimple
 - 实验环境：
 - 数据集： nuScenes dataset
+
+
 # 一、解决的问题
 1. 早期的单眼 3D 对象检测方法通常在2D 对象检测管道之后构建它们的框架；但它们⽆法利⽤周围摄像机的⼏何配置和多视图图像对应关系，⽽这些对于现实世界中物体的 3D 位置⾄关重要。此外，使这些⽅法适应多视图设置依赖于复杂的交叉相机后处理，这进⼀步导致效率和功效下降
 2. 多视⻆ 3D ⽬标检测⽅法主要可分为两类：稠密 3D ⽅法和稀疏查询⽅法
@@ -28,7 +30,7 @@
     3. 在标准nuScenes 数据集上测试了MV2D，它在 ***单帧*** ⽅法中实现了最先进的性能
 # 三、设计的模型
 
-![MV2D structure](../pictures/MV2D%20structure.png)
+![MV2D structure](../pictures/MV2D/MV2D%20structure.png)
 
 1. 模型总览
     - 给定 $N$ 个多视图图像 $\mathcal{I} = \lbrace \mathbf{I}_ {v} | 0 \le v < N \rbrace$ ，图像特征图 $\mathcal{F} = {\mathbf{F}_ {v} | 0 \le v < N}$ ，其中 $\mathbf{F}_ {v} \in \mathbb{R}^{H^{f} \times W^{f} \times C}$ ⾸先使⽤主⼲⽹络从输⼊图像中提取。为了获得 2D 物体检测，将 2D 物体检测器，即 ***Faster R-CNN*** ，应⽤于所有输⼊图像，产⽣⼀组 2D 物体边界框 $\mathcal{B} = {\mathbf{B}_ {v} | 0 \le v < N}$ ，其中 $\mathbf{B}_ {v} \in \mathbb{R}^{M_ {v} \times 4}$ 表⽰第 v 个图像中预测的 2D 边界框。 $M_ {v}$ 是检测框的数量。在实践中，⼆维检测器主⼲的权重也可以⽤于后续的特征提取
@@ -36,7 +38,7 @@
 
 2. 动态对象查询生成
 
-    ![MV2D  Dynamic object query generator](../pictures/MV2D%20%20Dynamic%20object%20query%20generator.png)
+    ![MV2D  Dynamic object query generator](../pictures/MV2D/MV2D%20%20Dynamic%20object%20query%20generator.png)
 
     - 在有效的 2D 物体检测器的帮助下，物体的存在得到了很好的证明，物体的位置被限制在特定的图像区域内，从⽽为 3D 空间中的物体定位提供了有价值的先验。为了从2D检测结果生成对象查询，我们提出了一个动态查询生成器，如图3所示。动态查询生成器为每个RoI导出3D世界空间中的3D参考点 $\mathbf{p}_ {ref} \in \mathbb{R}^{3}$ 。然后，位置编码层根据 $\mathbf{p}_ {ref}$ 生成对象查询
     - 具体来说，给定所有图像的⼆维⽬标检测结果 $\mathcal{B}$ 和图像特征图 $\mathcal{F}$ ，⾸先通过 RoI-Align 提取⽬标 RoI 特征 $\mathbf{O}$ ，其中 $\mathbf{O}_ {v} \in \mathbb{R}^{M_ {v} \times H^{roi} \times W^{roi} \times C}$ 是对应⼆维对象边界框 $\mathbf{B}_ {v}$ ： $$\begin{align} \mathbf{O}_ {v} = ROIAlign (\mathbf{F}_ {v},\mathbf{B}_ {v}) \end{align}$$ 的RoI特征
@@ -49,7 +51,7 @@
 
 3. 相关对象特征选择
 
-    ![MV2D Illustration of relevant region selection](../pictures/MV2D%20Illustration%20of%20relevant%20region%20selection.png)
+    ![MV2D Illustration of relevant region selection](../pictures/MV2D/MV2D%20Illustration%20of%20relevant%20region%20selection.png)
 
     - 每个对象仅在输⼊多视图图像内的⼦区域中捕获。为了精确描绘某个对象，对象查询应关注覆盖⽬标对象的所有相关图像区域，并丢弃可能误导⽬标对象 3D 定位的不相关区域
     - 为此，我们建议为每个对象查询的更新选择相关特征。由于2D对象检测器可以预测令人信服的2D对象建议，因此检测到的对象边界框暗示哪个区域包含关于对象的最独特的信息。因此，我们考虑对象的两部分相关特征：

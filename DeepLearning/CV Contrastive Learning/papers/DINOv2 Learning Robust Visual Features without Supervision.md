@@ -16,7 +16,7 @@
 
 本文主要介绍了一些技术上的创新，以充分挖掘自监督学习的潜力。其中，包括自动化数据管道用于获取更好的数据集，以及训练包含 10 亿个可调参数的 ViT 模型，并通过无监督蒸馏方法，将其压缩成一系列能够应用于不同任务的小模型。这些技术可以让计算机视觉领域变得更加高效、精准，并且更好理解。
 
-![DINOv2 Visualization of the first PCA components](../pictures/DINOv2%20Visualization%20of%20the%20first%20PCA%20components.png)
+![DINOv2 Visualization of the first PCA components](../pictures/DINOv2/DINOv2%20Visualization%20of%20the%20first%20PCA%20components.png)
 
 > 上图计算来自同一列的图像块之间的 PCA 可视化结果，并显示它们的前 3 个组件，每个组件都匹配到不同的颜色通道。可以看出，尽管姿势、风格甚至物体发生变化，但相关图像之间的相同部分是匹配的。（这里背景主要是通过阈值处理来屏蔽掉的）
 
@@ -24,7 +24,7 @@
 
 本文的主要贡献之一便是创建了一个大规模的数据集——`LVD-142M`。同以往的人工采集、标注和清洗流程不同，此数据集是通过从大量未标注的数据中检索出与几个经过精心整理过的数据集中存在相似度很高的那部分样本所组成的。下面我们一起遵循以下图例看看这个`pipeline`是如何构建起来的。
 
-![DINOv2 dataset](../pictures/DINOv2%20dataset.png)
+![DINOv2 dataset](../pictures/DINOv2/DINOv2%20dataset.png)
 
 ### 数据源
 
@@ -32,7 +32,7 @@
 
 #### 公开数据集
 
-![DINOv2 pubilc dataset](../pictures/DINOv2%20pubilc%20dataset.png)
+![DINOv2 pubilc dataset](../pictures/DINOv2/DINOv2%20pubilc%20dataset.png)
 
 #### 网络数据集
 
@@ -50,7 +50,7 @@
 
 经过第一个步骤，我们将一些质量太差或者格式破损的图像给剔除掉，然而这当中必然会存在许多冗余图像。本文采用《`A self-supervised descriptor for image copy detection`》这篇论文提出的`copy detection pipeline`进行图像查重，同样是 Meta 的工作，发表于 CVPR 2022，本质上也是通过深度学习的方法计算相似度，有兴趣的同学可以自行尝试下。
 
-![DINOv2 duplicate removal](../pictures/DINOv2%20duplicate%20removal.png)
+![DINOv2 duplicate removal](../pictures/DINOv2/DINOv2%20duplicate%20removal.png)
 
 经过上述操作，可以有效减少冗余并增加了图像之间的多样性。此外，作者还删除了这项工作中使用的任何基准的测试或验证集中包含的重复图像。
 
@@ -144,19 +144,19 @@ FSDP 技术的作用是使训练过程可以更加高效地扩展至多个 GPU �
 
 ### 定量分析
 
-![DINOv2 quantitative analysis1](../pictures/DINOv2%20quantitative%20analysis1.png)
+![DINOv2 quantitative analysis1](../pictures/DINOv2/DINOv2%20quantitative%20analysis1.png)
 
-![DINOv2 quantitative analysis2](../pictures/DINOv2%20quantitative%20analysis2.png)
+![DINOv2 quantitative analysis2](../pictures/DINOv2/DINOv2%20quantitative%20analysis2.png)
 
-![DINOv2 quantitative analysis3](../pictures/DINOv2%20quantitative%20analysis3.png)
+![DINOv2 quantitative analysis3](../pictures/DINOv2/DINOv2%20quantitative%20analysis3.png)
 
 ### 定性分析
 
-![DINOv2 qualitative analysis1](../pictures/DINOv2%20qualitative%20analysis1.png)
+![DINOv2 qualitative analysis1](../pictures/DINOv2/DINOv2%20qualitative%20analysis1.png)
 
-![DINOv2 qualitative analysis2](../pictures/DINOv2%20qualitative%20analysis2.png)
+![DINOv2 qualitative analysis2](../pictures/DINOv2/DINOv2%20qualitative%20analysis2.png)
 
-![DINOv2 qualitative analysis3](../pictures/DINOv2%20qualitative%20analysis3.png)
+![DINOv2 qualitative analysis3](../pictures/DINOv2/DINOv2%20qualitative%20analysis3.png)
 
 ## 总结
 

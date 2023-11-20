@@ -1,7 +1,7 @@
 # 论文信息
 - 时间：2020
 - 期刊：PMLR
-- 网络名称： EfficientNet
+- 网络名称：EfficientNet
 - 意义：通过架构搜索得到的CNN
 - 作者：Mingxing Tan；Quoc V. Le；Google
 - 实验环境：
@@ -19,13 +19,13 @@
 
 # 三、设计的模型
 
-![Model Scaling](../pictures/Model%20Scaling.png)
+![Model Scaling](../pictures/EfficientNet/Model%20Scaling.png)
 
-![Efficient Equation1](../pictures/EfficientNet%20Equation1.png)
+![Efficient Equation1](../pictures/EfficientNet/EfficientNet%20Equation1.png)
 
-![Efficient Equation2](../pictures/EfficientNet%20Equation2.png)
+![Efficient Equation2](../pictures/EfficientNet/EfficientNet%20Equation2.png)
 
-![Efficient Equation3](../pictures/EfficientNet%20Equation3.png)
+![Efficient Equation3](../pictures/EfficientNet/EfficientNet%20Equation3.png)
 
 -  STEP 1: we first fix φ = 1, assuming twice more resources available, and do a small grid search of α, β, γ based on Equation 2 and 3. In particular, we find
 the best values for EfficientNet-B0 are α = 1.2, β =1.1, γ = 1.15, under constraint of α · β^2· γ^2 ≈ 2.

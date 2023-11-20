@@ -23,7 +23,7 @@
     -  这就是我们来到这⾥的原因，通过经验丰富的优化将最近的进步交付给 YOLO 系列。考虑到 YOLOv4 和 YOLOv5 对于基于锚的管道可能有点过度优化，我们选择 YOLOv3 [25]作为我们的起点（我们将 YOLOv3-SPP 设置为默认 YOLOv3）。事实上，由于计算资源有限，在各种实际应⽤中软件⽀持不⾜，YOLOv3 仍然是业界使⽤最⼴泛的检测器之⼀。
 
     - 如图1 所⽰，随着上述技术的更新，我们将 YOLOv3 在分辨率为 640×640 的 COCO 上提⾼到 47.3% AP (YOLOX-DarkNet53)，超过了⽬前 YOLOv3 的最佳实践（44.3% AP， ultralytics version） ⼤幅度提⾼。此外，当切换到采⽤⾼级 CSPNet [31]主⼲和附加 PAN [19]头的⾼级 YOLOv5 架构时，YOLOX-L 在 COCO 上以 640 × 640 分辨率实现 50.0% AP，优于对应的 YOLOv5-L按 1.8% 美联社计算。我们还在⼩尺⼨模型上测试我们的设计策略。 YOLOX-Tiny 和 YOLOX-Nano（仅 0.91M Parameters 和 1.08G FLOPs）分别⽐对应的 YOLOv4-Tiny 和 NanoDet ⾼出10% AP 和 1.8% AP。
-        ![YOLOX1.png](../pictures/YOLOX1.png)
+        ![YOLOX1.png](../pictures/YOLOX/YOLOX1.png)
 
     - 我们已经在 https://github.com/Megvii-BaseDetection/YOLOX上发布了我们的代码，⽀持 ONNX、TensorRT、NCNN 和 Openvino。还有⼀件事值得⼀提，我们使⽤单个 YOLOX-L 模型赢得了 Streaming Perception Challenge（CVPR 2021 ⾃动驾驶研讨会）的第⼀名。
 
@@ -36,14 +36,14 @@
 
     2. YOLOv3 baseline
         - 我们的基线采用了DarkNet53主干和SPP层的架构，在一些论文中称为YOLOv3 SPP[1,7]。与最初的实现[25]相比，我们稍微改变了一些训练策略，增加了EMA权重更新、余弦lr调度、IoU损失和IoU感知分支。我们将BCE损失用于训练cls和obj分支，将IoU损失用于训练reg分支。这些一般的训练技巧与YOLOX的关键改进是正交的，因此我们将它们放在了基线上。此外，我们只进行RandomHorizontalFlip、ColorJitter和多尺度的数据增强，并放弃了RandomResizedCrop策略，因为我们发现RandomResiizedCrop与计划的马赛克增强有点重叠。有了这些增强，我们的基线在COCO val上实现了38.5%的AP，如表2所示。
-            ![YOLOX Table2.png](../pictures/YOLOX%20Table2.png)
+            ![YOLOX Table2.png](../pictures/YOLOX/YOLOX%20Table2.png)
 
     3. Decoupled head 
         - 在⽬标检测中，分类和回归任务之间的冲突是⼀个众所周知的问题[27,34]。因此，⽤于分类和定位的解耦头被⼴泛⽤于⼤多数⼀级和⼆级检测器[16,29,35,34]。然⽽，随着 YOLO 系列的主⼲和特征⾦字塔（例如，FPN [13]、 PAN [20]。）不断发展，它们的检测头仍然主要耦合，如图 2 所⽰。
-            ![YOLOX2.png](../pictures/YOLOX2.png)
+            ![YOLOX2.png](../pictures/YOLOX/YOLOX2.png)
 
         - 我们的两个分析实验表明耦合检测头可能会损害性能。 (1)如图3. (2)所⽰，⽤解耦的头部替换 YOLO 的头部⼤⼤提⾼了收敛速度。 decoupled head 对于端到端版本的 YOLO 是必不可少的（接下来会介绍）。从 Tab 可以看出。如图 1 所⽰，耦合头的端到端性能下降了 4.2% AP，⽽去耦合头的下降减少到 0.8% AP。因此，我们将 YOLO 检测头替换为图 2 中的精简耦合头。具体⽽⾔，它包含⼀个 1×1 卷积层以减少通道维度，然后是两个平⾏分⽀，分别具有两个 3×3 卷积层。我们在 Tab 中报告了在 V100 上 batch=1 的推理时间。 2和精简版去耦头带来额外的 1.1 毫秒（11.6 毫秒对 10.5 毫秒）。
-            ![YOLOX3.png](../pictures/YOLOX3.png)
+            ![YOLOX3.png](../pictures/YOLOX/YOLOX3.png)
 
     4. Strong data augmentation
         - 我们将Mosaic和MixUp添加到我们的增强策略中，以提高YOLOX的性能。Mosaic是ultralytics-YOLOv3提出的一种有效的扩增策略。然后它被广泛用于YOLOv4[1]、YOLOv5[7]和其他探测器[3]。MixUp[10]最初是为图像分类任务设计的，但后来在BoF[38]中进行了修改，用于对象检测训练。我们在模型中采用了MixUp和Mosaic实现，并在过去的15个时期中关闭了它，在表2中实现了42.0%的AP。在使用强大的数据增强后，我们发现ImageNet预训练不再有益，因此我们从头开始训练以下所有模型。
@@ -87,7 +87,7 @@
         - 在我们的实验中，所有模型都保持了几乎相同的学习计划和优化参数，如2.1所示。然而，我们发现合适的增强策略因不同尺寸的模型而异。如表5所示，虽然对YOLOX-L应用MixUp可以将AP提高0.9%，但最好削弱对YOLOX Nano等小型模型的增强。具体而言，当训练小型模型，即YOLOX-S、YOLOX-Tiny和YOLOX-Nano时，我们消除了混合的统计并削弱了马赛克（将尺度范围从[0.1，2.0]缩小到[0.5，1.5]）。这样的改性将YOLOX Nano的AP从24.0%提高到25.3%。
 
         - 对于大型模型，我们还发现更强的增强更有帮助。事实上，我们的MixUp实现比[38]中的原始版本更重。受Copypaste[6]的启发，我们在将两张图像混合之前，通过随机采样的比例因子对它们进行了抖动处理。为了理解Mixup与缩放抖动的威力，我们将其与YOLOX-L上的Copypaste进行了比较。注意，Copypaste需要额外的实例掩码注释，而MixUp则不需要。但如表5所示，这两种方法实现了有竞争力的性能，表明当没有实例掩码注释可用时，具有缩放抖动的MixUp是Copypaste的合格替代品。
-            ![YOLOX Table5.png](../pictures/YOLOX%20Table5.png)
+            ![YOLOX Table5.png](../pictures/YOLOX/YOLOX%20Table5.png)
 
 
 # 四、实验结果
@@ -95,7 +95,7 @@
 ## 1、比之前模型的优势
 ### Comparison with the SOTA
 - 传统上，SOTA比较表如表6所示。然而，请记住，该表中模型的推理速度通常是不受控制的，因为速度随软件和硬件的不同而变化。因此，我们对图1中的所有YOLO系列使用相同的硬件和代码库。绘制了稍微受控的速度/精度曲线。
-    ![YOLOX Table6.png](../pictures/YOLOX%20Table6.png)
+    ![YOLOX Table6.png](../pictures/YOLOX/YOLOX%20Table6.png)
 
 - 我们注意到，有一些高性能YOLO系列具有更大的型号尺寸，如Scale-YOLOv4[30]和YOLOv5-P6[7]。基于电流互感器的检测器[21]将精度SOTA提高到60 AP。由于时间和资源的限制，我们没有在本报告中探讨这些重要特征。然而，它们已经在我们的范围内了。
 

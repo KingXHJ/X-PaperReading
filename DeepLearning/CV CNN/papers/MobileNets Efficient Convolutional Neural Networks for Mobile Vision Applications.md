@@ -16,11 +16,11 @@
 # 二、做出的创新
 - MobileNet模型基于深度可分离卷积，这是一种因式卷积，它将标准卷积分解为深度卷积和1×1卷积，称为逐点卷积
 
-![Depthwise Separable Convolution](../pictures/Depthwise%20Separable%20Convolution.png)
+![Depthwise Separable Convolution](../pictures/MobileNet/Depthwise%20Separable%20Convolution.png)
 
-![Depthwise Separable Convolution vs Standard convolutional](../pictures/Depthwise%20Separable%20Conv%20vs%20standard.png)
+![Depthwise Separable Convolution vs Standard convolutional](../pictures/MobileNet/Depthwise%20Separable%20Conv%20vs%20standard.png)
 
-![MobileNet Body Architecture](../pictures/MobileNet%20Body%20Architecture.png)
+![MobileNet Body Architecture](../pictures/MobileNet/MobileNet%20Body%20Architecture.png)
 
 # 三、设计的模型
 1. >All layers are followed by a batchnorm and ReLU nonlinearity with the exception

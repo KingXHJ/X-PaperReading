@@ -21,7 +21,7 @@
 7. ***DETR其实是一个框架***
 # 三、设计的模型
 1. DETR流程
-    ![DETR works](../pictures/DETR%20works.png)
+    ![DETR works](../pictures/DETR/DETR%20works.png)
     - 先用CNN去抽取特征
     - 然后拉直，送入Transformer的encoder（学习全局信息）和decoder里面去
     - decoder输出框
@@ -29,7 +29,7 @@
     - 没画object query
 2. Object detection set prediction loss
     - DETR任何时候都会输出N个预测框（文章中 $N=100$ ）
-    ![DETR loss](../pictures/DETR%20loss.png)
+    ![DETR loss](../pictures/DETR/DETR%20loss.png)
     
     $$\mathcal{L}_ {Hungarian}(y,\hat{y})= \sum ^ {N} _ {i=1} [-log\hat{p}_ {\hat{\sigma}(i)}(c_i)+\mathbb{1}_ {\lbrace c_i\neq \varnothing \rbrace} \mathcal{L}_{box}(b_i,\hat{b}_ {\hat{\sigma}}(i))]$$
     - 分类的loss和匹配框的loss
@@ -37,8 +37,8 @@
     - 先算最优匹配，再在上面算loss
 
 3. DETR结构：
-    ![DETR architecture](../pictures/DETR%20architecture.png)
-    ![DETR arch analyse](../pictures/DETR%20arch%20analyse.png)
+    ![DETR architecture](../pictures/DETR/DETR%20architecture.png)
+    ![DETR arch analyse](../pictures/DETR/DETR%20arch%20analyse.png)
 
 
 # 四、实验结果 

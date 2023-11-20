@@ -15,10 +15,10 @@
 1. 单应性估计
     - 在同步定位和映射(SLAM)和运动结构(SfM)等几何计算机视觉任务中，图像中点之间的对应关系对于估计三维结构和相机姿态至关重要。这种对应关系通常是通过匹配局部特征来估计的，这个过程被称为数据关联。大视点和光照变化、遮挡、模糊和缺乏纹理是使2d到2d数据关联特别具有挑战性的因素。
     - 本文提出了一种新的特征匹配问题的思路。我们建议使用一种名为SuperGlue的新型神经结构，从已有的局部特征中学习匹配过程，而不是通过简单的匹配启发式和技巧来学习更好的任务无关的局部特征。在SLAM的背景下，通常将问题分解为视觉特征提取前端和束调整或姿态估计后端，我们的网络直接位于中间——SuperGlue是一个可学习的中间端(见图1)。
-    ![SuperGlue1](../pictures/SuperGlue1.png)
+    ![SuperGlue1](../pictures/SuperGlue/SuperGlue1.png)
 
     - 在这项工作中，学习特征匹配被视为寻找两组局部特征之间的部分分配。通过求解一个线性分配问题，我们重新审视了经典的基于图的匹配策略，当线性分配问题松弛为最优运输问题时，该问题可以微分求解。该优化的代价函数由图神经网络(GNN)预测。受Transformer成功的启发，它使用自我(图像内)和交叉(图像间)注意力来利用关键点的空间关系及其视觉外观。这个公式加强了预测的分配结构，同时使学习复杂先验的成本，优雅地处理遮挡和不可重复的关键点。我们的方法是从图像对端到端进行训练的——我们从一个大型带注释的数据集中学习姿态估计的先验，使SuperGlue能够推断3D场景和分配。我们的工作可以应用于各种需要高质量特征对应的多视图几何问题(参见图2)。
-    ![SuperGlue2](../pictures/SuperGlue2.png)
+    ![SuperGlue2](../pictures/SuperGlue/SuperGlue2.png)
 
     - 我们展示了SuperGlue相对于手工匹配器和学习的内层分类器的优越性。当与深度前端SuperPoint结合使用时，SuperGlue在室内和室外姿态估计任务上取得了最新进展，并为端到端深度SLAM铺平了道路
 
@@ -44,7 +44,7 @@
         1. 由于检测器的遮挡和失效，一些关键点将无法匹配。
         
         一个有效的特征匹配模型应该以找出相同3D点的重投影之间的所有对应关系和识别没有匹配的关键点为目标。我们将SuperGlue(见图3)表述为解决一个优化问题，其成本由深度神经网络预测。这减少了对领域专业知识和启发式的需求-我们直接从数据中学习相关的先验
-    ![SuperGlue3](../pictures/SuperGlue3.png)
+    ![SuperGlue3](../pictures/SuperGlue/SuperGlue3.png)
     
 - Formulation
     - 考虑两个图像A和B，每个图像都有一组关键点位置 $\mathbf{p}$ 和相关的视觉描述符 $\mathbf{d}$ -我们将它们联合引用 $(\mathbf{p},\mathbf{d})$ 作为局部特征。位置由x和y图像坐标以及检测置信度 $c,\mathbf{p}_ {i}:= (x,y,c)_ {i}$ 组成，视觉描述符 $\mathbf{d}_ {i} \in \mathbb{R}^{D}$ 可以是像SuperPoint这样的CNN提取的描述符，也可以是像SIFT这样的传统描述符。图像A和B分别有M和N个局部特征，索引分别为 $\mathcal{A}:= \lbrace 1, \cdots ,M \rbrace$ 和 $\mathcal{B}:= \lbrace 1, \cdots ,N \rbrace$ 。
@@ -96,11 +96,11 @@
 ## 2、有优势的原因
 1. Ablation study
     - 为了评估我们的设计决策，我们重复了SuperPoint特性的室内实验，但这次关注的是不同的SuperPoint变体。表4所示的消融研究表明，所有SuperGlue块都是有用的，并带来了实质性的性能提升。
-    ![SuperGlue_Table4](../pictures/SuperGlue_Table4.png)
+    ![SuperGlue_Table4](../pictures/SuperGlue/SuperGlue_Table4.png)
     - 当我们在训练SuperGlue时通过SuperPoint描述符网络进行反向传播时，我们观察到AUC@20◦从51.84到53.38的改进。这证实了SuperGlue适用于超越匹配的端到端学习。
 1. Visualizing Attention
     - 自我和交叉注意模式的广泛多样性如图7所示，反映了习得行为的复杂性。附录D对趋势和内部工作进行了详细分析。
-    ![SuperGlue7](../pictures/SuperGlue7.png)
+    ![SuperGlue7](../pictures/SuperGlue/SuperGlue7.png)
 ## 3、改进空间
 
 # 五、结论

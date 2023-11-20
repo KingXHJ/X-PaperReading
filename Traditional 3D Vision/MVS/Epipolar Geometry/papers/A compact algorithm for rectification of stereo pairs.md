@@ -21,12 +21,12 @@
     - 让我们将PPM写为： $$\begin{equation} \tilde{\mathbf{P}} = \begin{bmatrix} \begin{array}{c|c} \mathbf{q}^{T}_ {1} & q_ {14} \\ \mathbf{q}^{T}_ {2} & q_ {24} \\ \mathbf{q}^{T}_ {3} & q_ {34} \end{array} \end{bmatrix} = [\mathbf{Q} | \tilde{\mathbf{q}}] \end{equation}$$
     - 在笛卡尔坐标中，投影（公式(1)）写道： $$\begin{equation} \left\{ \begin{aligned} u & = & \frac{\mathbf{q}^{T}_ {1} \mathbf{w} + q_ {14}}{\mathbf{q}^{T}_ {3} \mathbf{w} + q_ {34}} \\ v & = & \frac{\mathbf{q}^{T}_ {2} \mathbf{w} + q_ {24}}{\mathbf{q}^{T}_ {3} \mathbf{w} + q_ {34}} \end{aligned} \right. \end{equation}$$
     - 焦平面是与包含光学中心 $C$ ，与视平面平行的平面。 $\mathbf{c}$ 的坐标 $C$ 由下式给出： $$\begin{equation} \mathbf{c} = -\mathbf{Q}^{-1} \tilde{\mathbf{q}} \end{equation}$$
-    ![change axis](../pictures/change%20axis.png)
+    ![change axis](../pictures/compact%20algorithm%20for%20rectification%20of%20stereo%20pairs/change%20axis.png)
     
     - 因此， $\tilde{\mathbf{P}}$ 可以被写为： $$\begin{equation} \tilde{\mathbf{P}} = [\mathbf{Q} | - \mathbf{Q} \mathbf{c}] \end{equation}$$
     - 与图像点 $M$ 相关联的光线是线 $MC$ ，即3D点的集合 $\lbrace \mathbf{w} : \tilde{\mathbf{m}} \cong \tilde{\mathbf{P}} \tilde{\mathbf{w}} \rbrace$ 。参数形式： $$\begin{equation} \mathbf{w} = \mathbf{c} + \lambda \mathbf{Q}^{-1} \tilde{\mathbf{m}}, \quad \quad \quad \quad \lambda \in \mathbb{R} \end{equation}$$
 2. 对极几何(Epipolar geometry)
-    ![Epipolar geometry](../pictures/Epipolar%20geometry.png)
+    ![Epipolar geometry](../pictures/compact%20algorithm%20for%20rectification%20of%20stereo%20pairs/Epipolar%20geometry.png)
     - 专有名词
         - 极点 $E_1$ ：右相机坐标原点 $C_2$ 在左像平面上的像
         - 极点 $E_2$ ：左相机坐标原点 $C_1$ 在右像平面上的像 
@@ -35,7 +35,7 @@
         - 极线约束：给定图像上的一个特征，它在另一幅图像上的匹配视图一定在对应的极线上，即已知 $M_{1}$ ，则它对应在右图的匹配点一定在极线 $l_2$ 上；反之亦然
         - 极线约束给出了对应点重要的约束条件，它将对应点匹配从整幅图像中查找压缩到一条线上查找，大大 减小了搜索范围，对对应点的匹配起指导作用
     
-    ![Rectified cameras](../pictures/Rectified%20cameras.png)
+    ![Rectified cameras](../pictures/compact%20algorithm%20for%20rectification%20of%20stereo%20pairs/Rectified%20cameras.png)
     - 当 $C_1$ 位于右相机的焦平面中时，右对极位于无穷远处，对极线在右图像中形成一束平行线。一种非常特殊的情况是当两个极点都在无穷远处时，当线 $C_1, C_2$（基线）包含在两个焦平面中时，即视平面平行于基线时，就会发生这种情况。然后，极线在两幅图像中形成一束平行线。任何一对图像都可以被变换，使得对极线在每个图像中是平行和水平的。此过程称为校正(rectification)
    
 # 一、解决的问题
@@ -70,7 +70,7 @@
     - 根据等式8，光线方程如下（因为整流不会移动光学中心）： $$\begin{equation} \left\{ \begin{aligned} \mathbf{w} &= \mathbf{c}_ {1} + \lambda _{o} \mathbf{Q}^{-1}_ {o1} \tilde{\mathbf{m}}_ {o1}, \quad \quad \quad \quad \lambda _{o} \in \mathbb{R} \\ \mathbf{w} &= \mathbf{c}_ {1} + \lambda _{n} \mathbf{Q}^{-1}_ {n1} \tilde{\mathbf{m}}_ {n1}, \quad \quad \quad \quad \lambda _{n} \in \mathbb{R} \end{aligned} \right. \end{equation}$$ 因此 $$\begin{equation} \tilde{\mathbf{m}}_ {n1} = \lambda \mathbf{Q}_ {n1} \mathbf{Q}^{-1}_ {o1} \tilde{\mathbf{m}}_ {o1} \quad \quad \quad \lambda \in \mathbb{R} \end{equation}$$
     - 然后，将变换 $\mathbf{T}_ {1}$ 应用于原始左图像以生成校正图像
 
-    ![rectified image](../pictures/rectified%20image.png)
+    ![rectified image](../pictures/compact%20algorithm%20for%20rectification%20of%20stereo%20pairs/rectified%20image.png)
     - ***请注意，校正图像的像素（整数坐标位置）通常对应于原始图像平面上的非整数位置。因此，通过双线性插值(bilinear interpolation)计算校正图像的灰度级***
     - 通过三角测量重建3D点（Hartley和Sturm，1997）可使用Pn1、Pn2直接从校正图像中进行
 

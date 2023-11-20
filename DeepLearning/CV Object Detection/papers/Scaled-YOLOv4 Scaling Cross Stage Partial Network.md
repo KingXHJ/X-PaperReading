@@ -21,7 +21,7 @@
 # 二、做出的创新
 1. Introduction 创新
     - 通过分析最先进的⽬标检测器[ 1、3、6、26、35、40、44 ] ，我们发现作为 YOLOv4 [1] ⻣⼲的 CSPDarknet53⼏乎匹配所有最佳架构特征通过⽹络架构搜索技术获得。 CSPDarknet53的深度、瓶颈⽐、阶段间宽度增⻓⽐分别为65、1、2。因此，我们开发了基于 YOLOv4 的模型缩放技术，并提出了 scaled-YOLOv4。如图 1 所⽰，所提出的 scaled-YOLOv4 结果具有出⾊的性能。scaled-YOLOv4 的设计过程如下。⾸先，我们重新设计了YOLOv4并提出了YOLOv4-CSP，然后基于YOLOv4-CSP我们开发了scaled-YOLOv4。在提出的scaled-YOLOv4中，我们讨论了linear scaling up/down模型的上限和下限，分别分析了⼩模型和⼤模型在模型缩放时需要注意的问题。因此，我们能够系统地开发 YOLOv4-large 和 YOLOv4-tiny 模型。 Scaled-YOLOv4 可以在速度和精度之间取得最佳平衡，能够对 16 FPS、30 FPS 和 60 FPS 电影以及嵌⼊式系统进⾏实时物体检测。
-        ![Scaled-YOLOv41.png](../pictures/Scaled-YOLOv41.png)
+        ![Scaled-YOLOv41.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv41.png)
 
     - 我们总结了本⽂的贡献：
         1. 为⼩模型设计了⼀种强⼤的模型缩放⽅法，可以系统地平衡浅层 CNN 的计算成本和内存带宽；
@@ -50,12 +50,12 @@
         - 在设计⾼效的模型缩放⽅法时，我们的主要原则是当缩放时，我们想要增加/减少的量化成本越低/越⾼越好。在本节中，我们将展⽰和分析各种通⽤ CNN 模型，并尝试了解它们在⾯对 (1) 图像⼤⼩、(2) 层数和 (3) 通道数变化时的量化成本。我们选择的 CNN 是 ResNet、ResNext 和 Darknet。
 
         - 对于具有b个基本层信道的 $k$ 层CNN，ResNet层的计算为 $k*[conv(1 \times 1, b/4) \to conv(3 \times 3, b/4) \to conv(1 \times 1, b)]$ ，并且ResNext层的是 $k*[conv(1 \times 1, b/2) \to gconv(3 \times 3/32, b/2) \to conv(1 \times 1, b)]$ 。对于暗网层，计算量为 $k * [conv(1 \times 1, b/2) \to conv(3 \times 3, b)]$ 。设可用于调整图像大小、层数和通道数的比例因子分别为 $\alpha, \beta 和 \gamma$ 。当这些比例因子发生变化时，FLOP的相应变化汇总在表1中。
-            ![Scaled-YOLOv4 Table1.png](../pictures/Scaled-YOLOv4%20Table1.png)
+            ![Scaled-YOLOv4 Table1.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table1.png)
 
         - 从表1可以看出，缩放尺⼨、深度、和宽度导致计算成本增加。分别表⽰平⽅、线性、平⽅递增。
 
         - Wang 等⼈提出的CSPNet [37] 。可以应⽤于各种CNN架构，同时减少参数量和计算量。此外，它还提⾼了准确性并减少了推理时间。我们将其应⽤于 ResNet、ResNeXt 和 Darknet，观察计算量的变化，如表2 所⽰。
-            ![Scaled-YOLOv4 Table2.png](../pictures/Scaled-YOLOv4%20Table2.png)
+            ![Scaled-YOLOv4 Table2.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table2.png)
 
         - 从表2所⽰的数据中，我们观察到将上述CNNs转换为CSPNet后，新架构可以有效地将ResNet、ResNeXt和Darknet的计算量（FLOPs）降低23.5%、46.7%和50.0%，分别。因此，我们使⽤ CSP 化模型作为执⾏模型缩放的最佳模型。
 
@@ -64,13 +64,13 @@
 
         1. Make the order of computations less than $O(whkb^{2})$
             - 轻量级模型不同于⼤型模型，其参数利⽤效率必须更⾼或更⾼der通过少量的计算达到要求的精度。在进⾏模型缩放时，我们希望计算的阶数能够越低越好。在表3中，我们分析了具有有效参数利⽤的⽹络，例如 DenseNet 和 OS ANet [15] 的计算负载，其中 $g$ 表⽰增⻓率。
-                ![Scaled-YOLOv4 Table3.png](../pictures/Scaled-YOLOv4%20Table3.png)
+                ![Scaled-YOLOv4 Table3.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table3.png)
 
             - 对于⼀般的 CNN，表3中列出的 $g, b 和 k$ 之间的关系是 $k << g < b$ 。因此，DenseNet的计算复杂度为 $O(whgbk)$，OSANet为 $O(max(whbg, whkg^{2}))$ 。上述两者的计算复杂度的阶数小于ResNet系列的 $O(whkb^{2})$ 。因此，我们在OSANet的帮助下设计了我们的微小模型，它具有较小的计算复杂度。
 
         2. Minimize/balance size of feature map
             - 为了在计算速度方面获得最佳折衷，我们提出了一个新的概念，即在CSOSANet的计算块之间进行梯度截断。如果我们将原始的CSPNet设计应用于DenseNet或ResNet架构，因为这两个架构的第 $j$ 层输出是第 $1$ 层到第 $(j−1)$ 层输出的集成，所以我们必须将整个计算块视为一个整体。由于OSANet的计算块属于PlainNet架构，因此从计算块的任何层制作CSPNet都可以达到梯度截断的效果。我们使用这一特性重新规划底层的b通道和计算块生成的 $kg$ 通道，并将它们拆分为两个通道数相等的路径，如表4所示。
-                ![Scaled-YOLOv4 Table4.png](../pictures/Scaled-YOLOv4%20Table4.png)
+                ![Scaled-YOLOv4 Table4.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table4.png)
 
             - 当通道的数量为 $b + kg$ 时，如果要将这些通道划分为两条路径，最好的划分是将其划分为两个相等的部分，即 $(b+kg)/2$ 。当我们实际考虑硬件的带宽 $\tau$ 时，如果不考虑软件优化，最佳值是 $ceil((b+kg)/2 \tau )\times \tau$ 。我们设计的CSOSANet可以动态调整信道分配
 
@@ -83,16 +83,16 @@
 
         4. Minimize Convolutional Input/Output (CIO)
             - CIO [4]是⼀个可以衡量 DRAM IO 状态的指标。表5列出了 OSA、CSP 和我们设计的 CSPOSANet 的 CIO。
-                ![Scaled-YOLOv4 Table5.png](../pictures/Scaled-YOLOv4%20Table5.png)
+                ![Scaled-YOLOv4 Table5.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table5.png)
 
             - 当 $kg > b/2$ 时，所提出的CSOSANet可以获得最佳的CIO。
 
     3. Scaling Large Models for High-End GPUs
         - 由于我们希望在放⼤ CNN 模型后提⾼准确性并保持实时推理速度，因此在进⾏复合缩放时，我们必须在对象检测器的众多缩放因⼦中找到最佳组合。通常，我们可以调整对象检测器的输⼊、主⼲和颈部的⽐例因⼦。表 6 总结了可以调整的潜在⽐例因⼦。
-            ![Scaled-YOLOv4 Table6.png](../pictures/Scaled-YOLOv4%20Table6.png)
+            ![Scaled-YOLOv4 Table6.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table6.png)
 
         - 图像分类与物体检测最⼤的区别在于，前者只需要识别图像中最⼤成分的类别，⽽后者需要预测图像中每个物体的位置和⼤⼩。在单级⽬标检测器中，每个位置对应的特征向量⽤于预测该位置⽬标的类别和⼤⼩。能否更好地预测物体的⼤⼩基本上取决于特征向量的感受野。在CNN架构中，与感受野最直接相关的就是stage，⽽特征⾦字塔⽹络（FPN）架构告诉我们stage越⾼越适合预测⼤物体。在表7 中，我们说明了感受野与⼏个参数之间的关系。
-            ![Scaled-YOLOv4 Table7.png](../pictures/Scaled-YOLOv4%20Table7.png)
+            ![Scaled-YOLOv4 Table7.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv4%20Table7.png)
 
         - 从表7中可以明显看出，宽度缩放可以独立操作。当输入图像大小增加时，如果想要对大型对象具有更好的预测效果，他/她必须增加网络的深度或级数。在表7中列出的参数中， $\{size^{input}, \#stage\}$ 的化合物具有最佳的影响。因此，在进行放大时，我们首先对 $size^{input}, \#stage$ 进行复合缩放，然后根据实时性要求，进一步分别对深度和宽度进行缩放
 
@@ -108,7 +108,7 @@
 
     2. Neck
         - 为了有效减少计算量，我们在 YOLOv4 中对 PAN [20]架构进⾏ CSP 化。PAN 架构的计算列表如图 2(a) 所⽰。它主要是对来⾃不同特征⾦字塔的特征进⾏整合，然后通过两组没有shortcut connections的反向Darknet残差层。 CSP 化后，新计算列表的架构如图2（b）所⽰。这个新的更新有效地减少了 40% 的计算量。
-            ![Scaled-YOLOv42.png](../pictures/Scaled-YOLOv42.png)
+            ![Scaled-YOLOv42.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv42.png)
 
     3. SPP
         - SPP模块最初插入颈部第一个计算列表组的中间位置。因此，我们还将SPP模块插入到CSPPAN的第一个计算列表组的中间位置。
@@ -117,13 +117,13 @@
     - YOLOv4-tiny 专为低端 GPU 设备设计，设计将遵循3.2 节中提到的原则。
 
     - 我们将使⽤具有 PCB 架构的 CSPOSANet 来构成 YOLOv4 的主⼲。我们设置 $g = b/2$ 作为增⻓率，让它最终增⻓到 $b/2 + kg = 2b$ 。通过计算，我们推导出 $k = 3$ ，其架构如图3所⽰。⾄于每个阶段的通道数和neck部分，我们遵循YOLOv3-tiny的设计。
-        ![Scaled-YOLOv43.png](../pictures/Scaled-YOLOv43.png)
+        ![Scaled-YOLOv43.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv43.png)
 
 3. YOLOv4-large
     - YOLOv4大型是为云GPU设计的，主要目的是实现高精度的物体检测。我们设计了一个完全CSP尺寸的型号YOLOv4-P5，并将其扩展到YOLOv4P6和YOLOv4P7。
 
     - 图4显示了YOLOv4-P5、YOLOv4P6和YOLOv4P7的结构。我们设计用于对 $size^{input},\#stage$ 执行复合缩放。我们将每个阶段的深度刻度设置为 $2^{d_ {s_ {i}}}$ ，并将ds设置为[1，3，15，15，7，7，7]。最后，我们进一步使用推理时间作为约束来执行额外的宽度缩放。我们的实验表明，当宽度缩放因子等于1时，YOLOv4-P6可以在30FPS视频下达到实时性能。对于YOLOv4-P7，当宽度缩放因子等于1.25时，它可以在16 FPS视频下达到实时性能。
-        ![Scaled-YOLOv44.png](../pictures/Scaled-YOLOv44.png)
+        ![Scaled-YOLOv44.png](../pictures/Scaled-YOLOv4/Scaled-YOLOv44.png)
 
 # 四、实验结果
 
