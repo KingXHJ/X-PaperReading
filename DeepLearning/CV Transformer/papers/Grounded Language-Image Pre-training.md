@@ -17,7 +17,7 @@
 # 二、做出的创新
 1. zero-shot推理过程
 
-    ![Glip zero-shot](../pictures/Glip%20zero-shot.png)
+    ![Glip zero-shot](../pictures/Glip/Glip%20zero-shot.png)
     
     1. 不论给出物体的标签，把它变成一句话，把这句话扔给Glip模型，Glip就能把这些类别都检测出来了
     2. 或者直接给一句话，也可以检测出想要的东西
@@ -32,11 +32,11 @@
 3. loss该如何算
     1. Detection：
         - 给定一个图片，有这个图像的backbone，就可以得到region embedding。假如有n个bounding box，每个bounding box的维度是d，接下来要做的就是接一个分类头，看一下每个bounding box里面的物体到底是哪一类。分类头的矩阵就是W，维度是cxd，c就是有多少个类别。所以把region embedding的O和W一乘，就得到了这个分类最后的logic。再用mns把bounding box筛选一下，再去跟ground truth去算cross entropy loss，就能得到最终的分类loss
-        ![Glip detection loss](../pictures/Glip%20detection%20loss.png)
+        ![Glip detection loss](../pictures/Glip/Glip%20detection%20loss.png)
         
     2. Vision grouding
         - 算了一个匹配的分数 $S_{ground}$ ，就是想看看图像中的区域，和句子里的单词是怎么匹配上的。图像的处理还是一样的，有image backbone，得到了一些region feature，但是接下来不是分类头，而是像ViLD一样，换成了一个文本编码器，通过已知的prompt，就能得到文本的embedding，和图像的embedding去算u你similarity，就可以得到region word alignment score $S_{ground}$ ，如果画成图，就是ViLD里的ViLD text分支，一模一样
-        ![Glip vision ground](../pictures/Glip%20vision%20ground.png)
+        ![Glip vision ground](../pictures/Glip/Glip%20vision%20ground.png)
         
     3. 结合
         - 只需要做小小的改动，就可以结合在一块
@@ -49,11 +49,11 @@
     - 将detection和grouding数据集合并，获得更大的数据集
     - 但是这样也逃不过corner case
     - 又引入了图像文本对，用伪标签（即GLIP-T（C）直接在Cap4M上做推理，把推理得到的bounding box当作ground truth，虽然有错误，但是不影响伪标签的有效性，有利于模型的效果和稳健性）
-    ![Glip dataset](../pictures/Glip%20dataset.png)     
+    ![Glip dataset](../pictures/Glip/Glip%20dataset.png)     
     
 # 三、设计的模型
 
-![Glip model](../pictures/Glip%20model.png)
+![Glip model](../pictures/Glip/Glip%20model.png)
 
 1. 图片经过图像编码器，得到region embedding
 2. 文本经过文本编码器，得到文本的embedding
@@ -69,7 +69,7 @@
 
 2. 数值结果
 
-    ![Glip result](../pictures/Glip%20result.png)
+    ![Glip result](../pictures/Glip/Glip%20result.png)
     - zero-shot很强
     - 不算是完全公平的比较，训练数据集和trick都不一样
 ## 1、比之前模型的优势

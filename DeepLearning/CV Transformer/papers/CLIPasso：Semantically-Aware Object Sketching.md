@@ -7,21 +7,21 @@
 - 实验环境：1张V100 GPU
 - 数据集：
 # 一、解决的问题
-![CLIPasso](../pictures/CLIPasso.png)
+![CLIPasso](../pictures/CLIPasso/CLIPasso.png)
 
 1. 文章内容：CLIP和毕加索的合体——保持语义信息的物体素描
 2. 文章期望：用一条线，或者几条线（minimal representation）表示出物体，语义和结构都能识别出来
 
 3. 前人工作局限：
     - 收集数据集，抽线程度都是定义好的
-    ![CLIPasso dataset](../pictures/CLIPasso%20dataset.png)
+    ![CLIPasso dataset](../pictures/CLIPasso/CLIPasso%20dataset.png)
     - 种类不能做的很丰富
 4. 巨人的肩膀：
     - CLIP非常的稳健，不会受图片风格的影响，从而把视觉特征编码的很好
     - 推荐文献索引14，图片可视化
 # 二、做出的创新
 1. 模型作用
-    ![CLIPasso](../pictures/CLIPasso%20model.png)
+    ![CLIPasso](../pictures/CLIPasso/CLIPasso%20model.png)
     - 给定一张物体图片，模型输出一个对应的简笔画    
 2. 本文创新
     - 训练方式上
@@ -31,7 +31,7 @@
         - 兼顾几何和语义
 # 三、设计的模型
 1. 模型流程
-    ![CLIPasso model do](../pictures/CLIPasso%20model%20do.png)
+    ![CLIPasso model do](../pictures/CLIPasso/CLIPasso%20model%20do.png)
     - 四个二维坐标点控制一条贝兹曲线
     - 通过不断地学习，改变点的二维坐标，调整曲线形状
     - 定义了n个笔画，扔给光栅化器且可导
@@ -51,7 +51,7 @@
     - 作者训练了2000个iteration，但是采取了saliency，100iterations的时候，就可以看出工作效果了
     - 收敛非常快
 4. 收敛过程
-    ![CLIPasso iterations](../pictures/CLIPasso%20iterations.png)
+    ![CLIPasso iterations](../pictures/CLIPasso/CLIPasso%20iterations.png)
 
 # 四、实验结果
 
@@ -60,7 +60,7 @@
 2. 可以给不常见的物体画简笔画
 3. 可以提供不同层次的抽象：调整贝兹曲线的数量
 ## 2、有优势的原因
-![CLIPasso result](../pictures/CLIPasso%20result.png)
+![CLIPasso result](../pictures/CLIPasso/CLIPasso%20result.png)
 - saliency生成的简笔画，形状更准
 ## 3、改进空间
 

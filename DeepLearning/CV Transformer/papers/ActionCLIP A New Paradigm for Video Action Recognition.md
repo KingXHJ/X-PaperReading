@@ -7,7 +7,7 @@
 - 实验环境：
 - 数据集：
 # 一、解决的问题
-![ActionCLIP model](../pictures/ActionCLIP%20model.png)
+![ActionCLIP model](../pictures/ActionCLIP/ActionCLIP%20model.png)
 1. 此前的做法
     - 视频经过编码之后，得到了向量
     - 过一个分类头得到了输出
@@ -26,7 +26,7 @@
     - 解决方法：cross entropy loss换成KL divergence
     - 用两个分布去算相似度就好了
 # 三、设计的模型
-![ActionCLIP to video](../pictures/ActionCLIP%20to%20video.png)
+![ActionCLIP to video](../pictures/ActionCLIP/ActionCLIP%20to%20video.png)
 1. prompt（文本中的含义保持不变，视觉中的prompt更像是adapter，一些effcient fune tuning的方法）
     - effcient fune tuning：设计一些小模块，在已经预训练好的参数上，训练这些小模块，让已经训练好的模型参数能够更快的适应下游任务
 2. 文本方面的prompt是前缀、中间（完形填空）和后缀

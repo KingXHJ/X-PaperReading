@@ -7,9 +7,9 @@
 - 实验环境：
 - 数据集：COCO、ADE20K
 
-[ppt](../ppt/models_by_DASOU/Swin_Transformer/SwinTRM.pdf)
+[ppt](../ppt/Swin%20Transformer/SwinTRM.pdf)
 
-[python code](../ppt/models_by_DASOU/Swin_Transformer/swin_transformer.py)
+[python code](../code/Swin%20Transformer/swin_transformer.py)
 
 # 一、解决的问题
 1. 告诉大家，Transformer可以被应用于视觉的方方面面，作为通用的骨干网络
@@ -21,17 +21,17 @@
 3. 类似池化的方法，`patch merging`
 # 三、设计的模型
 
-![Swin Transformer Hierarchical](../pictures/Swin%20Transformer%20Hierarchical.png)
+![Swin Transformer Hierarchical](../pictures/Swin%20Transformer/Swin%20Transformer%20Hierarchical.png)
 
 - 类似池化的方法，`patch merging`
 
-![Swin Transfomer Shift Window](../pictures/Swin%20Transformer%20Shift%20Window.png)
+![Swin Transfomer Shift Window](../pictures/Swin%20Transformer/Swin%20Transformer%20Shift%20Window.png)
 
 - 窗口整体向右下角移动，重新分割，达到了Transformer学习上下文，提供了学习窗口之间的联系
 
-![Swin Transformer](../pictures/Swin%20Transformer.png)
+![Swin Transformer](../pictures/Swin%20Transformer/Swin%20Transformer.png)
 
-![Swin Tranfomer Patch merging](../pictures/Swin%20Transfomer%20Patch%20merging.png)
+![Swin Tranfomer Patch merging](../pictures/Swin%20Transformer/Swin%20Transfomer%20Patch%20merging.png)
 
 - LN -> 一个窗口的自注意力 -> LN -> MLP -> shift window -> 基于移动窗口的自注意力 -> LN -> MLP
 - 都是偶数的block，因为Transfomer block都是两个两个组合的
@@ -58,7 +58,7 @@
 ## 3、模型是否引入了新的问题
 - 虽然移动窗口解决了窗口联系，但是窗口移动后，大小不同，且数量改变，提高了计算复杂度\
 
-![Swin Tranfomer shift window mask](../pictures/Swin%20Transfomer%20shift%20window%20mask.png)
+![Swin Tranfomer shift window mask](../pictures/Swin%20Transformer/Swin%20Transfomer%20shift%20window%20mask.png)
 
 - 通过循环移位，补充空缺位置；用完再还原回去
 

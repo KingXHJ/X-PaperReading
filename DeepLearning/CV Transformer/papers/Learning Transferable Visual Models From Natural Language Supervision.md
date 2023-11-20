@@ -17,7 +17,7 @@
 
 # 二、做出的创新
 
-![CLIP summary](../pictures/CLIP%20summary.png)
+![CLIP summary](../pictures/CLIP/CLIP%20summary.png)
 
 - 输入图片和文本的配对(4个亿)进行训练，做对比学习
 - 训练对角线上都是正样本，其余都是负样本
@@ -27,7 +27,7 @@
 1. 用自然语言预训练方法，用在视觉模型上；做大了规模
 2. 文本当作监督信号，跨模态
 
-![CLIP pseudocode](../pictures/CLIP%20pseudocode.png)
+![CLIP pseudocode](../pictures/CLIP/CLIP%20pseudocode.png)
 
 3. 单模态->多模态
 4. 模型太大了，不需要考虑过拟合
@@ -71,7 +71,7 @@
 
 # 七、应用
 
-![CLIP together up](../pictures/CLIP%20together%20up.png)
+![CLIP together up](../pictures/CLIP/CLIP%20together%20up.png)
 
 - 各个领域：
     - 分割：Lseg、GroupViT
@@ -91,7 +91,7 @@
 
 [Grounded Language-Image Pre-training](../CV%20Transformer/Grounded%20Language-Image%20Pre-training.md)
 
-![CLIP using conclu](../pictures/CLIP%20using%20conclu.png)
+![CLIP using conclu](../pictures/CLIP/CLIP%20using%20conclu.png)
 
 - 三种用途：
     1. 改动最小的方式：利用CLIP学习到的文本和图像特征直接拿来用，然后与自己想要的特征融合一下（点乘或者拼接），之前的训练框架保持不动，只是加强之前模型的训练

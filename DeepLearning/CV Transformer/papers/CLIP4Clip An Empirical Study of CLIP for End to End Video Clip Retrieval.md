@@ -11,7 +11,7 @@
 # 二、做出的创新
 
 # 三、设计的模型
-![CLIP4Clip framework](../pictures/CLIP4Clip%20framework.png)
+![CLIP4Clip framework](../pictures/CLIP4Clip/CLIP4Clip%20framework.png)
 1. CLIP天生就适合做retrive的任务，就是在算图像和文本之间的相似性
 2. CLIP是双塔结构，图像和文本编码器分开的，最后做一步点乘，就能得到相似性
 3. CLIP4Clip
@@ -36,7 +36,7 @@
 ## 1、比之前模型的优势
 
 ## 2、有优势的原因
-![CLIP4Clip result](../pictures/CLIP4Clip%20result.png)
+![CLIP4Clip result](../pictures/CLIP4Clip/CLIP4Clip%20result.png)
 - CLIP预训练，且迁移性非常好
 - 数据集较少，平均法更好
     - 简单

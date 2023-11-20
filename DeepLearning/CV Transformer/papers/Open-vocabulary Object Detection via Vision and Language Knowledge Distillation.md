@@ -12,7 +12,7 @@
 1. 上来一张图，然后作者提出一个问题，直接把这篇文章要做什么引了出来
     - 一句话把文章的研究动机说的明明白白
     
-    ![ViLD example](../pictures/ViLD%20example.png)
+    ![ViLD example](../pictures/ViLD/ViLD%20example.png)
     
 # 一、解决的问题
 1. 就是要做一个Open vocabulary的目标检测，从而能够检测到任意的新的物体类别
@@ -24,7 +24,7 @@
 
 # 三、设计的模型
 
-![ViLD model](../pictures/ViLD%20model.png)
+![ViLD model](../pictures/ViLD/ViLD%20model.png)
 
 - (a)是baseline，有监督的方法
 - (b)(c)(d)都是ViLD的方法，(b) + (c) = (d)，最后还提出了一个能让ViLD推理更快的ViLD ensemble
@@ -44,7 +44,7 @@
         - background：由于做的是有监督的训练，用的都是基础类，不在基础类里的所有别的类别，只能全部归为背景类。因此背景类的学习非常的关键，专门有一个学习背景的embedding，需要在模型训练的时候，把它学好。和Text Embeddings一样，直接和N region embeddings做点乘
     3. ViT训练的数学公式
     
-        ![ViLD function](../pictures/ViLD%20function.png)
+        ![ViLD function](../pictures/ViLD/ViLD%20function.png)
         
         1. 假设有一个图像I，$\phi(I,r)$ 就是去抽取一下图像的特征，r就是提前知道的proposal，就是抽取出来的bounding box candidate，经过额外层R的计算，就得到了region embedding $e_r$
         2. 接下来定义一个 $e_{bg}$ background embedding，还有文本特征 $t_1 \quad t_2 ... t_{|C_B|}$，数据集里有多少个基础类，也就是有多少个 $C_B$，也就是这个text有多少个embedding，然后region embeddings就分别和background以及所有的文本类去做点乘相似度计算，得到了ViLD的text模型的输出，类似于logitics
@@ -80,13 +80,13 @@
     5. 为了方便，N和M一块给，等到时候再劈开，N个去算cross entropy loss，M个去算L1 loss
 4. 模型总览图
 
-    ![ViLD overview](../pictures/ViLD%20overview.png)
+    ![ViLD overview](../pictures/ViLD/ViLD%20overview.png)
     
     - 上面的部分是模型的训练
     - 下面是推理过程
 # 四、实验结果
 
-![ViLD LVIS](../pictures/ViLD%20LVIS.png)
+![ViLD LVIS](../pictures/ViLD/ViLD%20LVIS.png)
 
 1. LVIS是一个非常长尾的一个目标检测数据集，一共有1203类，类别非常多，但是图片还是COCO的图片，因此会有很多非常不常见的物体，只标注了一次或者两次
 2. （rare），针对这几个分别去算AP
@@ -97,7 +97,7 @@
 7. ViLD实验做得很全，把backbone换了，数据集换了，都可以发现ViLD都可以直接用过来，而且性能都是大幅度提升
 8. 可以直接拓展到其他数据集上
 
-![ViLD dataset](../pictures/ViLD%20dataset.png)
+![ViLD dataset](../pictures/ViLD/ViLD%20dataset.png)
 
 ## 1、比之前模型的优势
 

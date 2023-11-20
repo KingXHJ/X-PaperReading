@@ -7,9 +7,9 @@
 - 实验环境：TPUv3 hardware
 - 数据集：ImageNet-21k JFT-300M
 
-[ppt](../ppt/models_by_DASOU/VIT/VIT.pdf)
+[ppt](../ppt/ViT/VIT.pdf)
 
-[python code](../ppt/models_by_DASOU/VIT/VIT.py)
+[python code](../code/ViT/VIT.py)
 
 # 一、解决的问题
 1. 挑战了CNN在CV界的绝对地位，足够多的数据上做预训练
@@ -26,7 +26,7 @@
 
 # 三、设计的模型
 
-![ViT Model](../pictures/ViT%20model.png)
+![ViT Model](../pictures/ViT/ViT%20model.png)
 
 - 图片预处理的过程：
 >- 把一张图（224·224·3）打成Patch（16·16·3）
@@ -39,7 +39,7 @@
 >- Multi-HeadAttention k、q、v（如果是12个头，12个kqv，768/12=64，每个都是197·64）
 >- MLP会放大4倍（197·3072），再缩小投射回去
 
-![ViT Equation](../pictures/ViT%20Equation.png)
+![ViT Equation](../pictures/ViT/ViT%20Equation.png)
 
 - 用公式表述了上述过程
 

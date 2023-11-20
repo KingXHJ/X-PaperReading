@@ -9,7 +9,7 @@
 # 一、解决的问题
 
 # 二、做出的创新
-![PointCLIP](../pictures/PointCLIP.png)
+![PointCLIP](../pictures/PointCLIP/PointCLIP.png)
 1. 3D点云投射到2D平面上->2D深度图
 2. 传入一个视觉编码器，得到很好的视觉表征
     - 因为CLIP在大量的2D图像上训练过

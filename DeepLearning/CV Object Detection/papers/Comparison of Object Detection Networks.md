@@ -514,9 +514,9 @@
 
 
 # YOLOv3 SPP
-- [ppt](../ppt/pytorch_object_detection/yolov3spp.pdf)
+- [ppt](../ppt/YOLOv3%20SPP/yolov3spp.pdf)
 ## 1. 优势/历史地位
-![YOLOv3 SPP compare.png](../pictures/YOLOv3%20SPP%20compare.png)
+![YOLOv3 SPP compare.png](../pictures/YOLOv3%20SPP/YOLOv3%20SPP%20compare.png)
 
 - u版代码，作者做了非常多的trick
 - Focal loss作者说效果不好，没启用
@@ -530,7 +530,7 @@
         1. BN能一次性统计多张图片的参数
 
 1. SPP模块
-![YOLOv3 SPP.png](../pictures/YOLOv3%20SPP.png)
+![YOLOv3 SPP.png](../pictures/YOLOv3%20SPP/YOLOv3%20SPP.png)
     - 注意：
         - 这里的SPP和SPPnet中的SPP(Spatial Pyramid Pooling)结构不一样
         - 只是借鉴
@@ -591,7 +591,7 @@
 
 
 # YOLOv4
-- [ppt](../ppt/pytorch_object_detection/yolov4.pdf)
+- [ppt](../ppt/YOLOv4/yolov4.pdf)
 ## 1. 优势/历史地位
 - 不是原作者的工作了
 - mAP提升10%
@@ -600,7 +600,7 @@
 
 ## 2. 算法流程
 1. 网络结构
-![YOLOv4 structure drawio.png](../pictures/YOLOv4%20structure%20drawio.png)
+![YOLOv4 structure drawio.png](../pictures/YOLOv4/YOLOv4%20structure%20drawio.png)
 
 - Backbone: CSPDarknet53
 - Neck: SPP, PAN
@@ -611,20 +611,20 @@
         - Removing computational bottlenecks
         - Reducing memory costs
 
-        ![YOLOv4 CSPDenseNet structure.png](../pictures/YOLOv4%20CSPDenseNet%20structure.png)
+        ![YOLOv4 CSPDenseNet structure.png](../pictures/YOLOv4/YOLOv4%20CSPDenseNet%20structure.png)
 
-        ![YOLOv4 CSPDenseNet structure by code.png](../pictures/YOLOv4%20CSPDenseNet%20structure%20by%20code.png)
+        ![YOLOv4 CSPDenseNet structure by code.png](../pictures/YOLOv4/YOLOv4%20CSPDenseNet%20structure%20by%20code.png)
 
-        ![YOLOv4 CSPDenseNet structure all.png](../pictures/YOLOv4%20CSPDenseNet%20structure%20all.png)
+        ![YOLOv4 CSPDenseNet structure all.png](../pictures/YOLOv4/YOLOv4%20CSPDenseNet%20structure%20all.png)
 
     1. SPP
-        ![YOLOv4 CSPDenseNet SPP.png](../pictures/YOLOv4%20CSPDenseNet%20SPP.png)
+        ![YOLOv4 CSPDenseNet SPP.png](../pictures/YOLOv4/YOLOv4%20CSPDenseNet%20SPP.png)
 
     1. PAN(Path Aggregation Network)
         - PAN其实就是在Upsampling之后，再做一个downsampling
         - 对之前的PAN做的更改是
             - 把融合过程的addition变成了concatenation
-        ![YOLOv4 CSPDenseNet PAN.png](../pictures/YOLOv4%20CSPDenseNet%20PAN.png)
+        ![YOLOv4 CSPDenseNet PAN.png](../pictures/YOLOv4/YOLOv4%20CSPDenseNet%20PAN.png)
 
 
 2. 优化策略
@@ -635,22 +635,22 @@
 - CIoU
 
     1. Eliminate grid sensitivity
-        ![YOLOv4 Eliminate grid sensitivity1.png](../pictures/YOLOv4%20Eliminate%20grid%20sensitivity1.png)
+        ![YOLOv4 Eliminate grid sensitivity1.png](../pictures/YOLOv4/YOLOv4%20Eliminate%20grid%20sensitivity1.png)
 
-        ![YOLOv4 Eliminate grid sensitivity2.png](../pictures/YOLOv4%20Eliminate%20grid%20sensitivity2.png)
+        ![YOLOv4 Eliminate grid sensitivity2.png](../pictures/YOLOv4/YOLOv4%20Eliminate%20grid%20sensitivity2.png)
 
         - Sigmoid的问题：当gt box的中心点坐标在grid cell的左上角点时，需要预测的参数 $t_ {x}, t_ {y}$ 都是0，但是Sigmoid要在负无穷的情况才能趋于0，这恶鬼条件非常难以达到
         - 解决方法：引入缩放因子
 
     1. Mosaic data augmentation
-        ![YOLOv4 Mosaic data augmentation.png](../pictures/YOLOv4%20Mosaic%20data%20augmentation.png)
+        ![YOLOv4 Mosaic data augmentation.png](../pictures/YOLOv4/YOLOv4%20Mosaic%20data%20augmentation.png)
 
     1. IoU threshold(match positive sample)
-        ![YOLOv4 IoU threshold1.png](../pictures/YOLOv4%20IoU%20threshold1.png)
+        ![YOLOv4 IoU threshold1.png](../pictures/YOLOv4/YOLOv4%20IoU%20threshold1.png)
 
-        ![YOLOv4 IoU threshold2.png](../pictures/YOLOv4%20IoU%20threshold2.png)
+        ![YOLOv4 IoU threshold2.png](../pictures/YOLOv4/YOLOv4%20IoU%20threshold2.png)
 
-        ![YOLOv4 IoU threshold3.png](../pictures/YOLOv4%20IoU%20threshold3.png)
+        ![YOLOv4 IoU threshold3.png](../pictures/YOLOv4/YOLOv4%20IoU%20threshold3.png)
 
         - 原作者的意思是，首先取大于阈值的anchor模板，且只取最大的
             - 但是这样的话，正样本数量就太少了
@@ -660,14 +660,14 @@
             - 只会取上下左右四个方向的grid cell，不取左上、左下、右上、右下四个方向
 
     1. Optimizered Anchors
-        ![YOLOv4 Optimizered Anchors.png](../pictures/YOLOv4%20Optimizered%20Anchors.png)
+        ![YOLOv4 Optimizered Anchors.png](../pictures/YOLOv4/YOLOv4%20Optimizered%20Anchors.png)
 
         - YOLOv3 的尺寸是通过聚类得到的
         - YOLOv4针对512x512优化了一下
         - 但是YOLOv5用的还是YOLOv3的anchor尺寸
 
     1. CIoU
-        ![YOLOv4 CIoU.png](../pictures/YOLOv4%20CIoU.png)
+        ![YOLOv4 CIoU.png](../pictures/YOLOv4/YOLOv4%20CIoU.png)
 
         - 和YOLOv3 SPP一样
     
@@ -675,10 +675,10 @@
 
 
 # YOLOv5
-- [ppt](../ppt/pytorch_object_detection/yolov5.pdf)
+- [ppt](../ppt/YOLOv5/yolov5.pdf)
 
 ## 1. 优势/历史地位
-![YOLOv5 ability.png](../pictures/YOLOv5%20ability.png)
+![YOLOv5 ability.png](../pictures/YOLOv5/YOLOv5%20ability.png)
 
 - 距离YOLOv4出来很近
 - 迭代版本很多
@@ -687,7 +687,7 @@
 
 ## 2. 算法流程
 - 绘制的是l大小模型的图
-![YOLOv5 directory.png](../pictures/YOLOv5%20directory.png)
+![YOLOv5 directory.png](../pictures/YOLOv5/YOLOv5%20directory.png)
 
 
 1. 网络结构
@@ -697,10 +697,10 @@
 
     - 补充：
         - 将6.1之前的Focus模块替换成了6行的普通卷积层。两者功能相同，但后者效率更高
-        ![YOLOv5 focus.png](../pictures/YOLOv5%20focus.png)
+        ![YOLOv5 focus.png](../pictures/YOLOv5/YOLOv5%20focus.png)
 
         - SPP -> SPPF：结果等价，效率更高，UP的实验说快了两倍左右
-        ![YOLOv5 SPPF.png](../pictures/YOLOv5%20SPPF.png)
+        ![YOLOv5 SPPF.png](../pictures/YOLOv5/YOLOv5%20SPPF.png)
 
 2. 数据增强
     1. Mosaic
@@ -758,13 +758,13 @@
 5. 消除Grid敏感度
     - 和YOLOv4的[算法流程 -> 优化策略 -> Eliminate grid sensitivity]差不多
     - 将计算公式革新了
-        ![YOLOv5 GRID.png](../pictures/YOLOv5%20GRID.png)
+        ![YOLOv5 GRID.png](../pictures/YOLOv5/YOLOv5%20GRID.png)
         - 指数不受限，很容易出现指数爆炸的情况
 
 6. 匹配正样本
     - 计算gt和at的长宽比值 -> 计算比例差异，越接近于1，差异越小 -> 找到宽度/高度差异最大的比值
     - 差异小于阈值则匹配成功
-        ![YOLOv5 find at.png](../pictures/YOLOv5%20find%20at.png)
+        ![YOLOv5 find at.png](../pictures/YOLOv5/YOLOv5%20find%20at.png)
 
     - 和YOLOv4一样去扩充正样本
 
@@ -773,7 +773,7 @@
 
 
 # YOLOX
-- [ppt](../ppt/pytorch_object_detection/YOLOX.pdf)
+- [ppt](../ppt/YOLOX/YOLOX.pdf)
 
 ## 1. 优势/历史地位
 - 借鉴于FCOS
@@ -783,44 +783,44 @@
 - 获得了Streaming Perception Challenge的第一名
 ## 2. 算法流程
 - 整体论文结构
-![YOLOX introduction.png](../pictures/YOLOX%20introduction.png)
+![YOLOX introduction.png](../pictures/YOLOX/YOLOX%20introduction.png)
 
 1. 前言
     - 主要对比YOLOv5
     - 数据集分辨率很高的话，建议使用YOLOv5，应为YOLOX也只是640x640
-    ![YOLOX effect.png](../pictures/YOLOX%20effect.png)
+    ![YOLOX effect.png](../pictures/YOLOX/YOLOX%20effect.png)
 
 1. YOLOX网络结构
     - 使用网络结构(YOLOX-L)绘制的图
-    ![YOLOX structure1.png](../pictures/YOLOX%20structure1.png)
+    ![YOLOX structure1.png](../pictures/YOLOX/YOLOX%20structure1.png)
 
     - YOLOX是基于YOLOv5的v5.0构建的，网络结构到PAN之前都一样，只有Head不一样(上面的YOLOv5是v6.1，和v5.0还有出入)
     - 区别：
         1. Focus -> 6x6的卷积(原理一样)
         1. YOLOv5是SPPF，但是YOLOX是SPP，而且YOLOX的摆放位置和YOLOv5也是一样的
         1. YOLOv5的检测头是1x1的卷积层，在YOLOX中改成如下的形式：
-            ![YOLOX structure2.png](../pictures/YOLOX%20structure2.png)
+            ![YOLOX structure2.png](../pictures/YOLOX/YOLOX%20structure2.png)
             
             - 作者认为YOLOv5这么做是一个耦合的检测头，耦合的检测头对网络是有害的。但是如果换成解耦的检测头，可以加速收敛，提升AP
             - 检测类别和检测定位以及obj的卷积层是分开的。检测三个项目的检测头是参数不共享的，而且不同的预测特征层的检测头参数也是不共享的。FCOS是共享的
 
 1. Anchor-Free
-    ![YOLOX Anchor Free.png](../pictures/YOLOX%20Anchor%20Free.png)
+    ![YOLOX Anchor Free.png](../pictures/YOLOX/YOLOX%20Anchor%20Free.png)
     
     - 这里预测的 $x_ {center}, y_{center}, w, h$ 都是在预测特征层上的尺度，再恢复到原图上还要计算缩放问题
     - 仔细看这个公式，之前的YOLO公式是要乘上对应ancher的尺寸，这里公式里不再使用anchor尺寸了，所以是anchor free
 
 1. 损失计算
-    ![YOLOX Loss.png](../pictures/YOLOX%20Loss.png)
+    ![YOLOX Loss.png](../pictures/YOLOX/YOLOX%20Loss.png)
 
 1. 正负样本匹配SimOTA
     - 论文消融实验都是和YOLOv3做对比
 
-    ![YOLOX SimOTA1.png](../pictures/YOLOX%20SimOTA1.png)
+    ![YOLOX SimOTA1.png](../pictures/YOLOX/YOLOX%20SimOTA1.png)
 
-    ![YOLOX SimOTA2.png](../pictures/YOLOX%20SimOTA2.png)
+    ![YOLOX SimOTA2.png](../pictures/YOLOX/YOLOX%20SimOTA2.png)
 
-    ![YOLOX SimOTA3.png](../pictures/YOLOX%20SimOTA3.png)
+    ![YOLOX SimOTA3.png](../pictures/YOLOX/YOLOX%20SimOTA3.png)
 
     - 在FCOS网络中，落入sub-box中的所有anchor point视为正样本，除此之外都是负样本
     - 在YOLOX中也是做了一个预筛选，首先找在GT box或者fixed center area(类似sub-box)范围之内的anchor point(fixed center area由一个参数，center_radius=2.5)
@@ -829,25 +829,25 @@
         2. 除了上面之外的点
     - 从损失(cost)公式中，可以看到，前两项是正常的分类损失和定位损失，后一项就是除了GT box和fixed center box交集区域以外的点，给了一个很大的权重，迫使降低这个部分的错误率
 
-    ![YOLOX SimOTA4.png](../pictures/YOLOX%20SimOTA4.png)
+    ![YOLOX SimOTA4.png](../pictures/YOLOX/YOLOX%20SimOTA4.png)
 
     - 筛选IoU最大的10个，或者更少的anchors
 
-    ![YOLOX SimOTA5.png](../pictures/YOLOX%20SimOTA5.png)
+    ![YOLOX SimOTA5.png](../pictures/YOLOX/YOLOX%20SimOTA5.png)
 
     - dynamic_ks代表论文中的Dynamic k Estimation Stragegy，意思是，每个GT分配的正样本的个数不一样，需要动态计算
     - 计算方法就是：对GT分配的正样本的IoU矩阵，对IoU的值进行求和，再向下取正
 
-    ![YOLOX SimOTA6.png](../pictures/YOLOX%20SimOTA6.png)
+    ![YOLOX SimOTA6.png](../pictures/YOLOX/YOLOX%20SimOTA6.png)
 
     - 根据dynamic_ks确定anchors的最终个数，根据cost的升序排列，选最小的dynamic_ks个anchors
 
-    ![YOLOX SimOTA7.png](../pictures/YOLOX%20SimOTA7.png)
+    ![YOLOX SimOTA7.png](../pictures/YOLOX/YOLOX%20SimOTA7.png)
 
     - 如果出现一个anchor被分配给了多个GT，那就看它跟哪个GT的cost最小，将其分配给对应的GT
         - 注意：这一步是在确定了每个GT最小的dynamic_ks个anchors，意味着冲突竞争中失败的GT们，最终获得的anchors数量会减少
 
-    ![YOLOX SimOTA8.png](../pictures/YOLOX%20SimOTA8.png)
+    ![YOLOX SimOTA8.png](../pictures/YOLOX/YOLOX%20SimOTA8.png)
 
 ## 3. 缺点
 
@@ -858,57 +858,57 @@
 
 ## 1. 面临的挑战
 1. 一般训练中的问题
-    ![YOLOR notation](../pictures/YOLOR%20notation.png)
+    ![YOLOR notation](../pictures/YOLOR/YOLOR%20notation.png)
 
     - 训练网络的过程大致如下：
-        ![YOLOR general learning process](../pictures/YOLOR%20general%20learning%20process.png)
+        ![YOLOR general learning process](../pictures/YOLOR/YOLOR%20general%20learning%20process.png)
 
     - 我们对事物的关注点如下：
-        ![YOLOR attention map](../pictures/YOLOR%20attention%20map.png)
+        ![YOLOR attention map](../pictures/YOLOR/YOLOR%20attention%20map.png)
 
     - 为什么我们会产生这样的原因呢？
-        ![YOLOR Formula](../pictures/YOLOR%20Formula.png)
+        ![YOLOR Formula](../pictures/YOLOR/YOLOR%20Formula.png)
 
     - 学习的时候，其实我们只学习不同类别之间有区分的地方，相似的地方我们不关注。就像下面的activation map上，猫和狗的身体在map上都不显现，因为靠猫和狗的身体无法帮助我们区分猫还是狗
-        ![YOLOR activation map](../pictures/YOLOR%20activation%20map.png)
+        ![YOLOR activation map](../pictures/YOLOR/YOLOR%20activation%20map.png)
 
     - 这也就带来一个问题：就像下面的皮卡丘，它们相似的部分我们不关注。这就会导致，它改变了颜色，改变了公母，改变了帽子，我们都不会关注，因为我们忽略它们形状类似的部分。
     - 导致这件事情的原因就是，在训练网络的Formula里的error，我们只把它们当成一个简单的error数值，却没去考虑它和原图有这个不同的点具体是什么？没有追根溯源
-        ![YOLOR Limitation](../pictures/YOLOR%20Limitation.png)
+        ![YOLOR Limitation](../pictures/YOLOR/YOLOR%20Limitation.png)
 
 1. 多任务训练的问题
     - 最简单的想法就是，一个任务训练疑个model。但是这会消耗大量的资源，而且最后的结果也并不一定是最好的。
-        ![YOLOR one model for one task](../pictures/YOLOR%20one%20model%20for%20one%20task.png)
+        ![YOLOR one model for one task](../pictures/YOLOR/YOLOR%20one%20model%20for%20one%20task.png)
     
     - 现在我们希望，所有的任务共用一个网络，就是backbone，这样我们可以在real time的时间里，做出相应的结果
     - 但是会发现，有的任务采取这种方法，效果还不错。但是有的任务就训练不起来
     - 这是因为不同任务需要的特征不一样，而且对特征的需求可能是冲突的。比如对目标检测任务检测宝可梦，希望宝可梦们的特征尽可能的相似；而对宝可梦的性别分析，可能要分析尾巴的花纹。那么这对特征提取就会有一定的冲突
-        ![YOLOR shared backbone](../pictures/YOLOR%20shared%20backbone.png)
+        ![YOLOR shared backbone](../pictures/YOLOR/YOLOR%20shared%20backbone.png)
 
     - 现在的一些解决方案是上述两种方案的折中：训练多个特征提取器，但是之间互相share一些weights，不共享的权重，用于提取特别需要的特征。
     - 但是问题是，怎么有效率的去甄别要共享哪些权重呢？
-        ![YOLOR soft parameter sharing](../pictures/YOLOR%20soft%20parameter%20sharing.png)
+        ![YOLOR soft parameter sharing](../pictures/YOLOR/YOLOR%20soft%20parameter%20sharing.png)
 
 ## 2. 解决方案
 1. Manifold Learning
     - 在高维度上评估距离是不可靠的。就像第二幅图，可能红色之间的距离，甚至比红色和蓝色之间的距离都要远
     - 但是如果降维到低维度上，就可以更好的使用距离error方法
-        ![YOLOR manifold](../pictures/YOLOR%20manifold.png)
+        ![YOLOR manifold](../pictures/YOLOR/YOLOR%20manifold.png)
 
     - 常用的Manifold Learning方法是t-SNE方法
     - 找到一个合适的Manifold Learning的方法是很重要的
-        ![YOLOR t-SNE](../pictures/YOLOR%20t-SNE.png)
+        ![YOLOR t-SNE](../pictures/YOLOR/YOLOR%20t-SNE.png)
 
     - 来看一个例子
     - x轴上代表了狗的姿势，y轴上代表了狗的种类
-        ![YOLOR reduce manifold space of the representation1](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation1.png)
+        ![YOLOR reduce manifold space of the representation1](../pictures/YOLOR/YOLOR%20reduce%20manifold%20space%20of%20the%20representation1.png)
 
     - 通过reduce维度，我们可以将复杂的问题投影到低维度上，变成一个简单的问题来处理
     - 如果reduce其中一个dimension的话，可以只提取一个种类的但是不同姿势的狗
-        ![YOLOR reduce manifold space of the representation2](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation2.png)
+        ![YOLOR reduce manifold space of the representation2](../pictures/YOLOR/YOLOR%20reduce%20manifold%20space%20of%20the%20representation2.png)
 
     - 如果reduce另一个dimension的话，可以只提取一个姿势的但是不同种类的狗
-        ![YOLOR reduce manifold space of the representation3](../pictures/YOLOR%20reduce%20manifold%20space%20of%20the%20representation3.png)
+        ![YOLOR reduce manifold space of the representation3](../pictures/YOLOR/YOLOR%20reduce%20manifold%20space%20of%20the%20representation3.png)
         
 
 1. Model the Error Term
@@ -916,27 +916,27 @@
     - 希望我们的任务输出，在high dimension上，每个维度上的数据是有关联性的
 
     - 此前我们是把属于同一类的error，映射到低维度的时候，都压缩成一个类别，压缩之后就丢失了这个类别的属性信息了，也没办法进一步知道它们具体error的点
-        ![YOLOR minimize the error term](../pictures/YOLOR%20minimize%20the%20error%20term.png)
+        ![YOLOR minimize the error term](../pictures/YOLOR/YOLOR%20minimize%20the%20error%20term.png)
 
     - 现在我们不对维度进行压缩了，我们映射到更高的维度，寻找一个新的方式进行映射压缩，这个方式压缩后，可以反映出为什么会产生error
-        ![YOLOR relax the error term](../pictures/YOLOR%20relax%20the%20error%20term.png)
+        ![YOLOR relax the error term](../pictures/YOLOR/YOLOR%20relax%20the%20error%20term.png)
 
     - 那么我们就要对error进行一个建模
     - 获得了error在高维的投影，我们就可以根据error种类的需要，去做不同的Manifold，获得对应压缩后的结果
-        ![YOLOR model the error term](../pictures/YOLOR%20model%20the%20error%20term.png)
+        ![YOLOR model the error term](../pictures/YOLOR/YOLOR%20model%20the%20error%20term.png)
 
     - 在结合这些explicit和implicit上面，可以有很多运算操作：addition, multiplication, concatenation
-        ![YOLOR operation](../pictures/YOLOR%20operation.png)
+        ![YOLOR operation](../pictures/YOLOR/YOLOR%20operation.png)
 
 1. Disentangle the Representation of Input and Tasks
     - 根据输入和任务去做裁剪
     - 相同的输入，但是在不同的想法下，是有不同的答案的
-        ![YOLOR observation](../pictures/YOLOR%20observation.png)
+        ![YOLOR observation](../pictures/YOLOR/YOLOR%20observation.png)
 
     - 需要找到只跟输入有关，但是跟任务无关的 $P(x)$
     - 需要找到只跟任务有关，但是跟输入无关的 $P(c)$
     - 最好还能找到基于任务的输入的关系，这样就能解释为什么通过这个输入能够得到这样的输出
-        ![YOLOR posterior](../pictures/YOLOR%20posterior.png)
+        ![YOLOR posterior](../pictures/YOLOR/YOLOR%20posterior.png)
 
 ## 3. YOLOR for Object Detection
 1. YOLOR
@@ -944,35 +944,35 @@
     - 根据输入可以得到一定的explicit Knowledge
     - 以及一些网络中没有输入的Implicit Kownledge
     - 通过Discriminator用来分辨任务种类
-        ![YOLOR YOLOR](../pictures/YOLOR%20YOLOR.png)
+        ![YOLOR YOLOR](../pictures/YOLOR/YOLOR%20YOLOR.png)
 
 1. Explicit Kownledge
-    ![YOLOR explicit kownledge](../pictures/YOLOR%20explicit%20kownledge.png)
+    ![YOLOR explicit kownledge](../pictures/YOLOR/YOLOR%20explicit%20kownledge.png)
 
 1. Implicit Kownledge
     - 在论文中，我们更关注Implicit Kownledge
-    ![YOLOR our focus](../pictures/YOLOR%20our%20focus.png)
+    ![YOLOR our focus](../pictures/YOLOR/YOLOR%20our%20focus.png)
 
     - 举一个之前在object detection上常见的问题
     - 高分辨率的图像，所包含的信息是很多的
     - 低分辨率的图像，包含信息很少
-        ![YOLOR kernel space alignment1](../pictures/YOLOR%20kernel%20space%20alignment1.png)
+        ![YOLOR kernel space alignment1](../pictures/YOLOR/YOLOR%20kernel%20space%20alignment1.png)
 
     - 但是我们很容易把多个分辨率的图像，都reduce到信息最少的低分辨率图像上
     - 原因就是之前的目标检测error都压缩了很多信息，所以即使高分辨率图像包含了大量信息，但是由于低分辨率图像上没有，取交集之后，就相当于映射到了低分辨率图像的信息集上
-        ![YOLOR kernel space alignment2](../pictures/YOLOR%20kernel%20space%20alignment2.png)
+        ![YOLOR kernel space alignment2](../pictures/YOLOR/YOLOR%20kernel%20space%20alignment2.png)
 
     - 近几年非常流行的FPN网络就在解决这个问题
     - 不同分支可以对不同物件分析不同的信息
-        ![YOLOR kernel space alignment3](../pictures/YOLOR%20kernel%20space%20alignment3.png)
+        ![YOLOR kernel space alignment3](../pictures/YOLOR/YOLOR%20kernel%20space%20alignment3.png)
 
     - 但是这样会导致，不同分支产生的特征彼此之间很难去映射
     - 大的特征图信息多，小的特征图信息少，映射很困难
-        ![YOLOR kernel space alignment4](../pictures/YOLOR%20kernel%20space%20alignment4.png)
+        ![YOLOR kernel space alignment4](../pictures/YOLOR/YOLOR%20kernel%20space%20alignment4.png)
 
     - 这时候Implicit Knowledge的作用就显现出来了
     - Implicit Knowledge的加入，对原始特征图上的特征都做了不同程度的偏移，从而使多个特征图放在一块的时候可以进行一个比较
-        ![YOLOR kernel space alignment5](../pictures/YOLOR%20kernel%20space%20alignment5.png)
+        ![YOLOR kernel space alignment5](../pictures/YOLOR/YOLOR%20kernel%20space%20alignment5.png)
 
 ## 4. 实验的结果和结论
 1. YOLOR + YOLO
@@ -980,45 +980,45 @@
     - addition：把不同特征通过加法做结合
     - multiplication：类似attention的机制
     - concatenation：类似给定一个条件去做condition的运算
-        ![YOLOR combine explicit knowledge and implicit knowledge](../pictures/YOLOR%20combine%20explicit%20knowledge%20and%20implicit%20knowledge.png)
+        ![YOLOR combine explicit knowledge and implicit knowledge](../pictures/YOLOR/YOLOR%20combine%20explicit%20knowledge%20and%20implicit%20knowledge.png)
     
     - 对最后的特征图使用加法或者乘法
-        ![YOLOR implicit representation1](../pictures/YOLOR%20implicit%20representation1.png)
+        ![YOLOR implicit representation1](../pictures/YOLOR/YOLOR%20implicit%20representation1.png)
 
     - 最后得到的一些准度的结果
-        ![YOLOR performance1](../pictures/YOLOR%20performance1.png)
+        ![YOLOR performance1](../pictures/YOLOR/YOLOR%20performance1.png)
     
     - 很显然，implicit knowledge在初始化为1附近采样的情况下，能够根据anchors的尺寸，学习到周期性的内容，也能根据数据集中每个类别样本数量的多少做出调整
-        ![YOLOR physical meaning](../pictures/YOLOR%20physical%20meaning.png)
+        ![YOLOR physical meaning](../pictures/YOLOR/YOLOR%20physical%20meaning.png)
 
     - 在中间层添加了implicit knowledge后，也会产生数值上的一些区分
-        ![YOLOR implicit representation2](../pictures/YOLOR%20implicit%20representation2.png)
+        ![YOLOR implicit representation2](../pictures/YOLOR/YOLOR%20implicit%20representation2.png)
 
     - feature special alignment效果还是不错的
     - 实验结果是，略微增加了参数量(基数很大，百分比很小)，但是提高了0.5%的精度
-        ![YOLOR performance2](../pictures/YOLOR%20performance2.png)
+        ![YOLOR performance2](../pictures/YOLOR/YOLOR%20performance2.png)
         
     - 做了很对不同的implicit knowledge model
     - Neural network：认为得到的z中的每个维度彼此是关联的
     - 矩阵分解：认为得到的z中的每个维度彼此是独立的，但是每个维度也有很多不同的变因导致最后的结果，通过乘以一个权重c，进行每个维度的加权和
     - 结果是，不管采用哪种方法，最后都是提升
-        ![YOLOR model explicit knowledge and implicit knowledge](../pictures/YOLOR%20model%20explicit%20knowledge%20and%20implicit%20knowledge.png)
+        ![YOLOR model explicit knowledge and implicit knowledge](../pictures/YOLOR/YOLOR%20model%20explicit%20knowledge%20and%20implicit%20knowledge.png)
 
     - 最后提升了88%的速度和3.8%的精度
 
 
 1. YOLOR + Multiple Tasks
-    ![YOLOR Faster R-CNN](../pictures/YOLOR%20Faster%20R-CNN.png)
+    ![YOLOR Faster R-CNN](../pictures/YOLOR/YOLOR%20Faster%20R-CNN.png)
 
-    ![YOLOR Mask R-CNN](../pictures/YOLOR%20Mask%20R-CNN.png)
+    ![YOLOR Mask R-CNN](../pictures/YOLOR/YOLOR%20Mask%20R-CNN.png)
 
-    ![YOLOR ATSS](../pictures/YOLOR%20ATSS.png)
+    ![YOLOR ATSS](../pictures/YOLOR/YOLOR%20ATSS.png)
 
-    ![YOLOR FCOS](../pictures/YOLOR%20FCOS.png)
+    ![YOLOR FCOS](../pictures/YOLOR/YOLOR%20FCOS.png)
 
-    ![YOLOR sparse R-CNN](../pictures/YOLOR%20sparse%20R-CNN.png)
+    ![YOLOR sparse R-CNN](../pictures/YOLOR/YOLOR%20sparse%20R-CNN.png)
 
-    ![YOLOR multiple task performance](../pictures/YOLOR%20multiple%20task%20performance.png)
+    ![YOLOR multiple task performance](../pictures/YOLOR/YOLOR%20multiple%20task%20performance.png)
 
 ## 5. Q&A
 - $z$ 是implicit的部分
@@ -1032,31 +1032,31 @@
 # YOLOv6 美团官方解读 + QA
 
 ## 1. 算法演进技术讲解
-![YOLOv6 meituan0.png](../pictures/YOLOv6%20meituan0.png)
+![YOLOv6 meituan0.png](../pictures/YOLOv6/YOLOv6%20meituan0.png)
 
 - 目录
-    ![YOLOv6 meituan1.png](../pictures/YOLOv6%20meituan1.png)
+    ![YOLOv6 meituan1.png](../pictures/YOLOv6/YOLOv6%20meituan1.png)
 
 - 背景
-    ![YOLOv6 meituan2.png](../pictures/YOLOv6%20meituan2.png)
+    ![YOLOv6 meituan2.png](../pictures/YOLOv6/YOLOv6%20meituan2.png)
 
-    ![YOLOv6 meituan3.png](../pictures/YOLOv6%20meituan3.png)
+    ![YOLOv6 meituan3.png](../pictures/YOLOv6/YOLOv6%20meituan3.png)
 
 - YOLOv6的诞生——由于工业的需求
-    ![YOLOv6 meituan4.png](../pictures/YOLOv6%20meituan4.png)
+    ![YOLOv6 meituan4.png](../pictures/YOLOv6/YOLOv6%20meituan4.png)
 
 - YOLOv6的性能
     - BS = batch_size
-        ![YOLOv6 meituan5.png](../pictures/YOLOv6%20meituan5.png)
+        ![YOLOv6 meituan5.png](../pictures/YOLOv6/YOLOv6%20meituan5.png)
 
 - 改进部分
-    ![YOLOv6 meituan6.png](../pictures/YOLOv6%20meituan6.png)
+    ![YOLOv6 meituan6.png](../pictures/YOLOv6/YOLOv6%20meituan6.png)
 
 - 网络结构设计
-    ![YOLOv6 meituan7.png](../pictures/YOLOv6%20meituan7.png)
+    ![YOLOv6 meituan7.png](../pictures/YOLOv6/YOLOv6%20meituan7.png)
 
     - 整体网络框架
-        ![YOLOv6 meituan8.png](../pictures/YOLOv6%20meituan8.png)
+        ![YOLOv6 meituan8.png](../pictures/YOLOv6/YOLOv6%20meituan8.png)
 
         - 结构
             - Backbone
@@ -1070,53 +1070,53 @@
             - CSPStackRep Block
 
     - 网络的设计思路
-        ![YOLOv6 meituan9.png](../pictures/YOLOv6%20meituan9.png)
+        ![YOLOv6 meituan9.png](../pictures/YOLOv6/YOLOv6%20meituan9.png)
     
     - 实验
         - Backbone部分采用不同网路的对比实验
-            ![YOLOv6 meituan10.png](../pictures/YOLOv6%20meituan10.png)
+            ![YOLOv6 meituan10.png](../pictures/YOLOv6/YOLOv6%20meituan10.png)
 
         - 结构重参数化和激活函数
-            ![YOLOv6 meituan11.png](../pictures/YOLOv6%20meituan11.png)
+            ![YOLOv6 meituan11.png](../pictures/YOLOv6/YOLOv6%20meituan11.png)
 
     - 检测头设计
-        ![YOLOv6 meituan12.png](../pictures/YOLOv6%20meituan12.png)
+        ![YOLOv6 meituan12.png](../pictures/YOLOv6/YOLOv6%20meituan12.png)
 
 - 先进目标检测算法探索
-    ![YOLOv6 meituan13.png](../pictures/YOLOv6%20meituan13.png)
+    ![YOLOv6 meituan13.png](../pictures/YOLOv6/YOLOv6%20meituan13.png)
     
     - 标签分配策略
-        ![YOLOv6 meituan14.png](../pictures/YOLOv6%20meituan14.png)
+        ![YOLOv6 meituan14.png](../pictures/YOLOv6/YOLOv6%20meituan14.png)
 
         - ATSS有一个问题，一旦网络配置和数据集确定了之后，那么正负样本的选择就是固定下来的，没办法随着训练的过程进行改变
         - SimOTA是根据OTA演化而来的。SimOTA在训练中容易不稳定，训练速度也会慢一些
 
     - 消融实验
-        ![YOLOv6 meituan15.png](../pictures/YOLOv6%20meituan15.png)
+        ![YOLOv6 meituan15.png](../pictures/YOLOv6/YOLOv6%20meituan15.png)
 
     - 损失函数
-        ![YOLOv6 meituan16.png](../pictures/YOLOv6%20meituan16.png)
+        ![YOLOv6 meituan16.png](../pictures/YOLOv6/YOLOv6%20meituan16.png)
 
         - 目标损失可有可无
 
     - 损失函数消融实验
-        ![YOLOv6 meituan17.png](../pictures/YOLOv6%20meituan17.png)
+        ![YOLOv6 meituan17.png](../pictures/YOLOv6/YOLOv6%20meituan17.png)
 
         - DFL的思想是将连续的坐标回归问题，转化成了离散的分类问题解决的，所以在预测阶段，比常规坐标预测多16个维度的tensor输出，多的计算量会对小模型影响较大
         - DFL虽然能够带来一定的精度提升，但是会对速度有一定影响，会变慢
         - 引入目标损失，网络的精度反而下降了。原因可能是，目标分支的引入和之前正负样本的分配策略、TAL的任务对齐存在冲突。之前TAL只需要对齐分类和回归，但是现在增加了目标分支，对其内容从两个变成了三个，任务增大，学习难度增加，从而因修改那个效果
 
 - 工业遍历技巧
-    ![YOLOv6 meituan18.png](../pictures/YOLOv6%20meituan18.png)
+    ![YOLOv6 meituan18.png](../pictures/YOLOv6/YOLOv6%20meituan18.png)
 
     - 自蒸馏训练
-        ![YOLOv6 meituan19.png](../pictures/YOLOv6%20meituan19.png)
+        ![YOLOv6 meituan19.png](../pictures/YOLOv6/YOLOv6%20meituan19.png)
 
         - 因为教师网络和学习网络都是同样的网络结构，所以称为自蒸馏
         - 训练的时候，教师网络提供的软标签带有更多的信息，可以更方便学生网络的拟合
 
     - 实验
-        ![YOLOv6 meituan20.png](../pictures/YOLOv6%20meituan20.png)
+        ![YOLOv6 meituan20.png](../pictures/YOLOv6/YOLOv6%20meituan20.png)
 
         - 小网络没用DFL，因为影响速度
         - 小网络的分类分支做了蒸馏，但是效果还不如多训练100轮效果好
@@ -1125,31 +1125,31 @@
         - 加入灰边有助于提升精度
 
 - 总结与展望
-    ![YOLOv6 meituan21.png](../pictures/YOLOv6%20meituan21.png)
+    ![YOLOv6 meituan21.png](../pictures/YOLOv6/YOLOv6%20meituan21.png)
 
     - 模型选择
-        ![YOLOv6 meituan22.png](../pictures/YOLOv6%20meituan22.png)
+        ![YOLOv6 meituan22.png](../pictures/YOLOv6/YOLOv6%20meituan22.png)
 
     - 模型指标
-        ![YOLOv6 meituan23.png](../pictures/YOLOv6%20meituan23.png)
+        ![YOLOv6 meituan23.png](../pictures/YOLOv6/YOLOv6%20meituan23.png)
 
     - 未来
-        ![YOLOv6 meituan24.png](../pictures/YOLOv6%20meituan24.png)
+        ![YOLOv6 meituan24.png](../pictures/YOLOv6/YOLOv6%20meituan24.png)
 
 ## 2. 量化部署实战指南
-![YOLOv6 meituan25.png](../pictures/YOLOv6%20meituan25.png)
+![YOLOv6 meituan25.png](../pictures/YOLOv6/YOLOv6%20meituan25.png)
 
 - 目录
-    ![YOLOv6 meituan26.png](../pictures/YOLOv6%20meituan26.png)
+    ![YOLOv6 meituan26.png](../pictures/YOLOv6/YOLOv6%20meituan26.png)
 
 - 背景
-    ![YOLOv6 meituan27.png](../pictures/YOLOv6%20meituan27.png)
+    ![YOLOv6 meituan27.png](../pictures/YOLOv6/YOLOv6%20meituan27.png)
 
     - 模型量化在实际业务部署中，是最有效最广泛的模型压缩方法
     - PTQ在实际业务中，使用很广泛，因为不需要额外的训练过程，也容易上手，但是不可避免的又精度损失
     - QAT在训练过程中引入量化操作，通过训练消除量化误差
 
-    ![YOLOv6 meituan28.png](../pictures/YOLOv6%20meituan28.png)
+    ![YOLOv6 meituan28.png](../pictures/YOLOv6/YOLOv6%20meituan28.png)
 
     - 为什么YOLOv6不大量使用QAT结构弥补精度？
         - 因为YOLOv6使用了大量重参数化结构
@@ -1160,7 +1160,7 @@
 
 - 量化问题解决
     - Backbone替换
-        ![YOLOv6 meituan29.png](../pictures/YOLOv6%20meituan29.png)
+        ![YOLOv6 meituan29.png](../pictures/YOLOv6/YOLOv6%20meituan29.png)
 
         - RepOpt使用优化器重参数化的方法，代替原来的结构重参数化
         - Rep难题主要是在结构重参数化的过程中，导致kernel的分布过差(实际有待考证)
@@ -1169,34 +1169,34 @@
             - 正常的网络训练过程
 
     - COCO复现结果
-        ![YOLOv6 meituan30.png](../pictures/YOLOv6%20meituan30.png)
+        ![YOLOv6 meituan30.png](../pictures/YOLOv6/YOLOv6%20meituan30.png)
 
     - 部分量化改善精度
-        ![YOLOv6 meituan31.png](../pictures/YOLOv6%20meituan31.png)
+        ![YOLOv6 meituan31.png](../pictures/YOLOv6/YOLOv6%20meituan31.png)
 
         - 对部分层进行量化，把敏感的层剔除
         - 如何去寻找敏感层很关键，提出四种方法
         - 获得了各层的敏感性排序，把最敏感的6层进行跳过，虽然精度有影响，但是能够极大的提升量化精度
 
     - QAT量化
-        ![YOLOv6 meituan32.png](../pictures/YOLOv6%20meituan32.png)
+        ![YOLOv6 meituan32.png](../pictures/YOLOv6/YOLOv6%20meituan32.png)
 
     - 其他方法
-        ![YOLOv6 meituan33.png](../pictures/YOLOv6%20meituan33.png)
+        ![YOLOv6 meituan33.png](../pictures/YOLOv6/YOLOv6%20meituan33.png)
     
     - 图优化(TensorRT部署流程)
-        ![YOLOv6 meituan34.png](../pictures/YOLOv6%20meituan34.png)
+        ![YOLOv6 meituan34.png](../pictures/YOLOv6/YOLOv6%20meituan34.png)
 
         - TensorRT可以自动对带有PTQ和QAT量化算子的模型进行融合，但是有的情况下自动融合算子是无法实现的，比如两个输入有不同的scale，为了实现数值的精度，它就必须在它附近的算子进行量化和反量化。让精度保持一致，这部分就会导致性能损失
             - 解决方案就是对不同输入手动置成相同的scale，美团采用两者中最大的scale
 
     - 部署优化
-        ![YOLOv6 meituan35.png](../pictures/YOLOv6%20meituan35.png)
+        ![YOLOv6 meituan35.png](../pictures/YOLOv6/YOLOv6%20meituan35.png)
 
         - 提高GPU并发的利用率
 
     - 结果
-        ![YOLOv6 meituan36.png](../pictures/YOLOv6%20meituan36.png)
+        ![YOLOv6 meituan36.png](../pictures/YOLOv6/YOLOv6%20meituan36.png)
 
 ### 3. Q&A
 1. 为什么DFL对小模型影响很大？
@@ -1239,10 +1239,10 @@ YOLOv6是美团视觉智能部研发的一款目标检测框架。致力于工�
 
 ### 精度与速度远超YOLOv5和YOLOX的新框架
 目标检测作为计算机视觉领域的一项基础性技术，在工业界得到了广泛的应用，其中YOLO系列算法因其较好的综合性能，逐渐成为大多数工业应用时的首选框架。至今，业界已衍生出许多YOLO检测框架，其中以YOLOv5、YOLOX和PP-YOLOE最具代表性，但在实际使用中，我们发现上述框架在速度和精度方面仍有很大的提升空间。基于此，我们通过研究并借鉴了业界已有的先进技术，开发了一套新的目标检测框架——YOLOv6。该框架支持模型训练、推理及多平台部署等全链条的工业应用需求，并在网络结构、训练策略等算法层面进行了多项改进和优化，在COCO数据集上，YOLOv6在精度和速度方面均超越其他同体量算法，相关结果如下：
-    ![YOLOv6 comparison1](../pictures/YOLOv6%20comparison1.png)
+    ![YOLOv6 comparison1](../pictures/YOLOv6/YOLOv6%20comparison1.png)
 
 展示了不同尺寸网络下各检测算法的性能对比，曲线上的点分别表示该检测算法在不同尺寸网络下(s/tiny/nano)的模型性能，从图中可以看到，YOLOv6在精度和速度方面均超越其他YOLO系列同体量算法。
-    ![YOLOv6 comparison2](../pictures/YOLOv6%20comparison2.png)
+    ![YOLOv6 comparison2](../pictures/YOLOv6/YOLOv6%20comparison2.png)
 
 图 展示了输入分辨率变化时各检测网络模型的性能对比，曲线上的点从左往右分别表示图像分辨率依次增大时(384/448/512/576/640)该模型的性能，从图中可以看到，YOLOv6在不同分辨率下，仍然保持较大的性能优势。
 
@@ -1254,34 +1254,34 @@ YOLOv6主要在Backbone、Neck、Head以及训练策略等方面进行了诸多�
 
 ### 2.1 Hardware-friendly的骨干网络设计
 YOLOv5/YOLOX使用的Backbone和Neck都基于CSPNet搭建，采用了多分支的方式和残差结构。对于GPU等硬件来说，这种结构会一定程度上增加延时，同时减小内存带宽利用率。下图 为计算机体系结构领域中的Roofline Model介绍图，显示了硬件中计算能力和内存带宽之间的关联关系
-    ![YOLOv6 memory and compute](../pictures/YOLOv6%20memory%20and%20compute.png)
+    ![YOLOv6 memory and compute](../pictures/YOLOv6/YOLOv6%20memory%20and%20compute.png)
 
 于是，我们基于硬件感知神经网络设计的思想，对Backbone和Neck进行了重新设计和优化。该思想基于硬件的特性、推理框架/编译框架的特点，以硬件和编译友好的结构作为设计原则，在网络构建时，综合考虑硬件计算能力、内存带宽、编译优化特性、网络表征能力等，进而获得又快又好的网络结构。对上述重新设计的两个检测部件，我们在YOLOv6中分别称为EfficientRep Backbone和Rep-PAN Neck，其主要贡献点在于：
 1. 引入了RepVGG style结构
-    ![YOLOv6 RepVGG](../pictures/YOLOv6%20RepVGG.png)
+    ![YOLOv6 RepVGG](../pictures/YOLOv6/YOLOv6%20RepVGG.png)
 
 2. 基于硬件感知思想重新设计了Backbone和Neck
 RepVGG Style结构时一种在训练时具有多分支拓扑，而在实际部署时可以等效融合为单个3x3卷积的一种可重参数化的结构(融合过程如下图所示)。通过融合成的3x3的卷积结构，可以有效利用计算密集型硬件计算能力(比如GPU)，同时也可获得GPU/CPU上已经高度优化的NVIDIA cuDNN和Intel MKL编译框架的帮助。
 
 实验表明，通过上述策略，YOLOv6减少了在硬件上的延时，并显著提升了算法的精度，让检测网络更快更强。以nano尺寸模型为例，对比YOLOv5-nano采用的网络结构，本方法在速度上提升了21%，同时精度提升3.6%AP。
-    ![YOLOv6 fusion](../pictures/YOLOv6%20fusion.png)
+    ![YOLOv6 fusion](../pictures/YOLOv6/YOLOv6%20fusion.png)
 
 **Efficient Backbone:** 在Backbone设计方面，我们基于以上Rep算子设计了一个高效的Backbone。相比于YOLOv5采用的CSP-Backbone，该Backbone能够高效利用硬件(如GPU)算力的同时，还具有较强的表征能力
 
 下图 为EfficientRep Backbone具体设计结构图，我们将Backbone中stride=2的普通Conv层替换成了stride=2的RepConv层。同时，将原始的CSP-Block都重新设计为RepBlock，其中RepBlock的第一个RepConv会做channel维度的变换和对齐。另外，我们还将原始的SPPF优化设计为更加高效的SimSPPF。
-    ![YOLOv6 backbone](../pictures/YOLOv6%20backbone.png)
+    ![YOLOv6 backbone](../pictures/YOLOv6/YOLOv6%20backbone.png)
 
 **Rep-PAN:** 在Neck设计方面，为了让其在硬件上推理更加高效，以达到更好的精度与速度的平衡，我们基于硬件感知神经网络设计思想，为YOLOv6设计了一个更有效地特征融合网络结构。
 
 Rep-PAN基于PAN拓扑方式，用RepBlock替换了YOLOv5中使用的CSP-Block，同时对整体Neck中的算子进行了调整，目的是在硬件上达到了高效推理二点同时，保持较好的多尺度特征融合能力(Rep-PAN结构图如下图)
-    ![YOLOv6 Rep-PAN](../pictures/YOLOv6%20Rep-PAN.png)
+    ![YOLOv6 Rep-PAN](../pictures/YOLOv6/YOLOv6%20Rep-PAN.png)
 
 ### 2.2 更简洁高效的Decoupled Head
 在YOLOv6中，我们采用了解耦检测头(Decoupled Head)结构，并对其进行了精简设计。原始YOLOv5的检测头是通过分类和回归分支融合共享的方式来实现的，而YOLOX的检测头则是将分类和回归分支进行解耦，同时新增了两个额外的3x3的卷积层，虽然提升了检测精度，但一定程度上增加了网络延时。
 
 因此，我们对解耦头进行了精简设计，同时综合考虑到相关算子表征能力和硬件上计算开销这两者的平衡，采用Hybrid Channels策略重新设计了一个更高效的解耦头结构，在维持精度的同时将低了延时，缓解了解耦头中3x3卷积带来的额外延时开销。通过在nano尺寸模型上进行消融实验，对比相同通道数的解耦头结构，精度提升0.2%AP的同时，速度提升6.8%。
-    ![YOLOv6 YOLOv5 decoupled head](../pictures/YOLOv6%20YOLOv5%20decoupled%20head.png)
-    ![YOLOv6 YOLOx YOLOv6 decoupled head](../pictures/YOLOv6%20YOLOx%20YOLOv6%20decoupled%20head.png)
+    ![YOLOv6 YOLOv5 decoupled head](../pictures/YOLOv6/YOLOv6%20YOLOv5%20decoupled%20head.png)
+    ![YOLOv6 YOLOx YOLOv6 decoupled head](../pictures/YOLOv6/YOLOv6%20YOLOx%20YOLOv6%20decoupled%20head.png)
 
 ### 2.3 更有效的训练策略
 为了进一步提升检测精度，我们吸收借鉴了学术界和工业界其他检测框架的先进研究进展：Anchor-free无锚范式、SImOTA标签分配策略以及SIoU边界框回归损失。
@@ -1289,10 +1289,10 @@ Rep-PAN基于PAN拓扑方式，用RepBlock替换了YOLOv5中使用的CSP-Block�
 **Anchor-free无锚范式**
 
 YOLOv6采用了更简洁的Anchor-free检测方法。由于Anchor-based检测器需要在训练之前进行聚类分析以确定最佳Anchor集合，这会一定程度提高检测器的复杂度；同时，在一些边缘端的应用中，需要在硬件之间搬运大量检测结果的步骤，也会带来额外的延时。而Anchor-free无锚范式因其泛化能力强，解码逻辑更简单，在近几年中应用比较广泛。经过对Anchor-free的实验调研，我们发现，相较于Anchor-based
-    ![YOLOv6 anchor](../pictures/YOLOv6%20anchor.png)
+    ![YOLOv6 anchor](../pictures/YOLOv6/YOLOv6%20anchor.png)
 
 检测器的复杂度而带来的额外延时，Anchor-free检测器在速度上有51%的提升。
-    ![YOLOv6 anchor free](../pictures/YOLOv6%20anchor%20free.png)
+    ![YOLOv6 anchor free](../pictures/YOLOv6/YOLOv6%20anchor%20free.png)
 
 **SimOTA标签分配策略(基本上就是继承了YOLOX的思想)**
 
@@ -1313,7 +1313,7 @@ SimOTA的流程：
 为了京一部提升回归精度，YOLOv6采用了SIoU边界框回归损失函数来监督网络的学习。目标检测网络的训练一般需要至少定义两个损失函数：分类损失和边界框回归损失，而损失函数的定义往往对检测精度以及寻来你速度产生较大的影响。
 
 近年来，常用的边界框回归损失包括IoU、GIoU、CIoU、DIoU loss等等，这些损失函数通过考虑预测框与目标框之间的重叠程度、中心点距离、纵横比等因素来衡量两者之间的差距，从而指导网络最小化损失，以提升回归精度。但是这些方法都没有考虑到预测框与目标框之间方向的匹配性。SIoU损失函数通过引入了所需回归之间的向量角度，重新定义了距离损失，有效降低了回归的自由度，加快网络收敛，进一步提升了回归精度。通过在YOLOv6s上采用SIoU loss进行实验，对比CIoU loss，平均检测精度提升0.3%AP。
-    ![YOLOv6 SIoU](../pictures/YOLOv6%20SIoU.png)
+    ![YOLOv6 SIoU](../pictures/YOLOv6/YOLOv6%20SIoU.png)
 
 SIoU:
 - Angle cost
@@ -1323,7 +1323,7 @@ SIoU:
 
 ## 3. 实验结果
 经过以上优化策略和改进，YOLOv6在多个不同尺寸下的模型均取得了卓越表现。下表1展示了YOLOv6-nano的消融实验结果，从实验结果可以看出，我们自主设计的检测网络在精度和速度上都带来了很大的增益。
-    ![YOLOv6 result1](../pictures/YOLOv6%20result1.png)
+    ![YOLOv6 result1](../pictures/YOLOv6/YOLOv6%20result1.png)
 
 - YOLOv6-nano在COCO val上取得了35.0%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到1242FPS的性能，相较于YOLOv5-nano精度提升7%AP，速度提升85%
 - YOLOv6-tiny在COCO val上取得了41.3%AP的精度，同时在T4上使用TRT FP16 batchsize=32进行推理，可达到602FPS的性能，相较于YOLOv5-s精度提升3.9%AP，速度提升29.4%
@@ -1334,7 +1334,7 @@ SIoU:
 
 ## 1. 创新点
 1. E-ELAN: Extended efficient layer aggregation networks
-    ![YOLOv7 ELAN.png](../pictures/YOLOv7%20ELAN.png)
+    ![YOLOv7 ELAN.png](../pictures/YOLOv7/YOLOv7%20ELAN.png)
     - 区分ELAN和E-ELAN
     - 这篇文章的重点结构
     - ELAN/E-ELAN配置文件结构：
@@ -1345,19 +1345,19 @@ SIoU:
         - args: 创建该层对应的模块时，需要传递的参数
             - [channels, kernel_size, stride]
     - E-ELAN是两个并行的ELAN
-        ![YOLOv7 E-ELAN.png](../pictures/YOLOv7%20E-ELAN.png)
+        ![YOLOv7 E-ELAN.png](../pictures/YOLOv7/YOLOv7%20E-ELAN.png)
 
         - 空洞卷积的等价形式
-            ![YOLOv7 E-ELAN-branch.png](../pictures/YOLOv7%20E-ELAN-branch.png)
+            ![YOLOv7 E-ELAN-branch.png](../pictures/YOLOv7/YOLOv7%20E-ELAN-branch.png)
 
     - ELAN和E-ELAN对比
-        ![YOLOv6 comparison ELAN and E-ELAN.png](../pictures/YOLOv7%20comparison%20ELAN%20and%20E-ELAN.png)
+        ![YOLOv6 comparison ELAN and E-ELAN.png](../pictures/YOLOv7/YOLOv7%20comparison%20ELAN%20and%20E-ELAN.png)
 
 2. 模型缩放方法Model scaling for concatenation-based models
     - 调节模型的属性，产生模型不同速度需求下的不同大小
     - 基于拼接操作(ELAN和E-ELAN就用了)的复合模型缩放方法
     - 能够同时改变深度和宽度
-        ![YOLOv7 ELAN-ELANUP.png](../pictures/YOLOv7%20ELAN-ELANUP.png)
+        ![YOLOv7 ELAN-ELANUP.png](../pictures/YOLOv7/YOLOv7%20ELAN-ELANUP.png)
 
 3. 计划的重参数化卷积
     - 把卷积用到残差模块或者拼接模块
@@ -1368,7 +1368,7 @@ SIoU:
 
     - 虽然重参数化方法在VGG上很好使，但是不能直接使用的ResNet和DensNet这种有残差结构的网络上
     - RepConvN就是在RepConv基础上去掉了恒等连接
-        ![YOLOv7 RepConv can and not.png](../pictures/YOLOv7%20RepConv%20can%20and%20not.png)
+        ![YOLOv7 RepConv can and not.png](../pictures/YOLOv7/YOLOv7%20RepConv%20can%20and%20not.png)
 
     - 结论：当一层带有残差或者拼接的模块时，必须使用没有恒等连接的重参数化结构
 
@@ -1376,7 +1376,7 @@ SIoU:
 
 3. 两种新的标签分配方法
     1. Deep supervision
-        ![YOLOv7 deep supervision.png](../pictures/YOLOv7%20deep%20supervision.png)
+        ![YOLOv7 deep supervision.png](../pictures/YOLOv7/YOLOv7%20deep%20supervision.png)
 
         - 在基本的检测头上，增加了辅助检测头
         - 辅助检测头参与反向传播
@@ -1384,7 +1384,7 @@ SIoU:
     2. label assignment
         - hard label：根据真实GT框对应的目标框，GT中心位置在哪，就产生什么标签
         - soft label：不再只通过红色标注框中心点位置，分配标注框。而是不同的网格位置，和这个红色的标注框去做额外的复杂运算，再最终确定标注框的分配位置
-            ![YOLOv7 label assign.png](../pictures/YOLOv7%20label%20assign.png)
+            ![YOLOv7 label assign.png](../pictures/YOLOv7/YOLOv7%20label%20assign.png)
         
         - 分配器Assigner：实际代码中是OTA
 
@@ -1414,42 +1414,42 @@ SIoU:
     - YOLOv7-E6E：在YOLOv7-E6基础上，把所有ELAN都替换成E-ELAN的模型，云GPU
 
 2. 网络结构
-    ![YOLOv7 yaml.png](../pictures/YOLOv7%20yaml.png)
+    ![YOLOv7 yaml.png](../pictures/YOLOv7/YOLOv7%20yaml.png)
 
     - 配置文件中的Conv不仅仅是普通的Conv，是Conv + BN
     + SiLU的组合，也被称为CBS层
 
     - ELAN
-        ![YOLOv7 ELAN.png](../pictures/YOLOv7%20ELAN.png)
+        ![YOLOv7 ELAN.png](../pictures/YOLOv7/YOLOv7%20ELAN.png)
     
     - MP1
-        ![YOLOv7 MP1.png](../pictures/YOLOv7%20MP1.png)
+        ![YOLOv7 MP1.png](../pictures/YOLOv7/YOLOv7%20MP1.png)
 
         - 复杂版的最大池化层：因为输入输出通道数不变，但是尺寸减半
     - SPPCSPC
-        ![YOLOv7 SPPCSPC.png](../pictures/YOLOv7%20SPPCSPC.png)
+        ![YOLOv7 SPPCSPC.png](../pictures/YOLOv7/YOLOv7%20SPPCSPC.png)
 
     - ELAN'
-        ![YOLOv7 ELAN'.png](../pictures/YOLOv7%20ELAN'.png)
+        ![YOLOv7 ELAN'.png](../pictures/YOLOv7/YOLOv7%20ELAN'.png)
 
     - MP2
-        ![YOLOv7 MP2.png](../pictures/YOLOv7%20MP2.png)
+        ![YOLOv7 MP2.png](../pictures/YOLOv7/YOLOv7%20MP2.png)
 
     - Detect
-        ![YOLOv7 Detect.png](../pictures/YOLOv7%20Detect.png)
+        ![YOLOv7 Detect.png](../pictures/YOLOv7/YOLOv7%20Detect.png)
 
         - 预测数量self.no = 类别数 + 回归参数(4) + 目标参数(1)
         - 锚框数量self.na一般都是3
         - 常见数值255 = self.no * self.na(其中self.no的类别数取80)
 
     - 预测框计算公式
-        ![YOLOv7 function.png](../pictures/YOLOv7%20function.png)
+        ![YOLOv7 function.png](../pictures/YOLOv7/YOLOv7%20function.png)
 
     - DownC
-        ![YOLOv7 downc.png](../pictures/YOLOv7%20downc.png)
+        ![YOLOv7 downc.png](../pictures/YOLOv7/YOLOv7%20downc.png)
 
     - ELAN所有变体
-        ![YOLOv7 all ELAN.png](../pictures/YOLOv7%20all%20ELAN.png)
+        ![YOLOv7 all ELAN.png](../pictures/YOLOv7/YOLOv7%20all%20ELAN.png)
 
     - ImplicitA和IMplicitM
         - 就是加了一个可学习的向量
@@ -1459,25 +1459,25 @@ SIoU:
 
 3. YOLOv7网络结构
     - YOLOv7-tiny
-        ![YOLOv7 tiny.png](../pictures/YOLOv7%20tiny.png)
+        ![YOLOv7 tiny.png](../pictures/YOLOv7/YOLOv7%20tiny.png)
 
     - YOLOv7
-        ![YOLOv7 yaml.png](../pictures/YOLOv7%20yaml.png)
+        ![YOLOv7 yaml.png](../pictures/YOLOv7/YOLOv7%20yaml.png)
 
     - YOLOv7-W6
-        ![YOLOv7 W6.png](../pictures/YOLOv7%20W6.png)
+        ![YOLOv7 W6.png](../pictures/YOLOv7/YOLOv7%20W6.png)
 
     - YOLOv7-X
-        ![YOLOv7 X.png](../pictures/YOLOv7%20X.png)
+        ![YOLOv7 X.png](../pictures/YOLOv7/YOLOv7%20X.png)
 
     - YOLOv7-E6
-        ![YOLOv7 E6.png](../pictures/YOLOv7%20E6.png)
+        ![YOLOv7 E6.png](../pictures/YOLOv7/YOLOv7%20E6.png)
 
     - YOLOv7-D6
-        ![YOLOv7 D6.png](../pictures/YOLOv7%20D6.png)
+        ![YOLOv7 D6.png](../pictures/YOLOv7/YOLOv7%20D6.png)
 
     - YOLOv7-E6E
-        ![YOLOv7 E6E.png](../pictures/YOLOv7%20E6E.png)
+        ![YOLOv7 E6E.png](../pictures/YOLOv7/YOLOv7%20E6E.png)
 
 # YOLOv8
 
@@ -1539,21 +1539,21 @@ YOLOv8 尚未发表论⽂，因此我们⽆法直接了解其创建过程中进�
 
 GitHub ⽤⼾ RangeKing 制作的下图显⽰了⽹络架构的详细可视化。
 
-![YOLOv8 Architecture, visualisation made by GitHub user RangeKing](../pictures/YOLOv8%20Architecture%2C%20visualisation%20made%20by%20GitHub%20user%20RangeKing.png)
+![YOLOv8 Architecture, visualisation made by GitHub user RangeKing](../pictures/YOLOv8/YOLOv8%20Architecture%2C%20visualisation%20made%20by%20GitHub%20user%20RangeKing.png)
 
 ### ⽆锚检测
 
 YOLOv8 是⼀个⽆锚模型。这意味着它直接预测对象的中⼼⽽不是已知 [锚框](https://blog.roboflow.com/what-is-an-anchor-box/) 的偏移量。
 
-![Visualization of an anchor box in YOLO](../pictures/YOLOv8%20Visualization%20of%20an%20anchor%20box%20in%20YOLO.png)
+![Visualization of an anchor box in YOLO](../pictures/YOLOv8/YOLOv8%20Visualization%20of%20an%20anchor%20box%20in%20YOLO.png)
 
 [锚框](https://blog.roboflow.com/what-is-an-anchor-box/) 是早期 YOLO 模型中众所周知的棘⼿部分，因为它们可能代表⽬标基准框的分布，⽽不是⾃定义数据集的分布。
 
-![The detection head of YOLOv5, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8%20The%20detection%20head%20of%20YOLOv5.png)
+![The detection head of YOLOv5, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8/YOLOv8%20The%20detection%20head%20of%20YOLOv5.png)
 
 Anchor free 检测减少了框预测的数量，从⽽加速了⾮最⼤抑制 (NMS)，这是⼀个复杂的后处理步骤，在推理后筛选候选检测。
 
-![The detection head for YOLOv8, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8%20The%20detection%20head%20for%20YOLOv8.png)
+![The detection head for YOLOv8, visualized in [netron.app](https://netron.app/?ref=blog.roboflow.com)](../pictures/YOLOv8/YOLOv8%20The%20detection%20head%20for%20YOLOv8.png)
 
 ### 新的卷积
 
@@ -1561,7 +1561,7 @@ stem 的第⼀个 `6x6` conv 被 `3x3` 替换,  主要构建块被更改，[C2f
 
 在 `C2f` 中, `Bottleneck` 的所有输出(两个具有残差连接的 3x3 `convs` 的奇特名称) 都被连接起来。⽽在 `C3` 中，仅使⽤了最后⼀个 `Bottleneck` 的输出。
 
-![New YOLOv8 `C2f` module](../pictures/YOLOv8%20New%20YOLOv8%20C2f%20module.png)
+![New YOLOv8 `C2f` module](../pictures/YOLOv8/YOLOv8%20New%20YOLOv8%20C2f%20module.png)
 
 `Bottleneck` 与 YOLOv5 相同，但第⼀个 conv 的内核⼤⼩从 `1x1` 更改为 `3x3`。从这些信息中，我们可以看到 YOLOv8 开始恢复到 2015 年定义的 ResNet 块。
 
@@ -1575,7 +1575,7 @@ YOLOv8 在在线训练期间增强图像。在每个时期，模型看到它所�
 
 其中⼀种增强称为 [⻢赛克增强](https://blog.roboflow.com/advanced-augmentations/)。这涉及将四张图像拼接在⼀起，迫使模型学习新位置、部分遮挡和不同周围像素的对象。
 
-![Mosaic augmentation of chess board photos](../pictures/YOLOv8%20Mosaic%20augmentation%20of%20chess%20board%20photos.png)
+![Mosaic augmentation of chess board photos](../pictures/YOLOv8/YOLOv8%20Mosaic%20augmentation%20of%20chess%20board%20photos.png)
 
 然⽽，如果在整个训练过程中执⾏，这种增强根据经验显⽰会降低性能。在最后⼗个训练时期将其关闭是有利的。
 
@@ -1591,7 +1591,7 @@ COCO（Common Objects in Context）是评估对象检测模型的⾏业标准基
 
 下图显⽰了 YOLOv8 在 COCO 上的准确性，使⽤的数据由 Ultralytics 团队收集并发布在他们的 [YOLOv8 README](https://github.com/ultralytics/ultralytics?ref=blog.roboflow.com) 中：
 
-![YOLOv8 COCO evaluation](../pictures/YOLOv8%20COCO%20evaluation.png)
+![YOLOv8 COCO evaluation](../pictures/YOLOv8/YOLOv8%20COCO%20evaluation.png)
 
 在撰写本⽂时，YOLOv8 COCO 的准确性是推理延迟相当的模型的最新⽔平。
 
@@ -1605,11 +1605,11 @@ _我们将每个模型的⼩型版本运⾏ 100 个 epoch，我们只⽤⼀个�
 
 下⾯的箱线图告诉我们，当针对 Roboflow 100 基准进⾏测量时，YOLOv8 有更少的离群值和更好的 mAP。
 
-![YOLOs _mAP@.50_ against RF100](../pictures/YOLOv8%20YOLOs%20_mAP%40.50_%20against%20RF100.png)
+![YOLOs _mAP@.50_ against RF100](../pictures/YOLOv8/YOLOv8%20YOLOs%20_mAP%40.50_%20against%20RF100.png)
 
 以下条形图显⽰了每个 RF100 类别的平均 _mAP@.50_ 。同样，YOLOv8 优于所有以前的模型。
 
-![YOLOv8 YOLOs average _mAP@.50_ against RF100 categories](../pictures/YOLOv8%20YOLOs%20average%20_mAP%40.50_%20against%20RF100%20categories.png)
+![YOLOv8 YOLOs average _mAP@.50_ against RF100 categories](../pictures/YOLOv8/YOLOv8%20YOLOs%20average%20_mAP%40.50_%20against%20RF100%20categories.png)
 
 相对于 YOLOv5 评估，YOLOv8 模型在每个数据集上产⽣了相似的结果，或者显着提⾼了结果。
 
@@ -1625,7 +1625,7 @@ YOLOv8 模型使⽤与 YOLOv5 相似的代码和新结构，其中分类、实�
 
 模型仍然使⽤相同的 [YOLOv5 YAML  格式](https://roboflow.com/formats/yolov8-pytorch-txt?ref=blog.roboflow.com) 进⾏初始化并且数据集格式保持不变。
 
-![YOLOv8 code structure](../pictures/YOLOv8%20code%20structure.png)
+![YOLOv8 code structure](../pictures/YOLOv8/YOLOv8%20code%20structure.png)
 
 ### YOLOv8 CLI
 

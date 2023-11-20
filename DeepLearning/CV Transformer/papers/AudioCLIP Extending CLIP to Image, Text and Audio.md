@@ -9,7 +9,7 @@
 # 一、解决的问题
 
 # 二、做出的创新
-![AudioCLIP](../pictures/AudioCLIP.png)
+![AudioCLIP](../pictures/AudioCLIP/AudioCLIP.png)
 1. 三个模态
     - 文本
     - 视频

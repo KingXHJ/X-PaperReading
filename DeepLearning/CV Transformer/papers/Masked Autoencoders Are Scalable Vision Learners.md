@@ -7,7 +7,7 @@
 - 实验环境：128 TPU V-core
 - 数据集：
 
-[ppt](../ppt/models_by_DASOU/MAE/MAE.pptx)
+[ppt](../ppt/MAE/MAE.pptx)
 
 # 论文知识补充
 - 做的模型很快叫`efficient`
@@ -25,7 +25,7 @@
 3. 编码器和解码器不对成，即看到的东西不一样
 # 三、设计的模型
 
-![MAE architecture](../pictures/MAE%20architecture.png)
+![MAE architecture](../pictures/MAE/MAE%20architecture.png)
 
 - 图片切成小块
 - 随机盖住一些块

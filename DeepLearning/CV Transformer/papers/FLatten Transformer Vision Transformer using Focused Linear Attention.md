@@ -15,7 +15,7 @@
 - 解决方法
     - 另一方面，线性注意力被认为是一种简单而有效的替代方案，可以通过降低总体复杂性来解决计算难题。早期的研究利用了一种局部敏感的哈希方案，该方案将计算复杂度从 $O(n^{2})$ 压缩到 $O(nlog(n))$ 。尽管如此，它在复杂性项之前引入了一个大常数，这使得它在常见情况下仍然负担不起。最近的研究注意到，自注意操作中的Softmax函数实际上迫使所有查询和密钥之间进行成对计算，这导致了 $O(n^{2})$ 的复杂性，并成为主要开销。为了解决这一问题，几种方法采用简单的激活函数或特定的映射函数来近似原始Softmax函数。如图1所示，通过将计算顺序从 $(query \cdot key) \cdot value$ 更改为 $query \cdot (key \cdot value)$ ，可以将整体计算复杂度降低到 $O(n)$ 。然而，与Softmax注意力相比，当前的线性注意力方法仍然存在严重的性能下降，并且可能涉及映射函数的额外计算开销，限制了它们的实际应用。
 
-![FLatten Transformer1](../pictures/FLatten_Transformer1.png)
+![FLatten Transformer1](../pictures/Flatten%20Transformer/FLatten_Transformer1.png)
 
 1. Vision Transformer and Self-Attention
     - Transformer和自注意机制最早出现在自然语言处理领域，在计算机视觉领域引起了广泛的研究兴趣。然而，自注意的高计算复杂度限制了直接应用于视觉任务。以前的工作试图从几个角度解决这一问题。先驱的视觉Transformer考虑通过将相邻像素合并为单个令牌来降低输入分辨率。在以下研究中也采用了类似的见解，并将其扩展到下游任务。另一条研究路线受到卷积神经网络中金字塔结构的启发，考虑逐步降低特征分辨率，同时采用精心设计的注意力模式来约束注意力标记的数量。例如，PVT使用稀疏注意力模式，并从全局角度选择注意力标记。DAT遵循这一路径，设计了一个可变形的注意力模块，以实现数据依赖的注意力模式。Swin-Transformer通过将输入划分为独立的窗口来本地选择关注令牌。NAT在卷积中遵循以查询为中心的模式，并为所有查询设计独立的注意令牌。一些研究还注意到，卷积运算对Transformer模型很有价值，可能有助于提高整体效率。CMT将Transformer块与深度卷积等高效卷积算子相结合，实现了更好的效率-性能折衷。ACmix分担卷积和自注意的计算开销，并以有限的成本集成了这两个模块。对于需要高效率的应用场景，MobileFormer分别为卷积和Transformer维护了两条路径，并从这两个模块中获益。MobileViT利用MobileNets的成功，使用mobilenet块和Transformer块的组合来实现轻量级和低延迟
@@ -26,7 +26,7 @@
 1. Linear Attention
     - 除了上述方法外，另一种研究方法是通过线性关注来解决高计算复杂度问题。具体来说，线性注意用单独的核函数代替了自注意中的Softmax函数。在这种情况下，线性注意不必首先计算成对相似度 $QK^{T}$ 。如图1所示，基于矩阵乘法的关联性质，线性关注可以通过先计算 $K^{T}V$ 来改变计算顺序，从而将计算复杂度从 $O(N^{2}d)$ 降低到 $O(nd^{2})$ 。线性注意力模块虽然有效，但如何设计出与softmax注意力一样有效的线性注意力模块是一个不容忽视的问题。Performer用正交随机特征近似Softmax操作。 Efficient attention分别对 $Q$ 和 $K$ 应用Softmax函数，自然保证了 $QK^{T}$ 的每一行之和为1。Nystromformer和SOFT通过矩阵分解近似全自注意矩阵。Hydra attention用余弦相似度代替Softmax，提出Hydra技巧，将计算复杂度降低到 $O(Nd)$ 。EfficientVit使用深度卷积提高线性注意的局部特征提取能力。Castling-ViT提出了线性角核来衡量每个 $Q_ {i}$ 和 $K_ {j}$ 之间的光谱相似度。
     - 然而，当前的线性注意力设计要么没有足够的表达能力来赶上Softmax注意力，要么涉及来自复杂内核函数的额外计算开销。在这项工作中，我们从聚焦能力和特征多样性的角度分析了线性注意力表现下降的原因。基于这些分析，我们提出了一种新的线性注意力模块，称为聚焦线性注意力，它以较低的计算复杂度实现了比Softmax注意力更好的性能（图2）。
-    ![FLatten Transformer2](../pictures/FLatten_Transformer2.png)
+    ![FLatten Transformer2](../pictures/Flatten%20Transformer/FLatten_Transformer2.png)
     
     - 相比之下，线性注意力被认为是一种有效的替代方法，它将计算复杂度从 $O(N^{2})$ 限制到 $O(N)$ 。具体来说，引入精心设计的核函数作为原始相似函数的近似，即： $$Sim(Q,K)=\phi(Q)\phi(K)^{T}$$ 其中，自关注模块可以重写为: $$O_ {i}=\sum^{N}_ {j=1} \frac{\phi(Q_ {i})\phi(K_ {j})^{T}}{\sum^{N}_ {j=1}\phi(Q_ {i})\phi(K_ {j})^{T}}V_ {j}$$ 这样，我们就可以根据矩阵乘法的关联性质(如图1所示)，将计算顺序从 $(QK^{T})V$ 改为 $Q(K^{T}V)$ :  $$O_ {i}=\frac{\phi(Q_ {i})(\sum^{N}_ {j=1}\phi(K_ {j})^{T}V_ {j})}{\phi(Q_ {i})(\sum^{N}_ {j=1}\phi(K_ {j})^{T})}$$ 其中，相对于令牌数的计算复杂度降低到 $O(N)$ 。
     - 然而，目前的线性关注方法也面临着模型复杂性和表达性的两难困境。一方面，简单的近似，例如使用ReLU激活，过于松散，会导致显著的性能下降。另一方面，精心设计的核函数或矩阵分解方法可能会产生额外的计算开销。总的来说，线性注意力和Softmax注意力的实际表现之间仍然存在差距
@@ -43,7 +43,7 @@
 - 虽然具有线性计算复杂度，但之前的各种研究也证明，简单地将Softmax注意力替换为线性注意力通常会导致严重的性能下降。在本节中，我们首先从聚焦能力和特征多样性两个角度详细分析了线性注意力的劣势。然后，我们介绍了聚焦线性注意力，充分解决了这些问题，实现了高效率和表达能力。
 1. Focus ability
     - Softmax注意力实际上提供了一种非线性重加权机制，使其易于集中于重要特征。如图3所示，Softmax注意力的注意力图在某些区域上的分布尤其明显，例如前景对象。可比较的是，线性注意力的分布相对平稳，使其输出更接近所有特征的平均值，并且未能集中在信息量更大的区域。
-    ![FLatten Transformer3](../pictures/FLatten_Transformer3.png)
+    ![FLatten Transformer3](../pictures/Flatten%20Transformer/FLatten_Transformer3.png)
 
     - 作为补救措施，我们提出了一个简单而有效的解决方案，通过调整每个查询和键特性的方向，使相似的查询键对更接近，而将不相似的查询键对推开。具体来说，我们给出了一个简单的映射函数 $f_ {p}$ ，称为 ***聚焦函数*** : $$Sim(Q_ {i}, K_ {j})=\phi_ {p}(Q_ {i})\phi_ {p}(K_ {j})^{T}$$ $$where \quad \phi_ {p}(x)=f_ {p}(ReLU(x)), \quad f_ {p}(x)=\frac{||x||}{||x^{**p}||}x^{**p}$$ 并且 $x^{∗∗p}$ 表示 $x$ 的元素幂 $p$。我们遵循前面的线性注意力模块，首先使用ReLU函数来确保公式 $$O_ {i}=\frac{\phi(Q_ {i})(\sum^{N}_ {j=1}\phi(K_ {j})^{T}V_ {j})}{\phi(Q_ {i})(\sum^{N}_ {j=1}\phi(K_ {j})^{T})}$$ 中输入的非负性和分母的有效性。直接观察到映射后特征范数保持不变，即 $$||x||=||f_ {p}(x)||$$，说明只调整了特征方向。
     
@@ -54,11 +54,11 @@
     - 因此，通过适当的 $p$ ，我们的聚焦函数 $f_ {p}(\cdot)$ 实际上实现了相似查询键对 $$\exists p > 1, \quad s.t. \langle \phi_ {p}(x), \phi_ {p}(y) \rangle > \langle x, y \rangle$$ 和不相似查询键对 $$\exists p > 1, \quad s.t. \langle \phi_ {p}(x), \phi_ {p}(y) \rangle < \langle x, y \rangle$$ 之间更明显的差异，恢复了原始Softmax函数那样尖锐的注意力分布。
 
     - 为了更好地理解，我们在图4中举了一个例子来说明 $f_ {p}$ 的作用。可以看出，$f_ {p}$ 实际上将每个向量“拉”到离它最近的轴上，而 $p$ 决定了这种“拉”的程度。通过这样做，$f_ {p}$ 有助于根据最近的轴将特征分成几组，提高每组内部的相似性，同时降低组之间的相似性。可视化与我们上面的分析一致。
-    ![FLatten Transformer4](../pictures/FLatten_Transformer4.png)
+    ![FLatten Transformer4](../pictures/Flatten%20Transformer/FLatten_Transformer4.png)
 
 1. Feature diversity
     - 除了聚焦能力外，特征多样性也是制约线性注意表达能力的因素之一。其中一个可能的原因可能是注意力矩阵的等级，其中可以看到显著的差异。以DeiT-Tiny中 $N = 14 \times 14$ 的Transformer层为例，我们可以从图5(a)中看到，注意矩阵具有完整的秩(196个中的196个)，显示了从值中聚合特征时的多样性。
-    ![FLatten Transformer5](../pictures/FLatten_Transformer5.png)
+    ![FLatten Transformer5](../pictures/Flatten%20Transformer/FLatten_Transformer5.png)
 
     - 然而，这在线性注意力的情况下很难实现。实际上，线性注意中注意矩阵的秩是由每个头部的令牌数 $N$ 和通道维数 $d$ 来限定的: $$rank(\phi(Q)\phi(K)^{T}) \le min \{ rank(\phi(Q)), rank(\phi(K)) \}$$ $$rank(\phi(Q)\phi(K)^{T}) \le min \{ N, d \}$$ 其中，在普通视觉变换器设计中，$d$ 通常小于 $N$ ，例如，DeiT中的 $d=64，N=196$ 以及Swin Transformer中的 $d=32，N=49$ 。在这种情况下，注意力矩阵秩的上限被限制在较低的比率，这表明注意力图的许多行被严重同质化。由于自关注的输出是同一组 $V$ 的加权和，因此注意力权重的均匀化不可避免地导致聚合特征之间的相似性
     - 为了更好地说明，我们将DeiT-Tiny中原始的Softmax注意力替换为线性注意力，并在图5(b)中显示了注意力图的秩。可以看到，秩大大降低(196个中的54个)，并且注意矩阵的许多行相似。
@@ -77,19 +77,19 @@
 - 在本节中，我们将在我们集中的线性关注中删除关键组件，以验证这些设计的有效性。我们报告了基于FLatten-DeiT-T和FLatten-Swin-T的ImageNet-1K分类结果。
 1. Focused function $f_ {p}$ and DWC
     - 我们首先评估了我们提出的聚焦函数 $f_ {p}$ 和深度卷积的有效性。我们从线性注意开始，依次引入 $f_ {p}$ 和DWC。如表4所示，采用所提出的聚焦函数 $f_ {p}$ 可获得+1.3的改进。使用DWC来保持特征多样性进一步导致+2.3的精度增益，实现74.1的总体精度。这些结果证明，我们提出的 $f_ {p}$ 和DWC可以大大提高线性注意力的表达能力，从而帮助我们的聚焦线性注意力模块获得比Softmax注意力更好的性能。
-    ![FLatten Transformer Table4](../pictures/FLatten_Transformer_Table4.png)
+    ![FLatten Transformer Table4](../pictures/Flatten%20Transformer/FLatten_Transformer_Table4.png)
 
 1. Ablation on different $p$
     - 在表5中我们研究了聚焦因子 $p$ 对模型性能的影响。我们发现当 $p$ 在2和32之间变化时，Top-1 的分类精度变化不大，这意味着我们的模块对这个超参数具有鲁棒性。实际上，我们对文中所有模型都选择 $p = 3$ 而不进行额外的调整。
-    ![FLatten Transformer Table5](../pictures/FLatten_Transformer_Table5.png)
+    ![FLatten Transformer Table5](../pictures/Flatten%20Transformer/FLatten_Transformer_Table5.png)
 
 1. Receptive field
     - 我们还研究了基于FLatten-Swin-tiny的感受野的影响。如表6所示，随着窗口大小的增加，我们的模型的性能逐渐提高。这进一步证明，尽管窗口关注是有效的，但从全球角度来看，它不可避免地牺牲了自我关注的长期依赖性，仍然不如全球关注。对于线性复杂性，我们的模块有可能在保持相同计算量的同时实现大的甚至全局的感受野。
-    ![FLatten Transformer Table6](../pictures/FLatten_Transformer_Table6.png)
+    ![FLatten Transformer Table6](../pictures/Flatten%20Transformer/FLatten_Transformer_Table6.png)
 
 1. Focused linear attention at different stages
     - 我们在不同阶段用我们的模块替换Swin-T的shift-window注意力。如表7所示，我们可以看到替换前两个阶段导致性能增益0.8，而替换后两个阶段会略微降低整体精度。我们将这一结果归因于Swin的前两个阶段具有更大的分辨率，并且更适合我们具有大接受场的模块。
-    ![FLatten Transformer Table7](../pictures/FLatten_Transformer_Table7.png)
+    ![FLatten Transformer Table7](../pictures/Flatten%20Transformer/FLatten_Transformer_Table7.png)
 
 ## 1、比之前模型的优势
 

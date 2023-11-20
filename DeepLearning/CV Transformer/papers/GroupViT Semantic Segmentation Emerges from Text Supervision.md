@@ -15,14 +15,14 @@
 # 三、设计的模型
 1. 模型结构
 
-    ![GroupViT model](../pictures/GroupViT%20model.png)
+    ![GroupViT model](../pictures/GroupViT/GroupViT%20model.png)
     
     1. 视觉很早之前做无监督分割的时候，经常用一类方法，叫做grouping
         - 类似说，有一些聚类的中心点，从这个点开始发散，把周围相似的点逐渐扩充成一个group，这个group相当于一个segmentation mask，是一种自下而上的方式
     2. 这里作者重新审视了grouping的方法，发现能把grouping完美的用在当前的框架中，提出了一个计算单元（图右），叫做grouping block，还有一些可学习的group tokens，主要目的是想让这个模型在初始学习的时候，能慢慢的把相邻相近的像素点group起来，变成一个又一个segmentation mask
 2. 模型细节
 
-    ![GroupViT dimension](../pictures/GroupViT%20dimension.png)
+    ![GroupViT dimension](../pictures/GroupViT/GroupViT%20dimension.png)
     
     1. 12层的Vision Transformer（12层Transformer）
     2. 图像编码器输入有两个
@@ -48,7 +48,7 @@
 
 5. 如何做zero-shot推理
 
-    ![GroupViT zero-shot](../pictures/GroupViT%20zero-shot.png)
+    ![GroupViT zero-shot](../pictures/GroupViT/GroupViT%20zero-shot.png)
     
     1. 和CLIP一样
     2. 给一个图片，经过GroupViT，得到8个Group embedding
@@ -56,14 +56,14 @@
     4. 只要去算图像的Group embedding和文本特征之间的相似度，就知道每个Group embedding之间对应什么样一个class
     5. 很明显的一个局限性，因为最后模型只有8个这个Group embedding，最多只能检测8类，不过这是一个超参数，8个效果最好
     
-        ![GroupViT output tokens](../pictures/GroupViT%20output%20tokens.png)
+        ![GroupViT output tokens](../pictures/GroupViT/GroupViT%20output%20tokens.png)
 # 四、实验结果
 
-![GroupViT group token](../pictures/GroupViT%20group%20token.png)
+![GroupViT group token](../pictures/GroupViT/GroupViT%20group%20token.png)
 
 - 真的学到了东西
 
-![GroupViT result](../pictures/GroupViT%20result.png)
+![GroupViT result](../pictures/GroupViT/GroupViT%20result.png)
 
 - Baseline中用文本做监督信号的第一个工作
 - 还可以做zero-shot的inference

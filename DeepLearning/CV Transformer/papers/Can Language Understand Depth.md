@@ -10,7 +10,7 @@
 1. CLIP对物体非常敏感，但是对概念可能理解的不一定很好
 2. 对比学习的方式，不太适用于去学习一个概念
 # 二、做出的创新
-![Can Language Understand Depth](../pictures/Can%20Language%20Understand%20Depth.png)
+![Can Language Understand Depth](../pictures/Can%20Language%20Understand%20Depth/Can%20Language%20Understand%20Depth.png)
 1. 和PointCLIP流程图非常像
 2. 与其把深度看作一个回归问题，不如把深度看作是一个分类问题
 3. 强制性把深度问题分成几个大类
