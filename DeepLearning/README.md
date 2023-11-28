@@ -4,6 +4,7 @@
 - [综述](./Summarize/README.md)
 - [图神经网络](./Graph%20Neural%20Network/README.md)
 - [生成模型](./Generative%20Model/README.md)
+- [扩散模型](./Diffusion%20Model/README.md)
 - [计算机视觉-特征匹配](./CV%20Feature%20Matching/README.md)
 - [机器视觉-位置识别](./CV%20VPR/README.md)
 - [计算机视觉-3D](./CV%203D/README.md)
