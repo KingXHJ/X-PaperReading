@@ -1,4 +1,4 @@
-# DeepLearning
+# Deep Learning
 
 ## 导航
 - [综述](./Summarize/README.md)

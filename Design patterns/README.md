@@ -1,4 +1,4 @@
-# Design patterns
+# Design Patterns
 
 ## 导航
 - [综述](./Summarize/README.md)
