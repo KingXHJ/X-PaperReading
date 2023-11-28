@@ -7,8 +7,10 @@
 - 实验环境：
 - 数据集：
 
-- [手写笔记](../notes/DDPM.pdf)
 
+[手写笔记](./Denoising%20Diffusion%20Probabilistic%20Models.pdf)
+
+[代码解读](../code/DDPM/Denoising%20Diffusion%20Probabilistic%20Models.pdf)
 
 # 一、解决的问题
 
