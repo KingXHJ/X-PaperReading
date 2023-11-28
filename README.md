@@ -8,7 +8,7 @@
 
 
 ## 导航
-- [深度学习](./DeepLearning/README.md)
+- [深度学习](./Deep%20Learning/README.md)
 - [传统3D视觉论文](./Traditional%203D%20Vision/README.md)
 - [设计模式](./Design%20patterns/README.md)
 - [强化学习](./Reinforcement/README.md)
