@@ -6,6 +6,9 @@
 - 作者：
 - 实验环境：
 - 数据集：
+
+[手写笔记](./Denoising%20Diffusion%20Implicit%20Models.pdf)
+
 # 一、解决的问题
 
 # 二、做出的创新
