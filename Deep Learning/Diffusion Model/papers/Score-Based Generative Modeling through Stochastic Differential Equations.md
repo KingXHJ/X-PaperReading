@@ -6,6 +6,9 @@
 - 作者：
 - 实验环境：
 - 数据集：
+
+[手写笔记](./Score-Based%20Generative%20Modeling%20through%20Stochastic%20Differential%20Equations.pdf)
+
 # 一、解决的问题
 
 # 二、做出的创新

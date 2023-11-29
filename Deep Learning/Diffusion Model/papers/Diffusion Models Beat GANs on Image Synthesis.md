@@ -6,6 +6,9 @@
 - 作者：
 - 实验环境：
 - 数据集：
+
+[模型解读](./Diffusion%20Models%20Beat%20GANs%20on%20Image%20Synthesis.pdf)
+
 # 一、解决的问题
 
 # 二、做出的创新
