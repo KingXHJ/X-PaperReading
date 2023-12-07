@@ -6,6 +6,7 @@
 - 作者：Kaiming He∗,† , Xinlei Chen∗ , Saining Xie,  Yanghao Li,  Piotr Dollar,  Ross Girshick, ∗equal technical contribution, †project lead; Facebook AI Research (FAIR)
 - 实验环境：128 TPU V-core
 - 数据集：
+- [返回上一层 README](../README.md)
 
 [ppt](../ppt/MAE/MAE.pptx)
 

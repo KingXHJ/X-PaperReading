@@ -6,6 +6,7 @@
 - 作者：Renrui Zhang, Ziyao Zeng, Ziyu Guo, Yafeng Li
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. CLIP对物体非常敏感，但是对概念可能理解的不一定很好
 2. 对比学习的方式，不太适用于去学习一个概念

@@ -6,6 +6,7 @@
 - 作者：Joseph Redmon∗, Santosh Divvala∗†, Ross Girshick¶, Ali Farhadi∗†; University of Washington∗, Allen Institute for AI†, Facebook AI Research¶
 - 实验环境：Titan X GPU
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要：
     - 我们介绍 YOLO，⼀种新的对象检测⽅法。先前关于对象检测的⼯作将分类器重新⽤于执⾏形式检测。相反，我们将对象检测框定为空间分离的边界框和相关类概率的回归问题。在⼀次评估中，单个神经⽹络直接从完整图像预测边界框和类别概率。由于整个检测管道是单个⽹络，因此可以直接在检测性能上进⾏端到端优化。我们的统⼀架构⾮常快。我们的基础 YOLO 模型以每秒 45 帧的速度实时处理图像。⽹络的⼀个较⼩版本，Fast YOLO，每秒处理惊⼈的 155 帧，同时仍然实现其他实时检测器的两倍 mAP。与最先进的检测系统相⽐，YOLO 会产⽣更多的定位错误，但不太可能在背景上预测误报。最后，YOLO 学习了⾮常通⽤的对象表⽰。当从⾃然图像泛化到艺术品等其他领域时，它优于其他检测⽅法，包括 DPM 和 R-CNN。

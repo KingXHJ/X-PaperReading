@@ -6,6 +6,7 @@
 - 作者：Alec Radford * 1, Jong Wook Kim * 1, Chris Hallacy 1, Aditya Ramesh 1, Gabriel Goh 1, Sandhini Agarwal 1, Girish Sastry 1, Amanda Askell 1, Pamela Mishkin 1, Jack Clark 1, Gretchen Krueger 1, Ilya Sutskever 1；OpenAI
 - 实验环境： V100 GPUs
 - 数据集：WIT(WebImageTex)，400 million
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 - taskagnostic architectures -> zero-shot transfer -> downstream datasets removing the need for specialized output heads or dataset specific customization 发展历程
 - 直接从网络文本中学习的可扩展预训练方法能否在计算机视觉领域取得类似的突破?

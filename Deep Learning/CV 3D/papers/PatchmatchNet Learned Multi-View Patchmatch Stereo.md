@@ -6,6 +6,7 @@
 - 作者：Fangjinhua Wang1 Silvano Galliani2 Christoph Vogel2 Pablo Speciale2 Marc Pollefeys1,2; 1Department of Computer Science, ETH Zurich; 2Microsoft Mixed Reality & AI Zurich Lab
 - 实验环境：2 Nvidia GTX 1080Ti GPUs
 - 数据集：DTU、Tanks&Temples和ETH3D
+- [返回上一层 README](../README.md)
 
 # 专有名词
 1. Lambertian表面：

@@ -6,6 +6,7 @@
 - 作者：
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 ![ActionCLIP model](../pictures/ActionCLIP/ActionCLIP%20model.png)
 1. 此前的做法

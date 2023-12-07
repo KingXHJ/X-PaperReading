@@ -6,6 +6,7 @@
 - 作者：Joseph Redmon, Ali Farhadi; University of Washington
 - 实验环境：Titan X
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 我们向 YOLO 展⽰了⼀些更新！我们做了⼀些⼩的设计更改以使其更好。我们还训练了这个⾮常强⼤的新⽹络。它⽐上次⼤⼀点，但更准确。不过还是很快的，不⽤担⼼。在 320 × 320 分辨率下，YOLOv3 在 28.2 mAP 下运⾏时间为 22 毫秒，与 SSD ⼀样准确，但速度快三倍。当我们查看旧的 .5 IOU mAP 检测指标时，YOLOv3 ⾮常好。它在 Titan X 上在 51 毫秒内达到 $57.9 AP_ {50}$ ，⽽RetinaNet 在 198 毫秒内达到 $57.5 AP_ {50}$ ，性能相似但速度快 3.8 倍

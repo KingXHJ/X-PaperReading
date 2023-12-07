@@ -6,6 +6,7 @@
 - 作者：Boyi Li, Kilian Q. Weinberger, Serge Belongie, Vladlen Koltun, René Ranftl
 - 实验环境：
 - 数据集：7个分割数据集
+- [返回上一层 README](../README.md)
 
 # 前言
 1. 分割和分类的任务很像。无非是把图片上的分类，变成了像素级别的分类。往往在图片方面的分类技术，都能直接用到像素级别分类上来，这就是过去几年分割领域卷的原因

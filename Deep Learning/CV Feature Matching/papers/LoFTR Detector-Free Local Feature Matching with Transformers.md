@@ -6,6 +6,8 @@
 - 作者：Jiaming Sun1,2∗, Zehong Shen1∗, Yuang Wang1∗, Hujun Bao1, Xiaowei Zhou1y; 1Zhejiang University, 2SenseTime Research
 - 实验环境：64 * 1080Ti
 - 数据集：HPatches, ScanNet, MegaDepth,  InLoc benchmark, Aachen Day-Night benchmark v1.1
+- [返回上一层 README](../README.md)
+
 # 一、解决的问题
 1. 摘要
     - 提出了一种新的图像局部特征匹配方法。我们不是按顺序进行图像特征检测、描述和匹配，而是建议首先在粗水平上建立逐像素的密集匹配，然后在细水平上细化好的匹配。与使用代价量来搜索对应的密集方法相反，我们在Transformer中使用自关注层和交叉关注层来获得基于两个图像的特征描述符。Transformer提供的全局接受场使我们的方法能够在低纹理区域产生密集匹配，而特征检测器通常难以产生可重复的兴趣点。在室内和室外数据集上的实验表明，LoFTR在很大程度上优于最先进的方法。在已发表的方法中，LoFTR在视觉定位的两个公开基准上也排名第一

@@ -6,6 +6,7 @@
 - 作者：Connelly Barnes1, Eli Shechtman2,3, Adam Finkelstein1, Dan B Goldman2; 1Princeton University; 2Adobe Systems; 3University of Washington
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 - 论文配套PPT：
 [PPT](../ppt/patchmatch/PatchMatch_%20A%20Randomized%20Correspondence%20Algorithm%20for%20Structural%20Image%20Editing%20Connelly%20Barnes%20Eli%20Shechtman%20Adam%20Finkelstein%20Dan%20B%20Goldman.pdf)

@@ -5,6 +5,7 @@
 - 意义：将对极几何的倾斜平面修正为平行关系
 - 作者：Andrea Fusiello, Emanuele Trucco, Alessandro Verri
 - 实验环境：
+- [返回上一层 README](../README.md)
 # 补充知识
 1. 相机模型
     - 针孔相机由其光学中心 $C$ 和视平面（或图像平面） $\mathcal{R}$ 建模。3D点 $W$ 被投影到由 $\mathcal{R}$ 与包含 $C$ 和 $W$ 的线的交点给出的图像点 $M$ 中。包含 $C$ 且与 $\mathcal{R}$ 正交的线称为光轴，其与 $\mathcal{R}$ 的交点为主点。 $C$ 和 $\mathcal{R}$ 之间的距离是焦距

@@ -6,6 +6,7 @@
 - 作者：Hongbin Xu1,3*, Zhipeng Zhou1*, Yu Qiao1,2†, Wenxiong Kang3, Qiuxia Wu3; 1ShenZhen Key Lab of Computer Vision and Pattern Recognition, Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences, Shenzhen, China; 2Shanghai AI Lab, Shanghai, China; 3South China University of Technology, Guangzhou, China
 - 实验环境： 4 NVIDIA RTX 2080Ti GPUs
 - 数据集：DTU; Tanks&Temples
+- [返回上一层 README](../README.md)
 
 # 一、解决的问题
 1. 颜色恒定模糊(color constancy ambiguity)

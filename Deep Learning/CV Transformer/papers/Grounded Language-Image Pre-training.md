@@ -6,6 +6,7 @@
 - 作者：Liunian Harold Li∗1†, Pengchuan Zhang∗2♠, Haotian Zhang∗3†, Jianwei Yang2, Chunyuan Li2, Yiwu Zhong4†, Lijuan Wang5, Lu Yuan5, Lei Zhang6, Jenq-Neng Hwang3, Kai-Wei Chang1, Jianfeng Gao2; 1UCLA, 2Microsoft Research, 3University of Washington, 4University of Wisconsin-Madison, 5Microsoft Cloud and AI, 6International Digital Economy Academy
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 - 研究动机：
 - 跟分割一样，精心标注好的数据很难得，而且生活中边边角角的类和层出不穷的新类，没有办法训练一个模型，把这些都做得很好，只能依赖这种做open vocabulary的detection模型，去把这些corner case处理好

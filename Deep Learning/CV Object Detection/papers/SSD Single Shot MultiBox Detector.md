@@ -6,6 +6,7 @@
 - 作者：Wei Liu1, Dragomir Anguelov2, Dumitru Erhan3, Christian Szegedy3, Scott Reed4, Cheng-Yang Fu1, Alexander C. Berg1; 1UNC Chapel Hill, 2Zoox Inc., 3Google Inc., 4University of Michigan, Ann-Arbor
 - 实验环境： Nvidia Titan X
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 我们提出了⼀种使⽤单个深度神经⽹络检测图像中对象的⽅法。我们的⽅法名为 SSD，将边界框的输出空间离散化为⼀组默认框，每个特征图位置具有不同的纵横⽐和⽐
 例。在预测时，⽹络为每个默认框中的每个对象类别的存在⽣成分数，并对框进⾏调整以更好地匹配对象形状。此外，该⽹络结合了来⾃多个具有不同分辨率的特征图的预测，以⾃然地处理各种⼤⼩的对象。 SSD 相对于需要对象提议的⽅法来说很简单， ***因为它完全消除了提议⽣成和后续像素或特征重采样阶段，并将所有计算封装在单个⽹络中*** 。这使得 SSD 易于训练，并且可以直接集成到需要检测组件的系统中。在 PASCAL VOC、COCO 和 ILSVRC 数据集上的实验结果证实，SSD 与使⽤额外对象建议步骤的⽅法相⽐具有竞争⼒的准确性，并且速度更快，同时为训练和推理提供了统⼀的框架。对于 300 × 300 输⼊，SSD在 Nvidia Titan X 上以 59 FPS 的 VOC2007 测试达到 74.3% mAP1，对于 512 × 512 输⼊，SSD 达到 76.9% mAP，优于可⽐的最先进的 Faster R-CNN模型。与其他单阶段⽅法相⽐，即使输⼊图像尺⼨较⼩，SSD 也具有更好的精度

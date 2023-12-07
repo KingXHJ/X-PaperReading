@@ -6,6 +6,7 @@
 - 作者：Yao Yao
 - 实验环境：
 - 数据集：室内数据集DTU；室外数据集Tanks and Temples
+- [返回上一层 README](../README.md)
 
 # 专有名词
 1. Homography：

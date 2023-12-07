@@ -6,6 +6,7 @@
 - 作者：Ze Liu†*, Yutong Lin†*, Yue Cao*, Han Hu*‡, Yixuan Wei†, Zheng Zhang, Stephen Lin, Baining Guo; Microsoft Research Asia
 - 实验环境：
 - 数据集：COCO、ADE20K
+- [返回上一层 README](../README.md)
 
 [ppt](../ppt/Swin%20Transformer/SwinTRM.pdf)
 

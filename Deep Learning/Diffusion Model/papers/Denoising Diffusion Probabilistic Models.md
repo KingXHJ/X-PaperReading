@@ -6,6 +6,7 @@
 - 作者：Jonathan Ho, Ajay Jain, Pieter Abbeel
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 
 [手写笔记](./Denoising%20Diffusion%20Probabilistic%20Models.pdf)

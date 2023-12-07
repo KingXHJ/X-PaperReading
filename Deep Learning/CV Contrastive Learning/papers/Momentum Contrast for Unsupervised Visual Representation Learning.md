@@ -6,6 +6,7 @@
 - 作者：Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, Ross Girshick; Facebook AI Research (FAIR)
 - 实验环境：8 GPUs
 - 数据集：PASCAL VOC, COCO
+- [返回上一层 README](../README.md)
 
 # 一些前瞻知识
 - ***对比学习的灵活性就在于，只要找到一个方法去定义正样本和负样本就可以实现***

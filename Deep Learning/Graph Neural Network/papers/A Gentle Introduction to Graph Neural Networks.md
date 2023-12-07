@@ -6,6 +6,7 @@
 - 作者：Benjamin Sanchez-Lengeling, Emily Reif, Adam Pearce, Alexander B. Wiltschko; Google Research
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 ![How GNN work](../pictures/GNN/How%20GNN%20work.png)
 1. 神经网络被用于处理图的结构和性质上面

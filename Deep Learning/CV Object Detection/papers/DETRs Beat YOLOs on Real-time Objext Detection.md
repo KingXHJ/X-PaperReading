@@ -6,7 +6,7 @@
 - 作者：Wenyu Lv, Shangliang Xu, Yian Zhao, Guanzhong Wang, Jinman Wei, Cheng Cui, Yuning Du, Qingqing Dang, Yi Liu
 - 实验环境：
 - 数据集：
-
+- [返回上一层 README](../README.md)
 
 
 > 最近，基于Transformer的端到端检测器（DETR）已经取得了显著的性能。然而，DETR的高计算成本问题尚未得到有效解决，这限制了它们的实际应用，并使它们无法充分利用无后处理的好处，如非最大值抑制（NMS）。

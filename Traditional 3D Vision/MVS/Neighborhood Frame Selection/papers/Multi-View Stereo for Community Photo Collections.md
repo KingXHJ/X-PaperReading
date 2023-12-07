@@ -6,6 +6,7 @@
 - 作者：Michael Goesele1,2, Noah Snavely1, Brian Curless1, Hugues Hoppe3, Steven M. Seitz1; University of Washington1; TU Darmstadt2; Microsoft Research3
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 前置知识
 1. CPC(community photo collections, CPCs)
 2. LVS(Local view selection)

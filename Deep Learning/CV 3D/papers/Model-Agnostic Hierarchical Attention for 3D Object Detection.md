@@ -6,6 +6,7 @@
 - 作者：Manli Shu1*, Le Xue2, Ning Yu2, Roberto Martín-Martín2,3, Juan Carlos Niebles2, Caiming Xiong2, Ran Xu2; 1 University of Maryland; 2 Salesforce Research; 3 UT Austin
 - 实验环境：
 - 数据集：ScanNetV2； SUN RGB-D
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 ![Model-Agnostic Hierarchical Attention for 3D Object Detection figure1](../pictures/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection/Model-Agnostic%20Hierarchical%20Attention%20for%203D%20Object%20Detection%20figure1.png)
 

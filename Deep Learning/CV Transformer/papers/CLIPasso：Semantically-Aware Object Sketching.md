@@ -6,6 +6,7 @@
 - 作者：Yael Vinker2,1 , Ehsan Pajouheshgar1, Jessica Y. Bo1 , Roman Christian Bachmann1, Amit Haim Bermano2, Daniel Cohen-Or2, Amir Zamir1, Ariel Shamir3; 1Swiss Federal Institute of Technology (EPFL), 2Tel-Aviv University, 3Reichman University
 - 实验环境：1张V100 GPU
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 ![CLIPasso](../pictures/CLIPasso/CLIPasso.png)
 

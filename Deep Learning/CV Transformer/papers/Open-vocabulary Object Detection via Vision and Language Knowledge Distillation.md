@@ -6,6 +6,7 @@
 - 作者：Xiuye Gu1, Tsung-Yi Lin2, Weicheng Kuo1, Yin Cui1; 1Google Research, 2Nvidia∗
 - 实验环境：21年4月就上传到arXive上了，也就是从CLIP出来到工作结束，前后2个月，训练了460个epoch，没有大量TPU根本做不出来这么高质量工作，不愧是Google+Nvidia
 - 数据集：
+- [返回上一层 README](../README.md)
 ***附录有很多好玩的，记得去看***
 
 # 引言写法

@@ -6,7 +6,7 @@
 - 作者：Zitian Wang1, Zehao Huang2, Jiahui Fu1, Naiyan Wang2, Si Liu1; 1Institute of Artificial Intelligence, Beihang University 2TuSimple
 - 实验环境：
 - 数据集： nuScenes dataset
-
+- [返回上一层 README](../README.md)
 
 # 一、解决的问题
 1. 早期的单眼 3D 对象检测方法通常在2D 对象检测管道之后构建它们的框架；但它们⽆法利⽤周围摄像机的⼏何配置和多视图图像对应关系，⽽这些对于现实世界中物体的 3D 位置⾄关重要。此外，使这些⽅法适应多视图设置依赖于复杂的交叉相机后处理，这进⼀步导致效率和功效下降

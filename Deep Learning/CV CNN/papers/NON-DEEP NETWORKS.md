@@ -6,6 +6,7 @@
 - 作者：Ankit Goyal 1,2; Alexey Bochkovskiy 2; Jia Deng 1; Vladlen Koltun 2; 1 Princeton University; 2 Intel Labs
 - 实验环境：single RTX 3090 using Pytorch 1.8.1 and CUDA 11.1
 - 数据集：MS-COCO
+- [返回上一层 README](../README.md)
 
 # 一、解决的问题
 1. >Is it possible to build high-performing “non-deep” neural networks? 

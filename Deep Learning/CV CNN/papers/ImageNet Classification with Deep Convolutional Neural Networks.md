@@ -7,6 +7,7 @@
 - 实验环境：两个 GTX 580 3GB GPU 就能跑
 - 数据集：ImageNet LSVRC-2010 contest
 >In all, there are roughly 1.2 million training images 50,000 validation images, and 150,000 testing images
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 目标检测小任务做的已经很好了，现在应该面向大任务去做
 2. 学习大任务需要大的数据集和更强的模型

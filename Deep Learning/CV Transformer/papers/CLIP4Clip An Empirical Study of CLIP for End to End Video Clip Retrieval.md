@@ -6,6 +6,7 @@
 - 作者：Huaishao Luo1∗, Lei Ji2, Ming Zhong3, Yang Chen3, Wen Lei3, Nan Duan2, Tianrui Li1； 1Southwest Jiaotong University, Chengdu, China, 2Microsoft Research Asia, Beijing, China, 3Microsoft STCA, Beijing, China
 - 实验环境：
 - 数据集：MSR-VTT, MSVC, LSMDC, ActivityNet, and DiDe
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 
 # 二、做出的创新

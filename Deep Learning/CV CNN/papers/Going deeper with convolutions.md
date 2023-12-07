@@ -6,6 +6,7 @@
 - 作者：Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich
 - 实验环境：
 - 数据集：ILSVRC14 competition
+- [返回上一层 README](../README.md)
 - 
 # 一、解决的问题
 1. 比AlexNet更准

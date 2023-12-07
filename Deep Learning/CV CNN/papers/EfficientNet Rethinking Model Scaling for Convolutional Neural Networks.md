@@ -6,6 +6,7 @@
 - 作者：Mingxing Tan；Quoc V. Le；Google
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 # 一、解决的问题
 1. >balancing network depth, width, and resolution can lead to better performance

@@ -6,6 +6,7 @@
 - 作者：Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. SPPnet 和 Fast R-CNN 等进步减少了这些检测⽹络的运⾏时间，暴露了区域提案计算的瓶颈。在这项⼯作中，我们引⼊了⼀个区域提议⽹络 (RPN)，它与检测⽹络共享全图像卷积特征，从⽽实现⼏乎⽆成本的区域提议。 RPN 是⼀种全卷积⽹络，可同时预测每个位置的对象边界和对象性分数。 RPN 经过端到端的训练以⽣成⾼质量的区域建议，Fast R-CNN 使⽤这些区域建议进⾏检测。我们通过共享 RPN 和 Fast R-CNN 的卷积特征进⼀步将 RPN 和 Fast R-CNN 合并到⼀个⽹络中
 2. ⽬标检测的最新进展是由区域建议⽅法（例如 [Selective Search for Object Recognition](http://www.huppelen.nl/publications/selectiveSearchDraft.pdf)）和基于区域的卷积神经⽹络 (R-CNN) 的成功推动的。尽管基于区域的 CNN 最初在R-CNN中开发时计算量很⼤，但由于在提议SPPnet、Fast R-CNN 之间共享卷积，它们的成本已⼤⼤降低。最新的化⾝，Fast R-CNN在忽略区域提议上花费的时间时，使⽤⾮常深的⽹络VGG实现了接近实时的速率。现在，提案是最先进的检测系统中测试时间的计算瓶颈。

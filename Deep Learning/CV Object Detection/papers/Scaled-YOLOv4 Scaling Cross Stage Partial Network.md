@@ -6,6 +6,7 @@
 - 作者：Chien-Yao Wang, Alexey Bochkovskiy, Hong-Yuan Mark Liao
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 我们展⽰了基于 CSP ⽅法的 YOLOv4 对象检测神经⽹络⼯作，可以向上和向下扩展，适⽤于⼩型和⼤型⽹络，同时保持最佳速度和准确性。我们提出了⼀种⽹络缩放⽅法，它不仅可以修改深度、宽度、分辨率，还可以修改⽹络的结构。 YOLOv4-large 模型获得了最先进的结果： MS COCO 数据集在 Tesla V100 上以 ~16 FPS 的速度获得了55.5% AP（73.4% $AP_ {50}$ ） ，同时随着测试时间的增加，YOLOv4-large 实现了56.0% AP (73.3 $AP_ {50}$ )。据我们所知，这是⽬前所有已发表作品中 COCO 数据集的最⾼准确度。YOLOv4-tiny 模型在 RTX 2080Ti 上以约 443 FPS 的速度达到 22.0% AP（42.0% $AP_ {50}$ ） ，⽽通过使⽤ TensorRT、batch size = 4 和 FP16-precision，YOLOv4-tiny 达到 1774 FPS。

@@ -6,6 +6,7 @@
 - 作者：Alexey Dosovitskiy∗,†, Lucas Beyer∗, lexander Kolesnikov∗, Dirk Weissenborn∗,Xiaohua Zhai∗, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer,Georg Heigold, Sylvain Gelly, Jakob Uszkoreit, Neil Houlsby∗,†;∗equal technical contribution, †equal advising; Google Research, Brain Team
 - 实验环境：TPUv3 hardware
 - 数据集：ImageNet-21k JFT-300M
+- [返回上一层 README](../README.md)
 
 [ppt](../ppt/ViT/VIT.pdf)
 

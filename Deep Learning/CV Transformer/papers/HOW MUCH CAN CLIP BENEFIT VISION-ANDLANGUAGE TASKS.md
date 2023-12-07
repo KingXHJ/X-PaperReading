@@ -6,6 +6,7 @@
 - 作者：Sheng Shen∗†, Liunian Harold Li∗‡, Hao Tan◦, Mohit Bansal◦,Anna Rohrbach†, Kai-Wei Chang‡, Zhewei Yao† and Kurt Keutzer†； †University of California, Berkeley, ‡University of California, Los Angeles ◦University of North Carolina at Chapel Hill
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 
 # 二、做出的创新

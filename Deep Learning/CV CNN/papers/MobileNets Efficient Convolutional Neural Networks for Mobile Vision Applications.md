@@ -6,6 +6,7 @@
 - 作者：Andrew G. Howard；Menglong Zhu；Bo Chen；Dmitry Kalenichenko；Weijun Wang；Tobias Weyand；Marco Andreetto；Hartwig Adam；Google
 - 实验环境：
 - 数据集： ILSVRC 2012
+- [返回上一层 README](../README.md)
 
 # 一、解决的问题
 1. >We present a class of efficient models called MobileNets for mobile and embedded vision applications

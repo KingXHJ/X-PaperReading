@@ -6,6 +6,7 @@
 - 作者：Alexey Bochkovskiy, Chien-Yao Wang, Hong-Yuan Mark Liao
 - 实验环境：Tesla V100
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 据说有⼤量功能可以提⾼卷积神经⽹络 (CNN) 的准确性。需要在⼤型数据集上对这些特征的组合进⾏实际测试，并对结果进⾏理论验证。某些特征专⻔针对某些模型和某些问题专⻔运⾏，或者仅适⽤于⼩规模数据集；⽽⼀些特性，例如批归⼀化和残差连接，适⽤于⼤多数模型、任务和数据集。我们假设此类通⽤特征包括加权残差连接 (WRC)、跨阶段部分连接 (CSP)、跨⼩批量归⼀化 (CmBN)、⾃我对抗训练 (SAT) 和 Mish 激活。我们使⽤新功能：WRC、CSP、CmBN、SAT、Mish activation、Mosaic data augmentation、CmBN、DropBlock regularization和 CIoU  loss，并将其中⼀些功能组合起来以获得最先进的结果：43.5% AP ( 65.7% $AP_ {50}$)⽤于 MS COCO 数据集，在 Tesla V100 上实时速度为 65 FPS

@@ -6,6 +6,7 @@
 - 作者：Ross Girshick, Jeff Donahue, Trevor Darrell, Jitendra Malik; UC Berkeley
 - 实验环境：
 - 数据集：PASCAL VOC
+- [返回上一层 README](../README.md)
 
 # 一些知识
 1. “CNN 在 1990 年代被⼤量使⽤，但随后随着⽀持向量机的兴起⽽过时了”：说明CNN比SVM早

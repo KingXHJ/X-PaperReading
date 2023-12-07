@@ -6,6 +6,7 @@
 - 作者：Chuyi Li∗, Lulu Li∗, Hongliang Jiang∗, Kaiheng Weng∗, Yifei Geng∗, Liang Li∗, Zaidan Ke∗, Qingyuan Li∗, Meng Cheng∗, Weiqiang Nie∗, Yiduo Li∗, Bo Zhang∗, Yufei Liang, Linyuan Zhou, Xiaoming Xu†, Xiangxiang Chu, Xiaoming Wei, Xiaolin Wei; Meituan Inc.
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 多年来，YOLO系列一直是高效物体检测的事实上的行业级标准。YOLO社区蓬勃发展，丰富了其在众多硬件平台和丰富场景中的使用。在这份技术报告中，我们努力将其极限提升到一个新的水平，以坚定不移的心态推进行业应用。考虑到现实环境中对速度和精度的不同要求，我们广泛研究了行业或学术界的最新物体检测进展。具体来说，我们大量吸收了最近网络设计、训练策略、测试技术、量化和优化方法的思想。除此之外，我们整合了我们的思想和实践，以构建一套可在各种规模上部署的网络，以适应多样化的用例。在YOLO作者的慷慨许可下，我们将其命名为YOLOv6。我们也对用户和贡献者的进一步改进表示热烈欢迎。为了了解性能，我们的YOLOv6-N在NVIDIA Tesla T4 GPU上以1234 FPS的吞吐量在COCO数据集上达到35.9%的AP。YOLOv6-S在495 FPS时达到43.5%的AP，优于同规模的其他主流探测器（YOLOv5-S、YOLOX-S和PPYOLOE-S）。我们的量化版本YOLOv6-S甚至以869 FPS的速度带来了最先进的43.3%的AP。此外，与具有类似推理速度的其他检测器相比，YOLOv6-M/L还实现了更好的精度性能（即49.5%/52.3%）。我们仔细地进行了实验，以验证每种成分的有效性

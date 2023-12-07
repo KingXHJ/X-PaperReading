@@ -6,6 +6,7 @@
 - 作者：Nicolas Carion*, Francisco Massa*, Gabriel Synnaeve, Nicolas Usunier,Alexander Kirillov, and Sergey Zagoruyko; Facebook AI
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 目标检测很少有端到端的方法，大多都需要一个后处理操作(nms, non-maximum suppersion 非极大值抑制)。
     - 不论是proposal based方法(RCNN)，还是anchor based方法(Yolo)，还是non-anchor based方法，最后都会生成很多预测框。如何去除这些冗余的框，就是nms要做的事情。但是有了nms的存在，这个模型的调参就比较复杂，而且即使训练好了一个模型，部署起来也是非常困难。因为nms这个操作，不是所有硬件都支持的。所以简单的端到端系统，是大家一直以来梦寐以求的。

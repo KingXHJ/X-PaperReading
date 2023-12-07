@@ -6,6 +6,7 @@
 - 作者：Jiarui Xu1*, Shalini De Mello2, Sifei Liu2, Wonmin Byeon2, Thomas Breuel2, Jan Kautz2, Xiaolong Wang1; 1UC San Diego; 2NVIDIA
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. Lseg虽然用了CLIP的预训练参数，图画的也很像CLIP，但是目标函数终究不是对比学习，也不是无监督学习的框架，并没有把文本当作一个监督信号来使用，导致它还是依赖于手工标注的segmentation mask，这就会导致能用的数据集太小了，而且对于分割来说，手工标注分割的mask是非常贵的一件事
 2. 如何摆脱掉手工标注，如何真的做到用文本当作监督信号，从而达到无监督的训练

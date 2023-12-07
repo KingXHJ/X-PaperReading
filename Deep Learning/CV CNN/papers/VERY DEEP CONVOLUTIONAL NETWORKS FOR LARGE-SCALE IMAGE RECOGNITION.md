@@ -6,6 +6,8 @@
 - 作者：Karen Simonyan & Andrew Zisserman Visual Geometry Group, Department of Engineering Science, University of Oxford
 - 实验环境：four NVIDIA Titan Black GPUs, training a single net took 2–3 weeks depending on the architecture
 - 数据集： ILSVRC-2012 dataset
+- [返回上一层 README](../README.md)
+
 # 一、解决的问题
 1. 探索卷积神经网络的深度和它的准确率的关系
 2. 继AlexNet的成果发展而来

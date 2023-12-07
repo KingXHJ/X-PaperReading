@@ -6,6 +6,7 @@
 - 作者：
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 [模型解读](./Generative%20Modeling%20by%20Estimating%20Gradients%20of%20the%20Data%20Distribution.pdf)
 

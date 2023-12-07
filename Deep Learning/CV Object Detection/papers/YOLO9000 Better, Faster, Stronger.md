@@ -6,6 +6,7 @@
 - 作者：Joseph Redmon∗†, Ali Farhadi∗†; University of Washington∗, Allen Institute for AI†
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 我们介绍了 YOLO9000，这是⼀种最先进的实时对象检测系统，可以检测 9000 多个对象类别。⾸先，我们提出了对 YOLO 检测⽅法的各种改进，既新颖⼜借鉴了先前的⼯作。改进后的模型 YOLOv2 在PASCAL VOC 和 COCO等标准检测任务上是最先进的。使⽤⼀种新颖的多尺度训练⽅法，相同的 YOLOv2 模型可以以不同的尺⼨运⾏，从⽽在速度和准确性之间提供轻松的权衡。在 67 FPS 时，YOLOv2 在 VOC 2007 上获得 76.8 mAP。在 40 FPS 时，YOLOv2 获得 78.6 mAP，优于最先进的⽅法，如 Faster R CNN with ResNet 和 SSD，同时仍然运⾏得更快。最后，我们提出了⼀种联合训练对象检测和分类的⽅法。使⽤这种⽅法，我们同时在 COCO 检测数据集和 ImageNet 分类数据集上训练 YOLO9000。我们的联合训练允许 YOLO9000 预测没有标记检测数据的对象类的检测。我们在 ImageNet 检测任务上验证了我们的⽅法。尽管只有 200 个类别中的 44 个类别的检测数据，YOLO9000 在 ImageNet 检测验证集上获得了 19.7 mAP。在不在 COCO 中的 156 个类中，YOLO9000 得到 16.0 mAP。但是 YOLO 可以检测的不仅仅是 200 个类别；它预测了 9000 多个不同对象类别的检测。⽽且它仍然实时运⾏。

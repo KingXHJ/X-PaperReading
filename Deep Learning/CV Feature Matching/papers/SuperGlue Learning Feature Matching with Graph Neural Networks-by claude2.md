@@ -8,6 +8,9 @@ Paul-Edouard Sarlin (1) , Daniel DeTone (2), Tomasz Malisiewicz (2), Andrew Rabi
 
 在Magic Leap公司完成硕士论文期间的工作。作者感谢他的学术导师:Cesar Cadena, Marcin Dymczyk, Juan Nieto。
 
+## 目录
+- [返回上一层 README](../README.md)
+
 摘要
 
 本文介绍了SuperGlue,这是一个神经网络,通过联合寻找对应关系和拒绝不可匹配的点来匹配两个局部特征集。通过解决一个可微分的最优运输问题来估计分配,其成本由图神经网络预测。我们引入了一种基于注意力的灵活上下文聚合机制,使SuperGlue能够同时推理关于三维场景和特征分配。与传统的手工设计的启发式相比,我们的技术通过端到端的训练从图像对中学习姿态估计的先验知识,使SuperGlue能够推理三维场景。SuperGlue的性能优于其他学习方法,并在实际室内外环境中的姿态估计任务中获得最先进的结果。所提出的方法可以在现代GPU上实时运行,并可以轻松地集成到现代SfM或SLAM系统中。代码和训练权重公开可获得,网址:https://github.com/magicleap/SuperGluePretrainedNetwork。

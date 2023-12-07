@@ -6,6 +6,7 @@
 - 作者：Jiayu Yang1, Wei Mao1, Jose M. Alvarez2, Miaomiao Liu1,3; 1Australian National University, 2NVIDIA, 3Australian Centre for Robotic Vision
 - 实验环境：NVIDIA TITAN RTX
 - 数据集：DTU；Tanks and Temples
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 尽管深度学习时代之前的传统方法在使用 ***朗伯曲面*** 重建场景方面取得了巨大的成就，但它们仍然会受到照明变化、低纹理区域和反射的影响，从而导致不可靠的匹配对应关系，无法进一步重建
 2. MVSNet的代价体矩阵为了支持更大分辨率的图像，通过时间换空间

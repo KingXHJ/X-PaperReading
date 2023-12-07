@@ -6,6 +6,7 @@
 - 作者：
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 [手写笔记](./Denoising%20Diffusion%20Implicit%20Models.pdf)
 

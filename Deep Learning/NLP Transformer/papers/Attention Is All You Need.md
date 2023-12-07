@@ -6,6 +6,7 @@
 - 作者：Ashish Vaswani∗, Google Brain; Noam Shazeer∗, Google Brain; Niki Parmar∗, Google Research; Jakob Uszkoreit∗, Google Research; Llion Jones∗, Google Research; Aidan N. Gomez∗ †, University of Toronto; Łukasz Kaiser∗, Google Brain; Illia Polosukhin∗ ‡
 - 实验环境：8个P100 GPUs
 - 数据集：
+- [返回上一层 README](../README.md)
 
 [PPT](../ppt/Transformer/TRM.pptx)
 

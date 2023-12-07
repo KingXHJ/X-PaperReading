@@ -6,6 +6,7 @@
 - 作者：Alec Radford, Karthik Narasimhan, Tim Salimans, Ilya Sutskever; OpenAI
 - 实验环境：V100 GPU
 - 数据集：reddit, Common Crawl
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. “先做预训练，再做微调的子任务”是计算机视觉先成熟的
 2. NLP标好的数据太少了，且没有太大的训练集

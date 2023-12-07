@@ -6,6 +6,7 @@
 - 作者：Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 ## 导读
 

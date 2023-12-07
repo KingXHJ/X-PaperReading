@@ -6,6 +6,7 @@
 - 作者：Yanping Huang, Youlong Cheng, Ankur Bapna, Orhan Firat, Mia Xu Chen, Dehao Chen, HyoukJoong Lee, Jiquan Ngiam, Quoc V. Le, Yonghui Wu, Zhifeng Chen {huangyp,ylc,ankurbpn,orhanf,miachen,dehao hyouklee,jngiam,qvl,yonghui,zhifengc} @google.com
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 
 # 名词解释
 1. Google作者喜欢用加速器（accelerator）一词，指代TPU或者GPU，Google指TPU

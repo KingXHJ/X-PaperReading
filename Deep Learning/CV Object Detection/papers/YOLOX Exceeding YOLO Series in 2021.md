@@ -6,6 +6,7 @@
 - 作者：Zheng Ge∗, Songtao Liu∗†, Feng Wang, Zeming Li, Jian Sun; Megvii Technology(旷视科技)
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 摘要
     - 在本报告中，我们对 YOLO 系列进⾏了⼀些改进，形成了⼀个新的⾼性能检测器YOLOX。我们将 YOLO 检测器切换为⽆锚⽅式，并进⾏其他先进的检测技术，即解耦头和领先的标签分配策略 SimOTA，以在⼤规模模型范围内获得最先进的结果：对于YOLO Nano 只有 0.91M 参数和 1.08G FLOPs，我们在 COCO 上获得 25.3% 的 AP，超过 NanoDet 1.8% AP；对于业界使⽤最⼴泛的检测器之⼀ YOLOv3，我们将其在 COCO 上的 AP 提升⾄ 47.3%，⽐当前最佳实践⾼出 3.0% AP；对于参数量与 YOLOv4-CSP、YOLOv5-L ⼤致相同的 YOLOX-L，我们在 Tesla V100 上以 68.9 FPS 的速度在 COCO 上实现了 50.0% AP，超过 YOLOv5-L 1.8% AP。此外，我们使⽤单个 YOLOX-L 模型赢得了流式感知挑战赛（CVPR 2021 ⾃动驾驶研讨会）的第⼀名。我们希望这份报告能为开发者提供有益的经验和研究⼈员在实际场景中，我们也提供了⽀持ONNX、TensorRT、NCNN、Openvino的deploy版本

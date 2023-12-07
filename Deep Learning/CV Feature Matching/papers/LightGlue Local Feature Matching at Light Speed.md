@@ -6,6 +6,7 @@
 - 作者：Philipp Lindenberger 1, Paul-Edouard Sarlin 1, Marc Pollefeys 1,2; 1 ETH Zurich; 2 Microsoft Mixed Reality & AI Lab
 - 实验环境：训练 2 * RTX3090，每台 GPU 24G 显存；实验 1 * RTX3080，每台 GPU 10G 显存
 - 数据集： HPatches dataset
+- [返回上一层 README](../README.md)
 
 - [内容整理](./LightGlue%20Local%20Feature%20Matching%20at%20Light%20Speed-TidyUp.md)
 

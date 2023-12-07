@@ -6,6 +6,7 @@
 - 作者：Nikhil Keetha∗1, Avneesh Mishra∗2, Jay Karhade∗1, Krishna Murthy Jatavallabhula3,Sebastian Scherer1, Madhava Krishna2, and Sourav Garg4; 1 CMU, 2 IIIT Hyderabad, 3 MIT,4 AIML, University of Adelaide
 - 实验环境：NVIDIA RTX 3090
 - 数据集：Structured Environments, Structured Environments
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 1. 简介
     - 视觉位置识别(VPR)是机器人定位的关键。迄今为止，性能最好的VPR方法是特定于环境和任务的:虽然它们在结构化环境(主要是城市驾驶)中表现出强大的性能，但在非结构化环境中它们的性能会严重下降，使得大多数方法在健壮的现实世界部署中都很脆弱。在这项工作中，我们开发了一种通用的VPR解决方案——一种在广泛的结构化和非结构化环境(城市、室外、室内、空中、水下和地下环境)中工作的技术，无需任何重新培训或微调。我们证明了从现成的没有特定VPR训练的自监督模型派生的通用特征表示是构建这种通用VPR解决方案的正确基础。将这些衍生特征与无监督特征聚合相结合，我们的方法套件AnyLoc可以实现比现有方法高4倍的性能。通过描述这些特征的语义属性，揭示封装类似环境数据集的独特域，我们进一步获得了6%的性能提升。我们详细的实验和分析为构建VPR解决方案奠定了基础，这些解决方案可以部署在任何地点、任何时间和任何视图。

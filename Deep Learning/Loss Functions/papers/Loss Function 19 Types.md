@@ -18,6 +18,7 @@
 - [负对数似然损失 NLLLoss](#17-负对数似然损失-nllloss)
 - [NLLLoss2d](#18-nllloss2d)
 - [PoissonNLLLoss](#19-poissonnllloss)
+- [返回上一层 README](../README.md)
 
 #### **1 L1范数损失 L1Loss**
 

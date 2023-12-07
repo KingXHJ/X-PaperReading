@@ -6,6 +6,7 @@
 - 作者：Renrui Zhang∗1,3, Ziyu Guo∗2, Wei Zhang1, Kunchang Li1, Xupeng Miao2,Bin Cui2, Yu Qiao1, Peng Gao†1, Hongsheng Li3,4; 1Shanghai AI Laboratory, 2School of CS and Key Lab of HCST, Peking University, 3CUHK-SenseTime Joint Laboratory, The Chinese University of Hong Kong, 4Centre for Perceptual and Interactive Intelligence (CPII)
 - 实验环境：
 - 数据集：
+- [返回上一层 README](../README.md)
 # 一、解决的问题
 
 # 二、做出的创新
