@@ -1,0 +1,55 @@
+<mxfile host="Electron" modified="2023-12-08T15:16:25.025Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.1 Chrome/112.0.5615.204 Electron/24.6.1 Safari/537.36" etag="Hvqi6CDd_CaGFM8Palho" version="21.6.1" type="device">
+  <diagram name="第 1 页" id="yt3hfS1rGf-SD9D7-6Yy">
+    <mxGraphModel dx="1562" dy="909" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-14" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="600" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="160" width="360" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-2" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Word2voc/Glove&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="170" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-3" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;静态词向量&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="170" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7L32MLvwKXWPvuVrS1Et-4" target="7L32MLvwKXWPvuVrS1Et-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-4" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;输入&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7L32MLvwKXWPvuVrS1Et-5" target="7L32MLvwKXWPvuVrS1Et-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-5" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;one-hot&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7L32MLvwKXWPvuVrS1Et-6" target="7L32MLvwKXWPvuVrS1Et-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-6" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Embedding&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7L32MLvwKXWPvuVrS1Et-9" target="7L32MLvwKXWPvuVrS1Et-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-9" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Bi-LSTM&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-11" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;输出&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-15" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;ELMO&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="405" y="120" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7L32MLvwKXWPvuVrS1Et-16" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;动态词向量&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="565" y="120" width="140" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
