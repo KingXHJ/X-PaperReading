@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2023
-- 期刊：CVPR
+- 期刊：IEEE transactions on multimedia
 - 网络/算法名称：BACL
 - 意义：解决长尾目标检测的统一框架
 - 作者：Tianhao Qi, Hongtao Xie*, Pandeng Li, Jiannan Ge and Yongdong Zhang, Senior Member, IEEE

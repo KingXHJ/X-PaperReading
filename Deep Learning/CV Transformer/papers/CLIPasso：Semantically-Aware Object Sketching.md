@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2022
-- 期刊：CVPR
+- 期刊：ACM Transactions on Graphics
 - 网络名称： CLIPasso
 - 意义：用简笔画表示物体特征
 - 作者：Yael Vinker2,1 , Ehsan Pajouheshgar1, Jessica Y. Bo1 , Roman Christian Bachmann1, Amit Haim Bermano2, Daniel Cohen-Or2, Amir Zamir1, Ariel Shamir3; 1Swiss Federal Institute of Technology (EPFL), 2Tel-Aviv University, 3Reichman University

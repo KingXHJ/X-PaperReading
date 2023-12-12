@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2017
-- 期刊：CVPR
+- 期刊：ICCV
 - 网络/算法名称：Mask R-CNN
 - 意义：能够预测对象掩码
 - 作者：Kaiming He, Georgia Gkioxari, Piotr Dollar, Ross Girshick; Facebook AI Research (FAIR)

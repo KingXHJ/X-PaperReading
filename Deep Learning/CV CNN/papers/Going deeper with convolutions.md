@@ -1,6 +1,6 @@
 # 论文信息
-- 时间：2014
-- 期刊：2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)
+- 时间：2015
+- 期刊：CVPR
 - 网络名称： GoogLeNet
 - 意义：使用并行架构构造更深的网络
 - 作者：Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich

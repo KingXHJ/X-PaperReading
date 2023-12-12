@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2023
-- 期刊：CVPR
+- 期刊：ICCV
 - 网络/算法名称：MV2D
 - 意义： ***多视图*** 2D物体引导的3D物体检测器
 - 作者：Zitian Wang1, Zehao Huang2, Jiahui Fu1, Naiyan Wang2, Si Liu1; 1Institute of Artificial Intelligence, Beihang University 2TuSimple

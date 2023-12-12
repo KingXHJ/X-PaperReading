@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2017
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络名称： MobileNet
 - 意义：适合终端设备的小CNN
 - 作者：Andrew G. Howard；Menglong Zhu；Bo Chen；Dmitry Kalenichenko；Weijun Wang；Tobias Weyand；Marco Andreetto；Hartwig Adam；Google

@@ -1,6 +1,6 @@
 # 论文信息
-- 时间：2021
-- 期刊：CVPR
+- 时间：2022
+- 期刊：Neurocomputing
 - 网络名称： CLIP4Clip
 - 意义：CLIP在视频领域的应用
 - 作者：Huaishao Luo1∗, Lei Ji2, Ming Zhong3, Yang Chen3, Wen Lei3, Nan Duan2, Tianrui Li1； 1Southwest Jiaotong University, Chengdu, China, 2Microsoft Research Asia, Beijing, China, 3Microsoft STCA, Beijing, China

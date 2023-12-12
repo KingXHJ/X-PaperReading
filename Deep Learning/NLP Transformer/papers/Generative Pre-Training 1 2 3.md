@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2018 2019 2020
-- 期刊：
+- 期刊：mikecaptain.com, amazonaws.com, NeurIPS
 - 网络名称： GPT1, 2, 3
 - 意义：使用 Transformer 解码器来做预训练; 更大的 GPT 模型，朝着zero-shot learning迈了一大步; 100倍更大的 GPT-2，few-shot learning效果显著
 - 作者：Alec Radford, Karthik Narasimhan, Tim Salimans, Ilya Sutskever; OpenAI

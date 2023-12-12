@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2023
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络/算法名称：
 - 意义：点云网络，Transformers + "多尺度"/"尺寸自适应局部"注意力机制，实现更好的小目标的3D目标检测
 - 作者：Manli Shu1*, Le Xue2, Ning Yu2, Roberto Martín-Martín2,3, Juan Carlos Niebles2, Caiming Xiong2, Ran Xu2; 1 University of Maryland; 2 Salesforce Research; 3 UT Austin

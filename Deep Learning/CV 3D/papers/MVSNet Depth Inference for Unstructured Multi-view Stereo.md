@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2018
-- 期刊：CVPR
+- 期刊：ECCV
 - 网络名称：MVSNet
 - 意义：第一个基于深度学习的MVS模型，3D 从上图volume
 - 作者：Yao Yao

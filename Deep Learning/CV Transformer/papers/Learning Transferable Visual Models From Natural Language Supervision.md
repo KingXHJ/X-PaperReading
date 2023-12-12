@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2021
-- 期刊：ICCV
+- 期刊：ICML
 - 网络名称： CLIP（Contrastive Language-Image Pre-training）
 - 意义：图片和文本之间的对比学习
 - 作者：Alec Radford * 1, Jong Wook Kim * 1, Chris Hallacy 1, Aditya Ramesh 1, Gabriel Goh 1, Sandhini Agarwal 1, Girish Sastry 1, Amanda Askell 1, Pamela Mishkin 1, Jack Clark 1, Gretchen Krueger 1, Ilya Sutskever 1；OpenAI

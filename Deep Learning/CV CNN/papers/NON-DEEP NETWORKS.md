@@ -1,6 +1,6 @@
 # 论文信息
-- 时间：2021
-- 期刊：CVPR
+- 时间：2022
+- 期刊：NeurIPS
 - 网络名称： Non-deep Networks (ParNet)
 - 意义：让不深的网络也能在ImageNet刷到SOTA
 - 作者：Ankit Goyal 1,2; Alexey Bochkovskiy 2; Jia Deng 1; Vladlen Koltun 2; 1 Princeton University; 2 Intel Labs

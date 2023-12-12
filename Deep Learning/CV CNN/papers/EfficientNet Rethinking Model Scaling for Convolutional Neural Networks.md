@@ -1,6 +1,6 @@
 # 论文信息
-- 时间：2020
-- 期刊：PMLR
+- 时间：2019
+- 期刊：ICML
 - 网络名称：EfficientNet
 - 意义：通过架构搜索得到的CNN
 - 作者：Mingxing Tan；Quoc V. Le；Google

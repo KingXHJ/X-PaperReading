@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2022
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络/算法名称：YOLOv6
 - 意义：极限推向新的⾼度
 - 作者：Chuyi Li∗, Lulu Li∗, Hongliang Jiang∗, Kaiheng Weng∗, Yifei Geng∗, Liang Li∗, Zaidan Ke∗, Qingyuan Li∗, Meng Cheng∗, Weiqiang Nie∗, Yiduo Li∗, Bo Zhang∗, Yufei Liang, Linyuan Zhou, Xiaoming Xu†, Xiangxiang Chu, Xiaoming Wei, Xiaolin Wei; Meituan Inc.

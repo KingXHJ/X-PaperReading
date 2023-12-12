@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2020
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络/算法名称：YOLOv4
 - 意义：着重提高准确性
 - 作者：Alexey Bochkovskiy, Chien-Yao Wang, Hong-Yuan Mark Liao

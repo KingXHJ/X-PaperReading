@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2021
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络/算法名称：YOLOX
 - 意义：将 YOLO 检测器切换为⽆锚⽅式
 - 作者：Zheng Ge∗, Songtao Liu∗†, Feng Wang, Zeming Li, Jian Sun; Megvii Technology(旷视科技)

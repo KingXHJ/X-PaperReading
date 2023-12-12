@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2015
-- 期刊：ICLR
+- 期刊：ICCV
 - 网络/算法名称：Fast R-CNN
 - 意义：更快更准的R-CNN
 - 作者：Ross Girshick（Microsoft Research）

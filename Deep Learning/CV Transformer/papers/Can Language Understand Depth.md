@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2022
-- 期刊：CVPR
+- 期刊：ACM International Conference on Multimedia
 - 网络名称： 
 - 意义：
 - 作者：Renrui Zhang, Ziyao Zeng, Ziyu Guo, Yafeng Li

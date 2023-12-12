@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2020
-- 期刊：NIPS
+- 期刊：NeurIPS
 - 网络/算法名称：DDPM
 - 意义：公认第一篇简单易懂的扩散模型
 - 作者：Jonathan Ho, Ajay Jain, Pieter Abbeel

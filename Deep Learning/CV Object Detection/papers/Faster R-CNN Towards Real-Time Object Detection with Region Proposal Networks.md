@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2015
-- 期刊：CVPR
+- 期刊：NeurIPS
 - 网络/算法名称：Faster R-CNN
 - 意义：实现⼏乎⽆成本的区域提议
 - 作者：Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun

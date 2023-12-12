@@ -1,6 +1,6 @@
 # 论文信息
-- 时间：2023
-- 期刊：
+- 时间：2024
+- 期刊：ICRA
 - 网络/算法名称：AnyLoc
 - 意义：通用的位置识别算法
 - 作者：Nikhil Keetha∗1, Avneesh Mishra∗2, Jay Karhade∗1, Krishna Murthy Jatavallabhula3,Sebastian Scherer1, Madhava Krishna2, and Sourav Garg4; 1 CMU, 2 IIIT Hyderabad, 3 MIT,4 AIML, University of Adelaide

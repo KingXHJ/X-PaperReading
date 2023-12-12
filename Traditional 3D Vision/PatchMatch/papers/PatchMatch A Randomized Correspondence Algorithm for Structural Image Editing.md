@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2009
-- 期刊：ACM
+- 期刊：ACM SIGGRAPH
 - 算法名称：PatchMatch
 - 意义：Adobe⼯具，新的随机算法来快速找到图像块之间的近似最近邻匹配
 - 作者：Connelly Barnes1, Eli Shechtman2,3, Adam Finkelstein1, Dan B Goldman2; 1Princeton University; 2Adobe Systems; 3University of Washington

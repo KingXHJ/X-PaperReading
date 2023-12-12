@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2021
-- 期刊：CVPR
+- 期刊：Journal of information science and engineering
 - 网络/算法名称：YOLOR
 - 意义：统⼀的⽹络来编码隐性知识和显性知识
 - 作者：Chien-Yao Wang1, I-Hau Yeh2, and Hong-Yuan Mark Liao1; 1Institute of Information Science, Academia Sinica, Taiwan; 2Elan Microelectronics Corporation, Taiwan

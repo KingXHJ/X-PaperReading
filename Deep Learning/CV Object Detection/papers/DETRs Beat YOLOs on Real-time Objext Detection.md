@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2023.4.17 提交
-- 期刊：CVPR
+- 期刊：arXiv
 - 网络/算法名称：RT-DETR
 - 意义：实时检测Transformer(RT-DETR)
 - 作者：Wenyu Lv, Shangliang Xu, Yian Zhao, Guanzhong Wang, Jinman Wei, Cheng Cui, Yuning Du, Qingqing Dang, Yi Liu

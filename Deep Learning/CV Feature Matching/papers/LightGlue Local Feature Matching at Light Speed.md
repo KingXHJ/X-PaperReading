@@ -1,6 +1,6 @@
 # 论文信息
 - 时间：2023
-- 期刊：ICCV
+- 期刊：arXiv
 - 网络/算法名称：LightGlue
 - 意义：更容易训练的 SuperGlue
 - 作者：Philipp Lindenberger 1, Paul-Edouard Sarlin 1, Marc Pollefeys 1,2; 1 ETH Zurich; 2 Microsoft Mixed Reality & AI Lab
