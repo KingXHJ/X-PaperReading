@@ -2,7 +2,21 @@
 
 ## 目录
 - [视频课程](https://www.bilibili.com/video/BV13a4y1J7bw/?spm_id_from=333.999.0.0&vd_source=09eb8c9e7b3a221f6536a575e712dfa4)
+- [视频代码](../code/One%20Hour%20of%20Reinforce%20Learning/One%20Hour%20of%20Reinforce%20Learning%20ooxx.py)
 - [元素介绍](#元素介绍)
+- [元素关系](#元素关系)
+- [强化学习的特点](#强化学习的特点)
+- [强化学习的核心问题](#强化学习的核心问题)
+- [举例：多臂老虎机（K-armed Bandit）](#举例多臂老虎机k-armed-bandit)
+- [几种算法](#几种算法)
+- [误差的概念](#误差的概念)
+    - [第一类公式推导](#第一类公式推导)
+    - [第二类公式推导](#第二类公式推导)
+- [推广：状态价值/状态行动价值——强化学习的核心](#推广状态价值状态行动价值强化学习的核心)
+    - [状态行动价值函数](#状态行动价值函数)
+    - [状态价值函数](#状态价值函数)
+- [后果(Outcome/Afterstate)](#后果outcomeafterstate)
+- [返回上一层 README](../README.md)
 
 ## 元素介绍
 
@@ -14,10 +28,13 @@
 >
 > 第三层结构：核心元素（Core Elements）
 
+*[跳转至目录](#目录)*
 
 ## 元素关系
 
 ![](../pictures/One%20Hour%20of%20Reinforce%20Learning/RL%20Beginner.png)
+
+*[跳转至目录](#目录)*
 
 
 ## 强化学习的特点
@@ -30,6 +47,7 @@
     1. Back Propagation
     - 举例：复盘法
 
+*[跳转至目录](#目录)*
 
 ## 强化学习的核心问题
 
@@ -41,6 +59,7 @@
 1. Exploitation（利用）
     - 完全相信学到的价值函数，完全相信价值函数的结果，按照既定策略，采用理论最优解，做出相应的行动
 
+*[跳转至目录](#目录)*
 
 ## 举例：多臂老虎机（K-armed Bandit）
 
@@ -71,6 +90,7 @@
         1. 普通的Greedy+初始值不为0且计入平均计算：鼓励更多的探索行为
         1.  $\epsilon-Greedy$：探索进一步被增强
 
+*[跳转至目录](#目录)*
 
 ## 几种算法
 1. Finite Markov Decision Process
@@ -78,6 +98,7 @@
 1. Monte Carlo Methods
 1. Temporal-Difference Learning
 
+*[跳转至目录](#目录)*
 
 ## 误差的概念
 
@@ -135,6 +156,7 @@ $$
 继续递推：
 $$Q_ {n+1} = (1 - \alpha)^{n}Q_ {1} + \sum^{n}_ {i-1}\alpha(1 - \alpha)^{n-i}R_ {i}$$
 
+*[跳转至目录](#目录)*
 
 ## 推广：状态价值/状态行动价值——强化学习的核心
 
@@ -180,7 +202,11 @@ $$
 \end{aligned}
 $$
 
+*[跳转至目录](#目录)*
+
 
 ## 后果(Outcome/Afterstate)
 
 虽然状态——行动对可能不同，但导致的后果可能相同
+
+*[跳转至目录](#目录)*
