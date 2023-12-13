@@ -81,6 +81,8 @@
 
 ## 误差的概念
 
+强化学习本身是一种基于误差的学习方法
+
 ### 第一类公式推导
 
 Sample-Average，**以初始值为0且不计入平均计算**，初始 $Q_ {1}$ 对之后的价值估计无影响（也可以有带初始值的算术平均）
@@ -132,3 +134,53 @@ $$
 
 继续递推：
 $$Q_ {n+1} = (1 - \alpha)^{n}Q_ {1} + \sum^{n}_ {i-1}\alpha(1 - \alpha)^{n-i}R_ {i}$$
+
+
+## 推广：状态价值/状态行动价值——强化学习的核心
+
+流程：
+$$
+\begin{aligned}
+S_ {t} &\to A_ {t} \to R_ {t} \\
+&\swarrow \\
+S_ {t+1} &\to A_ {t+1} \to R_ {t+1} \\
+&\swarrow \\
+\cdots &\quad \cdots \quad \cdots\\
+S_ {T} &\to A_ {T} \to R_ {T} \\
+&\swarrow \\
+S_ {T+1} &\to A_ {T+1} \to R_ {T+1} \\
+\end{aligned}
+$$
+
+
+令：
+$$
+\begin{aligned}
+\sum^{T}_ {i=t}R_ {i} &= R_ {t} + \sum^{T}_ {i=t+1}R_ {i} \\
+&\approx R_ {t} + Q(S_ {t+1}, A_ {t+1}) \\
+\end{aligned}
+$$
+
+
+### 状态行动价值函数
+
+$$
+\begin{aligned}
+\underset{New Estimate}{Q(S_ {t} ,A_ {t})} &\gets \underset{Old Estimate}{Q(S_ {t},A_ {t})} + \underset{Learning Rate}{\alpha}\underset{Error}{(\sum^{T}_ {i=t}R_ {i} - Q(S_ {t},A_ {t}))} \quad 蒙特卡洛方法(Monte Carlo Method)的雏形 \\
+&\gets Q(S_ {t},A_ {t}) + \alpha(R_ {t} + Q(S_ {t+1},A_ {t+1}) - Q(S_ {t},A_ {t})) \quad 时序差分学习法(Temporal-Difference Learning)的雏形 \\
+\end{aligned}
+$$
+
+### 状态价值函数
+
+$$
+\begin{aligned}
+\underset{New Estimate}{Q(S_ {t})} &\gets \underset{Old Estimate}{Q(S_ {t})} + \underset{Learning Rate}{\alpha}\underset{Error}{(\sum^{T}_ {i=t}R_ {i} - Q(S_ {t}))} \quad 蒙特卡洛方法(Monte Carlo Method)的雏形 \\
+&\gets Q(S_ {t}) + \alpha(R_ {t} + Q(S_ {t+1}) - Q(S_ {t})) \quad 时序差分学习法(Temporal-Difference Learning)的雏形 \\
+\end{aligned}
+$$
+
+
+## 后果(Outcome/Afterstate)
+
+虽然状态——行动对可能不同，但导致的后果可能相同
