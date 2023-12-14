@@ -56,8 +56,8 @@
 
 1. 强化学习的独特性
     - 一般有监督学习和强化学习的范式之间的区别为
-        1. 一般的有监督学习关注寻找一个模型，使其在给定数据分布下得到的损失函数的期望最小；$$最优模型=\underset{模型}{argmin}\mathbb{E}_ {(特征, 标签)~数据分布}[损失函数(标签, 模型(特征))]$$
-        1. 强化学习关注寻找一个智能体策略，使其在与动态环境交互的过程中产生最优的数据分布，即最大化该分布下一个给定奖励函数的期望。$$最优策略=\underset{策略}{argmin}\mathbb{E}_ {(状态, 动作)~策略的占用度量}[奖励函数(状态, 动作)]$$
+        1. 一般的有监督学习关注寻找一个模型，使其在给定数据分布下得到的损失函数的期望最小； $$最优模型=\underset{模型}{argmin}\mathbb{E}_ {(特征, 标签)~数据分布}[损失函数(标签, 模型(特征))]$$
+        1. 强化学习关注寻找一个智能体策略，使其在与动态环境交互的过程中产生最优的数据分布，即最大化该分布下一个给定奖励函数的期望。 $$最优策略=\underset{策略}{argmin}\mathbb{E}_ {(状态, 动作)~策略的占用度量}[奖励函数(状态, 动作)]$$
 
 *[跳转至目录](#目录)*
 
@@ -104,22 +104,29 @@
 
     - 一个马尔可夫奖励过程由 $<\mathcal{S}, \mathcal{P}, r, \gamma>$ 构成
         1. $\mathcal{S}$ 是有限状态的集合
+        
         1. $\mathcal{P}$ 是有限状态的集合
+        
         1. $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
-        1. $\gamma$ 是折扣因子（discount factor），$\gamma$ 的取值范围为 $[0,1)$。引入折扣因子的理由为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励
+        
+        1. $\gamma$ 是折扣因子（discount factor）， $\gamma$ 的取值范围为 $[0,1)$ 。引入折扣因子的理由为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励
 
     - 价值函数
         - 分类
             1. 状态价值函数：定义为从状态 $s$ 出发遵循策略 $\pi$ 能获得的期望回报 $$V^{\pi}(s)=\mathbb{E}_ {\pi}[G_ {t}|s_ {t}=s]$$
-            1. 状态动作价值函数：在 MDP 遵循策略 $\pi$ 时，对当前状态 $s$ 执行动作 $a$ 得到的期望回报 $$Q^{\pi}(s, a)=\mathbb{E}_ {\pi}[G_ {t}|S_ {t}=s, A_ {t}=a]$$
+            
+            1. 动作价值函数：在 MDP 遵循策略 $\pi$ 时，对当前状态 $s$ 执行动作 $a$ 得到的期望回报 $$Q^{\pi}(s, a)=\mathbb{E}_ {\pi}[G_ {t}|S_ {t}=s, A_ {t}=a]$$
+            
             - 两种函数之间的关系：在使用策略 $\pi$ 中，状态 $s$ 的价值等于在该状态下基于策略 $\pi$ 采取所有动作的概率与相应的价值相乘再求和的结果 $$V^{\pi}(s)=\sum_ {a\in A}\pi(a|s)Q^{\pi}(s,a)$$
-            - 使用策略 $\pi$ 时，状态 $s$ 下采取动作 $a$ 的价值等于即时奖励加上经过衰减后的所有可能的下一个状态的状态转移概率与相应的价值的乘积：$$Q^{\pi}(s,a)=r(s,a)+\gamma \sum_ {s^{'}\in S}P(s^{'}|s,a)V^{\pi}(s^{'})$$
+            
+            - 使用策略 $\pi$ 时，状态 $s$ 下采取动作 $a$ 的价值等于即时奖励加上经过衰减后的所有可能的下一个状态的状态转移概率与相应的价值的乘积： $$Q^{\pi}(s,a)=r(s,a)+\gamma \sum_ {s^{\prime}\in S}P(s^{\prime}|s,a)V^{\pi}(s^{\prime})$$
 
         - 在马尔可夫奖励过程中，一个状态的期望回报（即从这个状态出发的未来累积奖励的期望）被称为这个状态的价值（value）
 
         - 贝尔曼方程（Bellman equation）
-            1. 普通形式：$V(s)=r(s)+\gamma\sum_ {s{'}\in S}p(s^{'}|s)V(s^{'})$
-            1. 矩阵形式：$$\begin{aligned}\mathcal{V} &= \mathcal{R}+\gamma\mathcal{P}\mathcal{V} \\ (\mathcal{I}-\gamma\mathcal{P})\mathcal{V} &= \mathcal{R} \\ \mathcal{V} &= (\mathcal{I}- \gamma\mathcal{P})^{-1}\mathcal{R} \\ \end{aligned}$$
+            1. 普通形式： $V(s)=r(s)+\gamma\sum_ {s{\prime}\in S}p(s^{\prime}|s)V(s^{\prime})$
+
+            1. 矩阵形式： $$\begin{aligned}\mathcal{V} &= \mathcal{R}+\gamma\mathcal{P}\mathcal{V} \\ (\mathcal{I}-\gamma\mathcal{P})\mathcal{V} &= \mathcal{R} \\ \mathcal{V} &= (\mathcal{I}- \gamma\mathcal{P})^{-1}\mathcal{R} \\ \end{aligned}$$
 
         - 以上解析解的计算复杂度是 $O(n^{3})$，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用动态规划（dynamic programming）算法、蒙特卡洛方法（Monte-Carlo method）和时序差分（temporal difference）
 
@@ -128,18 +135,71 @@
 
     -  一个马尔可夫决策过程由 $<\mathcal{S}, \mathcal{A}, P, r, \gamma>$ 构成
         1. $\mathcal{S}$ 是状态的集合
+
         1. $\mathcal{A}$ 是动作的集合
+
         1. $\gamma$ 是折扣因子
-        1. $r(s, a)$ 是奖励函数，此时奖励可以同时取决于状态 $s$ 和动作 $a$，在奖励函数只取决于状态 $s$ 时，则退化为$r(s)$
-        1. $P(s^{'}|s, a)$ 是状态转移函数，表示在状态 $s$ 执行动作 $a$ 之后到达状态 $s^{'}$ 的概率
+
+        1. $r(s, a)$ 是奖励函数，此时奖励可以同时取决于状态 $s$ 和动作 $a$，在奖励函数只取决于状态 $s$ 时，则退化为 $r(s)$
+
+        1. $P(s^{\prime}|s, a)$ 是状态转移函数，表示在状态 $s$ 执行动作 $a$ 之后到达状态 $s^{\prime}$ 的概率
 
     - 策略：智能体根据当前状态从动作的集合中选择一个动作的函数，被称为策略。
         - 智能体的策略（Policy）通常用字母 $\pi$ 表示。策略 $\pi(a|s)=P(A_ {t}=a|S_ {t}=s)$ 是一个函数，表示在输入状态 $s$ 情况下采取动作 $a$ 的概率
 
 1. 贝尔曼期望方程
-    1. 状态价值函数：$$\begin{aligned} V^{\pi}(s) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma V^{\pi}(S_ {t+1})|S_ {t}=s] \\ &= \sum_ {a \in A} \pi(a|s)(r(s,a) + \gamma \sum_ {s^{'} \in S}p(s^{'}|s,a)V^{\pi}(s^{'})) \\ \end{aligned}$$
-    1. 状态动作价值函数：$$\begin{aligned} Q^{\pi}(s,a) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma Q^{\pi}(S_ {t+1},A_ {t+1})|S_ {t}=s,A_ {t}=a] \\ &= r(s,a) + \gamma \sum_ {s^{'} \in S}p(s^{'}|s,a) \sum_ {a^{'} \in A} \pi(a^{'}|s^{'})Q^{\pi}(a^{'},s^{'}) \\ \end{aligned}$$
+    1. 状态价值函数： $$\begin{aligned} V^{\pi}(s) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma V^{\pi}(S_ {t+1})|S_ {t}=s] \\ &= \sum_ {a \in A} \pi(a|s)(r(s,a) + \gamma \sum_ {s^{\prime} \in S}p(s^{\prime}|s,a)V^{\pi}(s^{\prime})) \\ \end{aligned}$$
 
+    1. 动作价值函数： $$\begin{aligned} Q^{\pi}(s,a) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma Q^{\pi}(S_ {t+1},A_ {t+1})|S_ {t}=s,A_ {t}=a] \\ &= r(s,a) + \gamma \sum_ {s^{\prime} \in S}p(s^{\prime}|s,a) \sum_ {a^{\prime} \in A} \pi(a^{\prime}|s^{\prime})Q^{\pi}(a^{\prime},s^{\prime}) \\ \end{aligned}$$
+
+1. 贝尔曼最优方程
+    - 最优策略都有相同的状态价值函数，我们称之为最优状态价值函数，表示为： $$V^{*}(s)=\underset{\pi}{\mathbf{max}}V^{\pi}(s), \quad \forall s \in \mathcal{S}$$
+
+    - 同理，我们定义最优动作价值函数: $$Q^{*}(s,a)=\underset{\pi}{\mathbf{max}}Q^{\pi}(s,a), \quad \forall s \in \mathcal{S},a \in \mathcal{A}$$
+
+    - 为了使 $Q^{pi}(s,a)$ 最大，我们需要在当前的状态动作对 $(s,a)$ 之后都执行最优策略。于是我们得到了最优状态价值函数和最优动作价值函数之间的关系： $$Q^{*}(s,a)=r(s,a) + \gamma \sum_ {s^{\prime} \in S}P(s^{\prime}|s,a)V^{*}(s^{\prime})$$
+
+    - 这与在普通策略下的状态价值函数和动作价值函数之间的关系是一样的。另一方面，最优状态价值是选择此时使最优动作价值最大的那一个动作时的状态价值： $$V^{*}(s)=\underset{a \in \mathcal{A}}{\mathbf{max}}Q^{*}(s,a)$$
+
+    - 根据 $V^{*}(s)$ 和 $Q^{*}(s,a)$ 的关系，我们可以得到贝尔曼最优方程（Bellman optimality equation）： $$\begin{aligned} V^{*}(s) &= \underset{a \in \mathcal{A}}{\mathbf{max}}\lbrace r(s,a) + \gamma \sum_ {s^{\prime} \in \mathcal{S}}p(s^{\prime}|s,a)V^{*}(s^{\prime}) \rbrace \\ Q^{*}(s,a) &= r(s,a) + \gamma \sum_ {s^{\prime} \in \mathcal{S}}p(s^{\prime}|s,a)\underset{a \in \mathcal{A}}{\mathbf{max}}Q^{*}(s,a) \end{aligned}$$
+
+
+
+算法：
+1. MDP->MRP
+    - 问题：这个 MRP 解析解的方法在状态动作集合比较大的时候不是很适用
+
+1. 蒙特卡洛方法（Monte-Carlo methods）也被称为统计模拟方法，是一种基于概率统计的数值计算方法
+
+1. 最优策略：在有限状态和动作集合的 MDP 中，至少存在一个策略比其他所有策略都好或者至少存在一个策略不差于其他所有策略，这个策略就是最优策略（optimal policy）
+    - 强化学习的目标通常是找到一个策略，使得智能体从初始状态出发能获得最多的期望回报
+
+
+占用度量:
+
+- 不同策略的价值函数是不一样的。这是因为对于同一个 MDP，不同策略会访问到的状态的概率分布是不同的
+
+- 一个策略的状态访问分布（state visitation distribution）： $$\mathcal{v}^{\pi}(s)=(1-\gamma)\sum^{\infty}_ {t=0}\gamma^{t}P^{\pi}_ {t}(s)$$
+
+    1. MDP 的初始状态分布为 $\mathcal{v}_ {0}(s)$
+
+    1. 采取策略使得智能体在 $t$ 时刻状态为 $s$ 的概率： $P^{\pi}_ {t}(s)$, 有 $P^{\pi}_ {t}(s)=\mathcal{v}_ {0}(s)$
+
+    1. $1-\gamma$ 是用来使得概率加和为 1 的归一化因子
+
+- 状态访问概率表示一个策略和 MDP 交互会访问到的状态的分布。需要注意的是，理论上在计算该分布时需要交互到无穷步之后，但实际上智能体和 MDP 的交互在一个序列中是有限的。不过我们仍然可以用以上公式来表达状态访问概率的思想，状态访问概率有如下性质： $$\mathcal{v}^{\pi}(s^{\prime})=(1-\gamma)\mathcal{v}_ {0}(s^{\prime}) + \gamma \int P(s^{\prime}|s,a)\pi (a|s)\mathcal{v}^{\pi}(s)dsda$$
+
+- 此外，我们还可以定义策略的占用度量（occupancy measure）： $$\rho^{\pi}(s,a)=(1-\gamma)\sum^{\infty}_ {t=0}\gamma^{t}P^{\pi}_ {t}(s)\pi (a|s)$$
+
+- 它表示动作状态对 $(s,a)$ 被访问到的概率。二者之间存在如下关系： $$\rho^{\pi}(s,a)=\mathcal{v}^{\pi}(s)\pi (a|s)$$
+
+- 进一步得出如下两个定理
+    1. 定理 1：智能体分别以策略 $\pi_ {1}$ 和 $\pi_ {2}$ 和同一个 MDP 交互得到的占用度量 $\rho^{\pi_ {1}}$ 和 $\rho^{\pi_ {2}}$ 满足 $$\rho^{\pi_ {1}}=\rho^{\pi_ {2}} \Longleftrightarrow \pi_ {1}=\pi_ {2}$$
+
+    1. 定理 2：给定一合法占用度量 $\rho$ ，可生成该占用度量的唯一策略是 $$\pi_ {\rho}=\frac{\rho(s,a)}{\sum_ {a^{\prime}}\rho(s,a^{\prime})}$$
+
+- 注意：以上提到的“合法”占用度量是指存在一个策略使智能体与 MDP 交互产生的状态动作对被访问到的概率。
+ 
 
 ## 强化学习进阶篇
 
