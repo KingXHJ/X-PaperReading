@@ -101,20 +101,31 @@
 
 1. 马尔可夫奖励过程（Markov reward process）[感觉就是普通的深度学习]
     - 在马尔可夫过程的基础上加入奖励函数 $r$ 和折扣因子 $\gamma$
+
     - 一个马尔可夫奖励过程由 $<\mathcal{S}, \mathcal{P}, r, \gamma>$ 构成
         1. $\mathcal{S}$ 是有限状态的集合
         1. $\mathcal{P}$ 是有限状态的集合
         1. $r$ 是奖励函数，某个状态 $s$ 的奖励 $r(s)$ 指转移到该状态时可以获得奖励的期望。
         1. $\gamma$ 是折扣因子（discount factor），$\gamma$ 的取值范围为 $[0,1)$。引入折扣因子的理由为远期利益具有一定不确定性，有时我们更希望能够尽快获得一些奖励，所以我们需要对远期利益打一些折扣。接近 1 的 $\gamma$ 更关注长期的累计奖励，接近 0 的 $\gamma$ 更考虑短期奖励
+
     - 价值函数
+        - 分类
+            1. 状态价值函数：定义为从状态 $s$ 出发遵循策略 $\pi$ 能获得的期望回报 $$V^{\pi}(s)=\mathbb{E}_ {\pi}[G_ {t}|s_ {t}=s]$$
+            1. 状态动作价值函数：在 MDP 遵循策略 $\pi$ 时，对当前状态 $s$ 执行动作 $a$ 得到的期望回报 $$Q^{\pi}(s, a)=\mathbb{E}_ {\pi}[G_ {t}|S_ {t}=s, A_ {t}=a]$$
+            - 两种函数之间的关系：在使用策略 $\pi$ 中，状态 $s$ 的价值等于在该状态下基于策略 $\pi$ 采取所有动作的概率与相应的价值相乘再求和的结果 $$V^{\pi}(s)=\sum_ {a\in A}\pi(a|s)Q^{\pi}(s,a)$$
+            - 使用策略 $\pi$ 时，状态 $s$ 下采取动作 $a$ 的价值等于即时奖励加上经过衰减后的所有可能的下一个状态的状态转移概率与相应的价值的乘积：$$Q^{\pi}(s,a)=r(s,a)+\gamma \sum_ {s^{'}\in S}P(s^{'}|s,a)V^{\pi}(s^{'})$$
+
         - 在马尔可夫奖励过程中，一个状态的期望回报（即从这个状态出发的未来累积奖励的期望）被称为这个状态的价值（value）
-        - 贝尔曼方程（Bellman equation）：
+
+        - 贝尔曼方程（Bellman equation）
             1. 普通形式：$V(s)=r(s)+\gamma\sum_ {s{'}\in S}p(s^{'}|s)V(s^{'})$
-            1. 矩阵形式：$$\begin{aligned}\mathcal{V}&=\mathcal{R}+\gamma\mathcal{P}\mathcal{V} \\ (\mathcal{I}-\gamma\mathcal{P})\mathcal{V} &= \mathcal{R} \\ \mathcal{V} &= (\mathcal{I} - \gamma\mathcal{P})^{-1}\mathcal{R} \end{aligned}$$
+            1. 矩阵形式：$$\begin{aligned}\mathcal{V} &= \mathcal{R}+\gamma\mathcal{P}\mathcal{V} \\ (\mathcal{I}-\gamma\mathcal{P})\mathcal{V} &= \mathcal{R} \\ \mathcal{V} &= (\mathcal{I}- \gamma\mathcal{P})^{-1}\mathcal{R} \\ \end{aligned}$$
+
         - 以上解析解的计算复杂度是 $O(n^{3})$，其中 $n$ 是状态个数，因此这种方法只适用很小的马尔可夫奖励过程。求解较大规模的马尔可夫奖励过程中的价值函数时，可以使用动态规划（dynamic programming）算法、蒙特卡洛方法（Monte-Carlo method）和时序差分（temporal difference）
 
 1. 马尔可夫决策过程（Markov decision process，MDP）
     - 马尔可夫过程和马尔可夫奖励过程都是自发改变的随机过程；而如果有一个外界的“刺激”来共同改变这个随机过程，就有了马尔可夫决策过程（Markov decision process，MDP）。我们将这个来自外界的刺激称为智能体（agent）的动作，在马尔可夫奖励过程（MRP）的基础上加入动作，就得到了马尔可夫决策过程（MDP）
+
     -  一个马尔可夫决策过程由 $<\mathcal{S}, \mathcal{A}, P, r, \gamma>$ 构成
         1. $\mathcal{S}$ 是状态的集合
         1. $\mathcal{A}$ 是动作的集合
@@ -122,7 +133,12 @@
         1. $r(s, a)$ 是奖励函数，此时奖励可以同时取决于状态 $s$ 和动作 $a$，在奖励函数只取决于状态 $s$ 时，则退化为$r(s)$
         1. $P(s^{'}|s, a)$ 是状态转移函数，表示在状态 $s$ 执行动作 $a$ 之后到达状态 $s^{'}$ 的概率
 
+    - 策略：智能体根据当前状态从动作的集合中选择一个动作的函数，被称为策略。
+        - 智能体的策略（Policy）通常用字母 $\pi$ 表示。策略 $\pi(a|s)=P(A_ {t}=a|S_ {t}=s)$ 是一个函数，表示在输入状态 $s$ 情况下采取动作 $a$ 的概率
 
+1. 贝尔曼期望方程
+    1. 状态价值函数：$$\begin{aligned} V^{\pi}(s) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma V^{\pi}(S_ {t+1})|S_ {t}=s] \\ &= \sum_ {a \in A} \pi(a|s)(r(s,a) + \gamma \sum_ {s^{'} \in S}p(s^{'}|s,a)V^{\pi}(s^{'})) \\ \end{aligned}$$
+    1. 状态动作价值函数：$$\begin{aligned} Q^{\pi}(s,a) &= \mathbb{E}_ {\pi}[R_ {t} + \gamma Q^{\pi}(S_ {t+1},A_ {t+1})|S_ {t}=s,A_ {t}=a] \\ &= r(s,a) + \gamma \sum_ {s^{'} \in S}p(s^{'}|s,a) \sum_ {a^{'} \in A} \pi(a^{'}|s^{'})Q^{\pi}(a^{'},s^{'}) \\ \end{aligned}$$
 
 
 ## 强化学习进阶篇
