@@ -1,8 +1,15 @@
 # 大语言模型LLM
 
 ## 目录
+- [LLM Beginner]()
 - [笔记](#笔记)
 - [返回上一层 README](../README.md)
+
+
+## LLM综述
+[大纲](./LLM%20Beginner/LLM底层技术及发展.xmind)
+
+[PPT](./LLM%20Beginner/LLM基础.pptx)
 
 
 ## 笔记
