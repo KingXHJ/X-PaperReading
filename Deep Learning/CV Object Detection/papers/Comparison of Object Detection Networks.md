@@ -1333,6 +1333,8 @@ SIoU:
 
 # YOLOv7
 
+- [Pictures](../pictures/YOLOv7/)
+
 ## 1. 创新点
 1. E-ELAN: Extended efficient layer aggregation networks
     ![YOLOv7 ELAN.png](../pictures/YOLOv7/YOLOv7%20ELAN.png)

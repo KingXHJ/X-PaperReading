@@ -8,6 +8,9 @@ Institute of Information Science, Academia Sinica, Taiwan
 - 实验环境：
 - 数据集：MS COCO
 - [返回上一层 README](../README.md)
+
+- [Pictures](../pictures/YOLOv7/)
+
 # 一、解决的问题
 1. 摘要
     - YOLOv7 在 5 FPS 到 160 FPS 的范围内在速度和精度上都超过了所有已知的物体检测器，并且在 GPU V100 上具有 30 FPS 或更⾼的所有已知实时物体检测器中具有最⾼的精度 56.8% AP。 YOLOv7-E6 ⽬标检测器（56 FPS V100，55.9% AP）在速度上优于基于Transformer的检测器 SWIN L Cascade-Mask R-CNN（9.2 FPS A100，53.9% AP）509% 的速度和 2% 的精度，以及卷积基于检测器 ConvNeXt-XL Cascade-Mask R-CNN（8.6 FPS A100，55.2% AP）的速度提⾼了 551%，准确度提⾼了 0.7% AP，以及 YOLOv7 优于：YOLOR、YOLOX、Scaled-YOLOv4、YOLOv5、DETR、可变形 DETR、DINO-5scale-R50、ViT-Adapter-B 和许多其他速度和准确性的物体检测器。此外，我们只在 MS COCO 数据集上从头开始训练 YOLOv7，⽽不使⽤任何其他数据集或预训练权重。
