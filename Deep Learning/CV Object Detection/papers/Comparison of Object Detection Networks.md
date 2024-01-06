@@ -1333,7 +1333,7 @@ SIoU:
 
 # YOLOv7
 
-- [Pictures](../pictures/YOLOv7/)
+- [付费购买的网络结构图](../pictures/YOLOv7-drawings/payment.png)
 
 ## 1. 创新点
 1. E-ELAN: Extended efficient layer aggregation networks

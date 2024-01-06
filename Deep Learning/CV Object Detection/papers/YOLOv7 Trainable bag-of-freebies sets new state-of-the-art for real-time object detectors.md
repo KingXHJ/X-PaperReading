@@ -9,7 +9,7 @@ Institute of Information Science, Academia Sinica, Taiwan
 - 数据集：MS COCO
 - [返回上一层 README](../README.md)
 
-- [Pictures](../pictures/YOLOv7/)
+- [付费购买的网络结构图](../pictures/YOLOv7-drawings/payment.png)
 
 # 一、解决的问题
 1. 摘要
