@@ -7,6 +7,8 @@
 - 实验环境：
 - 数据集：
 
+[ppt](../ppt/Review/Review%20of%20YOLO.pptx)
+
 TP TF FN FP: https://www.cnblogs.com/caiyishuai/p/9597365.html; https://zhuanlan.zhihu.com/p/87768945; https://zhuanlan.zhihu.com/p/498846393
 AP: https://zhuanlan.zhihu.com/p/88896868; https://zhuanlan.zhihu.com/p/498846393; https://zhuanlan.zhihu.com/p/70667071
 
