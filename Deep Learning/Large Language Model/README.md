@@ -11,6 +11,7 @@
 
 [PPT](./LLM%20Beginner/LLM基础.pptx)
 
+[微调概念](./Tuning/pictures/Tuning.png)
 
 ## 笔记
 
