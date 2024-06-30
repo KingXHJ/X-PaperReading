@@ -2,6 +2,7 @@
 
 ## 导航
 - [综述](./Summarize/README.md)
+- [KAN](./KAN/README.md)
 - [图神经网络](./Graph%20Neural%20Network/README.md)
 - [生成模型](./Generative%20Model/README.md)
 - [扩散模型](./Diffusion%20Model/README.md)
