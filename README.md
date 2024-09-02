@@ -13,5 +13,5 @@
 - [设计模式](./Design%20Patterns/README.md)
 - [强化学习](./Reinforcement/README.md)
 - [推荐系统](./Recommendation%20System/README.md)
-- [机器人](./Robotics/README.md)
+- [具身智能](./Embodied%20AI/README.md)
 - [可视化工具](./Tools/README.md)
