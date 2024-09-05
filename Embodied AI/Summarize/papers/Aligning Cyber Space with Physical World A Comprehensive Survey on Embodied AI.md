@@ -7,6 +7,7 @@
 - 实验环境：
 - 数据集：
 - [ppt](../ppt/Aligning%20Cyber%20Space%20with%20Physical%20World%20A%20Comprehensive%20Survey%20on%20Embodied%20AI.pptx)
+- [Source Paper](../papers/Aligning%20Cyber%20Space%20with%20Physical%20World%20A%20Comprehensive%20Survey%20on%20Embodied%20AI.pdf)
 - [中文解说](https://mp.weixin.qq.com/s/vB-q47YaLcQbdmWwuCci2w)
 - [中文解说下载](./具身智能综述：多模态大模型与世界模型在AGI时代的应用与挑战.pdf)
 
