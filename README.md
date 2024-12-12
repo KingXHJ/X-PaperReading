@@ -7,11 +7,11 @@
 ](https://space.bilibili.com/414678948)、[VictorYuki](https://space.bilibili.com/13355688)，飞书用户[陈敏凯Marco(由于离职，链接为其文章URL)](https://s3tlxskbq3.feishu.cn/docx/NyPqdCKraoXz9gxNVCfcIFdnnAc?continueFlag=0f3e03decdf4cadde0a19bcedd4f0820)给我在阅读论文的启发。本仓库借鉴了李沐老师的README格式，进行了一次大幅度调整。在学习整理上述大咖的资料的基础上，增加了自己阅读的一些论文及翻译和笔记，希望能够对不同机器学习邻域能够有更深的了解。
 
 
-## 导航
-- [深度学习](./Deep%20Learning/README.md)
-- [传统3D视觉论文](./Traditional%203D%20Vision/README.md)
-- [设计模式](./Design%20Patterns/README.md)
-- [强化学习](./Reinforcement/README.md)
-- [推荐系统](./Recommendation%20System/README.md)
-- [具身智能](./Embodied%20AI/README.md)
-- [可视化工具](./Tools/README.md)
+## Contents
+- [Deep Learning](./Deep%20Learning/README.md)
+- [Traditional 3D Vision](./Traditional%203D%20Vision/README.md)
+- [Design Patterns](./Design%20Patterns/README.md)
+- [Reinforcement](./Reinforcement/README.md)
+- [Recommendation System](./Recommendation%20System/README.md)
+- [Embodied AI](./Embodied%20AI/README.md)
+- [Tools](./Tools/README.md)

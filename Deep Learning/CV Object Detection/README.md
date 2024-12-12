@@ -1,4 +1,4 @@
-# 计算机视觉-Object Detection
+# CV-Object Detection
 
 ## 目录
 - [笔记](#笔记)

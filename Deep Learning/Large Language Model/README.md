@@ -1,4 +1,4 @@
-# 大语言模型LLM
+# LLM
 
 ## 目录
 - [LLM Beginner]()

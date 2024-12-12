@@ -1,7 +1,7 @@
-# 工具
+# Tools
 
 ## 导航
-- [可视化工具](./Visualization/README.md)
+- [Visualization](./Visualization/README.md)
 - [返回上一层 README](../README.md)
 
 

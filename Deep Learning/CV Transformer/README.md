@@ -1,4 +1,4 @@
-# 计算机视觉-Transformer
+# CV-Transformer
 
 ## 目录
 - [笔记](#笔记)

@@ -1,4 +1,4 @@
-# 计算机视觉-Contrastive Learning
+# CV-Contrastive Learning
 
 ## 目录
 - [笔记](#笔记)

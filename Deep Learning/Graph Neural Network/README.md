@@ -1,4 +1,4 @@
-### 图神经网络
+# Graph Neural Networks
 
 ## 目录
 - [笔记](#笔记)

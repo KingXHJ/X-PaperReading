@@ -1,7 +1,7 @@
 # 推荐系统
 
 ## 导航
-- [综述](./Summarize/README.md)
+- [Summarize](./Summarize/README.md)
 - [返回上一层 README](../README.md)
 
 
