@@ -40,7 +40,7 @@
 
 ![DINO fusion experiment](../pictures/DINO/DINO%20fusion%20experiment.png)
 
-然而，这种学生和教师网络均输出相同 `embeddings` 的情况容易出现模式崩塌(`mode collapse`)的现象。在《`Momentum Contrast for Unsupervised Visual Representation Learning`》一文中提出了一种解决方案，即应用“动量教师”(`momentum tearcher`)模型，可以简单地理解为就是教师的模型不是基于反向传播更新的，而是再对学生模型进行梯度回传后，在通过指数移动平均(`Exponentially Weighted Average, EWA`)，直接将学生网络学习到的模型参数更新给教师网络，换句话就是教师网络的权重更新自学生网络。
+然而，这种学生和教师网络均输出相同 `embeddings` 的情况容易出现模式崩塌(`mode collapse`)的现象。在《`Momentum Contrast for Unsupervised Visual Representation Learning`》一文中提出了一种解决方案，即应用“动量教师”(`momentum tearcher`)模型，可以简单地理解为就是教师的模型不是基于反向传播更新的，而是再对学生模型进行梯度回传后，在通过指数移动平均(`Exponential Moving Average, EMA`)，直接将学生网络学习到的模型参数更新给教师网络，换句话就是教师网络的权重更新自学生网络。
 
 DINO 中便是沿用这种方式。具体地，我们可以简单看下教师权重的更新公式：
 
